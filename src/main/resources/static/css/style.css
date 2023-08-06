@@ -1,5 +1,69 @@
 @charset "UTF-8";
 
+#wrap {
+	width: 900px;
+	height: auto;
+	background-color: aliceblue;
+}
+
+header {
+	height: 100px;
+	background-color: lightskyblue;
+}
+
+.contents {
+    min-height: 600px; 
+    background-color: bisque;
+}
+
+
+#bestSellerBoxInMain {
+	width: 600px;
+	height: 180px;
+}
+
+.book-in-best-seller-box {
+	width: 80px;
+	height: 120px;
+}
+
+#newBookBoxInMain {
+	width: 600px;
+	height: 180px;
+}
+
+.book-in-new-book-box {
+	width: 80px;
+	height: 120px;
+}
+
+#eventBoxInMain {
+	width: 600px;
+	height: 180px;
+}
+
+.event-in-event-box {
+	width: 550px;
+	height: 120px;
+}
+
+footer {
+	height: 150px;
+	background-color: palegreen;
+}
+
 #searchBox {
-	width: 300px;
+	width: 330px;
+}
+
+.my-page-menus {
+	background-color: darkseagreen;
+	width: 200px;
+	height: 500px;
+}
+
+.my-page-contents {
+	background-color: silver;
+	width: 600px;
+	height: auto;
 }

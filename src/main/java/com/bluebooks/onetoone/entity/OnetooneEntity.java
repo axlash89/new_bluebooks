@@ -1,7 +1,6 @@
-package com.bluebooks.user.entity;
+package com.bluebooks.onetoone.entity;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,37 +22,29 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Getter
-@Table(name = "user")
+@Table(name = "onetoone")
 @Entity
-public class UserEntity {
+public class OnetooneEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)  // auto increment
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+		
+	@Column(name="userId")
+	private int userId;
 	
-	private String type;
+	@Column(name="postNoForOneself")
+	private int postNoForOneself;
 	
-	@Column(name = "loginId")
-	private String loginId;
+	private String subject;	
+	private String content;
+	private String answer;
 	
-	private String password;
-	private String name;
+	@Column(name="imagePath")
+	private String imagePath;
 	
-	@Column(name = "birthDate")
-	private Date birthDate;
-
-	private String email;
+	private String status;
 	
-	@Column(name = "phoneNumber")
-	private String phoneNumber;
-	
-	@Column(name = "zipCode")
-	private String zipCode;
-	
-	private String address;
-	
-	private int point;	
-
 	@UpdateTimestamp
 	@Column(name = "createdAt", updatable = false)
 	private ZonedDateTime createdAt;
@@ -62,5 +52,5 @@ public class UserEntity {
 	@UpdateTimestamp
 	@Column(name = "updatedAt")
 	private ZonedDateTime updatedAt;
-	
+
 }

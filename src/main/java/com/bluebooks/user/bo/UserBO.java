@@ -113,8 +113,6 @@ public class UserBO {
 	
 	public void deleteUserEntityByUserId(int userId) {
 		
-		// onetoone, like, comment, cart 다 지워야함.
-		
 		UserEntity userEntity = userRepository.findById(userId).orElse(null);
 		
 		if (userEntity != null) {

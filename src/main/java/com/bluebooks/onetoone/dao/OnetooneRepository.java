@@ -15,7 +15,5 @@ public interface OnetooneRepository extends JpaRepository<OnetooneEntity, Intege
 	public List<OnetooneEntity> findAllByUserId(int userId); 
 	
 	public Page<OnetooneEntity> findAllByUserId(Pageable pageable, int userId);
-	
-	public void deleteAllByUserId(int userId);
-	
+		
 }

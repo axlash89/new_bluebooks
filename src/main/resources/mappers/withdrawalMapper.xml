@@ -7,14 +7,16 @@
 	<insert id="insertWithdrawal" parameterType="map">
 		INSERT INTO `withdrawal`
  		(
-			`userLoginId`
+ 			`userId`
+			,`userLoginId`
 			,`userCreatedAt`
 			,`reason`
 			,`createdAt`
  		)
  		VALUES
  		(
- 			#{userLoginId}
+ 			#{userId}
+ 			,#{userLoginId}
  			,#{userCreatedAt}
  			,#{reason}
  			,now()

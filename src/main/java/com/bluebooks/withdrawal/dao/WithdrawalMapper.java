@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface WithdrawalMapper {
 
 	public int insertWithdrawal(
+			@Param("userId") int userId,
 			@Param("userLoginId") String userLoginId,
 			@Param("userCreatedAt") Date userCreatedAt,
 			@Param("reason") String reason);

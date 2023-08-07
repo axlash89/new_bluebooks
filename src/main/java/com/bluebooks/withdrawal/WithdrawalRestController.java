@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bluebooks.withdrawal.bo.WithdrawalAsyncBO;
 import com.bluebooks.withdrawal.bo.WithdrawalBO;
 
 @RequestMapping("/withdrawal")
@@ -20,6 +21,9 @@ public class WithdrawalRestController {
 	@Autowired
 	private WithdrawalBO withdrawalBO;
 	
+	@Autowired 
+	private WithdrawalAsyncBO withdrawalAsyncBO;
+	
 	@PostMapping("/withdraw")
 	public Map<String, Object> withdraw (
 			@RequestParam("reason") String reason,
@@ -28,7 +32,9 @@ public class WithdrawalRestController {
 		int userId = (int) session.getAttribute("userId");
 		String userLoginId = (String) session.getAttribute("userLoginId");
 		
-		int row = withdrawalBO.insertWithdrawal(userId, userLoginId, reason);
+		int row = withdrawalAsyncBO.insertWithdrawal(userId, userLoginId, reason);
+		
+		withdrawalBO.deleteWithdrawal(userId);
 		
 		
 		// 응답

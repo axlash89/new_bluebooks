@@ -124,9 +124,25 @@ public class OnetooneBO {
 	}
 	
 	
-	public void deleteOnetooneEntityByUserId(int userId) {
+	public void deleteOnetooneByUserId(int userId) {
 		
-		onetooneRepository.deleteAllByUserId(userId);
+		List<OnetooneEntity> onetooneList = onetooneRepository.findAllByUserId(userId);
+		
+		if (onetooneList.size() > 0) {
+			
+			
+			for (int i = 0; i < onetooneList.size(); i++) {
+				
+				if (onetooneList.get(i).getImagePath() != null) {				
+				fileManager.deleteFile(onetooneList.get(i).getImagePath());				
+				}
+				
+			}
+			
+			onetooneRepository.deleteAll(onetooneList);
+			
+		}
+		
 		
 	}
 	

@@ -61,7 +61,7 @@
 			    <c:forEach begin="${startPage}" end="${endPage}" var="cnt">
 				    <c:choose>
 				    	<c:when test="${cnt eq nowPage}">
-				    		<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
+				    		<li class="page-item disabled"><a class="page-link text-white bg-info" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
 				    	</c:when>
 				    	<c:otherwise>
 				    		<li class="page-item"><a class="page-link" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>

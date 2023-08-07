@@ -36,7 +36,7 @@
 			</tr>
 			<tr>
 				<th class="text-center pt-4">* 생년월일</th>
-				<td><input type="text" class="form-control col-8 ml-2" name="birthDate" id="birthDate" placeholder="생년월일 입력">
+				<td><input type="text" class="form-control col-8 ml-2" name="birthDate" id="birthDate" placeholder="생년월일 입력" readOnly>
 				</td>
 			</tr>
 			<tr>
@@ -206,8 +206,8 @@
 				
 				, success: function(data) {
 					if (data.code == 1) {
-						alert("블루북스의 회원이 되어주셔서 감사합니다.\n포인트 1,000원이 지급되었습니다.");
-						location.href="/main_view";
+						alert("블루북스의 회원이 되어주셔서 감사합니다.\n포인트 1,000원이 지급되었습니다.\n\n로그인 해주세요");
+						location.href="/user/sign_in_view";
 					} else {
 						alert(data.errorMessage);
 					}

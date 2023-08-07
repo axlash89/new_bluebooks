@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.bluebooks.common.SHA256;
 import com.bluebooks.user.bo.UserBO;
+import com.bluebooks.user.dto.MailDTO;
 import com.bluebooks.user.entity.UserEntity;
 
 @RequestMapping("/user")
@@ -27,9 +27,10 @@ import com.bluebooks.user.entity.UserEntity;
 public class UserRestController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+		
 	@Autowired
 	private UserBO userBO;
+	
 	
 	/**
 	 * 중복확인 API
@@ -256,6 +257,55 @@ public class UserRestController {
 		result.put("code", 1);
 		result.put("result", "성공");
 		return result;
+	}
+	
+	
+	@PostMapping("/find_id")
+	public Map<String, Object> findId(
+			@RequestParam("name") String name,
+			@RequestParam("birthDate") @DateTimeFormat(pattern = "yyyy/MM/dd") Date birthDate,
+			@RequestParam("phoneNumber") String phoneNumber,
+			HttpSession session) {
+				
+		String foundId = userBO.getUserEntityByNameAndBirthDateAndPhoneNumber(name, birthDate, phoneNumber);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		if (foundId != null) {
+			result.put("code", 1);
+			result.put("result", "성공");
+			result.put("foundId", foundId);
+		} else {
+			result.put("message", "일치하는 아이디가 없습니다.");
+		}
+		
+		return result;
+		
+	}
+	
+	
+	@PostMapping("/re_pw")
+	public Map<String, Object> findId(
+			@RequestParam("loginId") String loginId,
+			@RequestParam("name") String name,
+			@RequestParam("birthDate") @DateTimeFormat(pattern = "yyyy/MM/dd") Date birthDate,
+			@RequestParam("phoneNumber") String phoneNumber,
+			HttpSession session) {
+				
+		String foundEmail = userBO.getUserEntityByLoginIdAndNameAndBirthDateAndPhoneNumber(loginId, name, birthDate, phoneNumber);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		if (foundEmail != null) {	
+			result.put("code", 1);
+			result.put("result", "성공");
+			result.put("foundEmail", foundEmail);
+		} else {
+			result.put("message", "일치하는 정보가 없습니다.");
+		}
+		
+		return result;
+		
 	}
 	
 	

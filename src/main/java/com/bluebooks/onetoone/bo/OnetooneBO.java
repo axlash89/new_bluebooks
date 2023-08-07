@@ -128,21 +128,14 @@ public class OnetooneBO {
 		
 		List<OnetooneEntity> onetooneList = onetooneRepository.findAllByUserId(userId);
 		
-		if (onetooneList.size() > 0) {
-			
-			
-			for (int i = 0; i < onetooneList.size(); i++) {
-				
+		if (onetooneList.size() > 0) {			
+			for (int i = 0; i < onetooneList.size(); i++) {				
 				if (onetooneList.get(i).getImagePath() != null) {				
-				fileManager.deleteFile(onetooneList.get(i).getImagePath());				
-				}
-				
-			}
-			
-			onetooneRepository.deleteAll(onetooneList);
-			
-		}
-		
+					fileManager.deleteFile(onetooneList.get(i).getImagePath());				
+				}				
+			}			
+			onetooneRepository.deleteAll(onetooneList);			
+		}		
 		
 	}
 	

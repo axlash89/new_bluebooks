@@ -2,14 +2,21 @@ package com.bluebooks.user;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bluebooks.user.bo.UserBO;
+import com.bluebooks.user.entity.UserEntity;
+
 @RequestMapping("/user")
 @Controller
 public class UserController {
+	
+	@Autowired
+	private UserBO userBO;
 	
 	@GetMapping("/sign_up_view")
 	public String signUpView(Model model) {
@@ -33,5 +40,18 @@ public class UserController {
 		return "redirect:/main_view";
 		
 	}
-
+	
+	@RequestMapping("/edit_my_info_view")
+	public String editMyInfo(HttpSession session, Model model) {
+		
+		String userLoginId = (String) session.getAttribute("userLoginId");		
+		UserEntity userEntity = userBO.getUserEntityByLoginId(userLoginId);
+		
+		model.addAttribute("user", userEntity);		
+		model.addAttribute("view", "user/editMyInfo");
+		
+		return "template/layout";
+		
+	}
+	
 }

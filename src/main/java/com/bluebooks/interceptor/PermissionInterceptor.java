@@ -34,9 +34,14 @@ public class PermissionInterceptor implements HandlerInterceptor {
 			return false;  // 컨트롤러 수행 안함.
 		}
 		
+		if (userId == null && (uri.startsWith("/user/edit_my_info_view") || uri.startsWith("/withdrawal"))) {
+			response.sendRedirect("/user/sign_in_view");
+			return false;
+		}
+				
 		// 로그인 && /user로 온 경우 => 글 목록 페이지로 이동, 컨트롤러 수행 방지
-		if (userId != null && uri.startsWith("/user")) {
-			response.sendRedirect("/main_view");
+		if (userId != null && uri.startsWith("/user/sign") && !uri.contains("/user/edit_my_info_view")) {
+			response.sendRedirect("/main_view");			
 			return false;  // 컨트롤러 수행 안함.
 		}
 		

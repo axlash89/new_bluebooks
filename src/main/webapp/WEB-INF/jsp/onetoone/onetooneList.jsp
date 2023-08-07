@@ -6,6 +6,7 @@
 	    	<div>
 		    	<div>1:1 문의</div>
 	    	</div>
+	    	
 	    	<div>총 게시물 수 : ${onetooneList.totalElements}</div>
 	    	<table class="table">
 	    		<thead>
@@ -17,23 +18,32 @@
 	    			</tr>
 	    		</thead>
 	    		<tbody>
-	    		<c:forEach items="${onetooneList.content}" var="onetoone">
-	    			<tr>
-	    				<td>${onetoone.postNoForOneself}</td>
-	    				<td><a href="/onetoone/onetoone_detail_view?id=${onetoone.id}">${onetoone.subject}</a></td>
-	    				<td>
-	    					${onetoone.status}
-	    				</td>
-	    				<td>
-	    					<%-- ZonedDateTime -> Date -> String --%>
-							<fmt:parseDate value="${onetoone.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
-							<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일 HH:mm"/>
-						</td>
-	    			</tr>
-    			</c:forEach>
+		    		<c:forEach items="${onetooneList.content}" var="onetoone">
+		    			<tr>
+		    				<td>${onetoone.postNoForOneself}</td>
+		    				<td><a href="/onetoone/onetoone_detail_view?id=${onetoone.id}">${onetoone.subject}</a></td>
+		    				<td>
+		    					${onetoone.status}
+		    				</td>
+		    				<td>
+		    					<%-- ZonedDateTime -> Date -> String --%>
+								<fmt:parseDate value="${onetoone.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
+								<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일 HH:mm"/>
+							</td>
+		    			</tr>
+	    			</c:forEach>
 	    		</tbody>
 	    	</table>
-	    	
+	    	<c:if test="${endPage eq 0}">
+		    	<nav aria-label="Page navigation example">
+				  <ul class="pagination justify-content-center">
+				    	<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage - 1}">이전</a></li>	
+			      		<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
+				    	<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage + 1}">다음</a></li>	
+				  </ul>
+				</nav>
+	    	</c:if>
+	    	<c:if test="${endPage ne 0}">	 
 	    	<nav aria-label="Page navigation example">
 			  <ul class="pagination justify-content-center">
 		    	<c:choose>
@@ -72,8 +82,7 @@
 			    </c:choose>
 			  </ul>
 			</nav>
-			
-			
+			</c:if>   				
 			
 	    	<div class="d-flex justify-content-end">
 	    		<a href="/onetoone/onetoone_create_view" class="btn btn-info">글쓰기</a>

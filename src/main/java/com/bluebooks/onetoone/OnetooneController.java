@@ -38,8 +38,12 @@ public class OnetooneController {
 		
 		int nowPage = onetooneList.getPageable().getPageNumber();
 		int startPage = Math.max(0, onetooneList.getPageable().getPageNumber() - 4);
-		int endPage = Math.min(onetooneList.getTotalPages() - 1, nowPage + 4);
-		
+		int endPage;
+		if (onetooneList.getTotalPages() != 0) {
+			endPage = Math.min(onetooneList.getTotalPages() - 1, nowPage + 4);
+		} else {
+			endPage = 0;
+		}
 		
 		
 		model.addAttribute("onetooneList", onetooneList);

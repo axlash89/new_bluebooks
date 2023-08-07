@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bluebooks.onetoone.bo.OnetooneBO;
 import com.bluebooks.user.dao.UserRepository;
 import com.bluebooks.user.entity.UserEntity;
 
@@ -45,5 +46,81 @@ public class UserBO {
 		return userRepository.findByLoginIdAndPassword(loginId, password);
 	}
 	
+	
+	public UserEntity updateUserEntityPasswordById(int userId, String password) {
+		
+		UserEntity userEntity = userRepository.findById(userId).orElse(null);
+		
+		if (userEntity != null) {
+			userEntity = userEntity.toBuilder()
+					.password(password)
+					.build();
+					userEntity = userRepository.save(userEntity);					
+		}
+		
+		return userEntity;
+		
+	}
+	
+	
+	public UserEntity updateUserEntityEmailById(int userId, String email) {
+		
+		UserEntity userEntity = userRepository.findById(userId).orElse(null);
+		
+		if (userEntity != null) {
+			userEntity = userEntity.toBuilder()
+					.email(email)
+					.build();
+					userEntity = userRepository.save(userEntity);					
+		}
+		
+		return userEntity;
+		
+	}
+	
+	
+	public UserEntity updateUserEntityPhoneNumberById(int userId, String phoneNumber) {
+		
+		UserEntity userEntity = userRepository.findById(userId).orElse(null);
+		
+		if (userEntity != null) {
+			userEntity = userEntity.toBuilder()
+					.phoneNumber(phoneNumber)
+					.build();
+					userEntity = userRepository.save(userEntity);					
+		}
+		
+		return userEntity;
+		
+	}
+	
+		
+	public UserEntity updateUserEntityZipCodeAndAddressById(int userId, String zipCode, String address) {
+		
+		UserEntity userEntity = userRepository.findById(userId).orElse(null);
+		
+		if (userEntity != null) {
+			userEntity = userEntity.toBuilder()
+					.zipCode(zipCode)
+					.address(address)
+					.build();
+					userEntity = userRepository.save(userEntity);					
+		}
+		
+		return userEntity;
+		
+	}
+	
+	public void deleteUserEntityByUserId(int userId) {
+		
+		// onetoone, like, comment, cart 다 지워야함.
+		
+		UserEntity userEntity = userRepository.findById(userId).orElse(null);
+		
+		if (userEntity != null) {
+			userRepository.delete(userEntity);			
+		}
+		
+	}
 	
 }

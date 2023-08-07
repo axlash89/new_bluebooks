@@ -124,4 +124,10 @@ public class OnetooneBO {
 	}
 	
 	
+	public void deleteOnetooneEntityByUserId(int userId) {
+		
+		onetooneRepository.deleteAllByUserId(userId);
+		
+	}
+	
 }

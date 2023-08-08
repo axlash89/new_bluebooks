@@ -37,6 +37,7 @@ public class OnetooneBO {
 			}
 		}
 		
+		// 개개인 글번호 생성
 		List<OnetooneEntity> onetooneEntityList = onetooneRepository.findAllByUserId(userId);		
 		int maxPostNo = 0;		
 		for (int i = 0; i < onetooneEntityList.size(); i++) {

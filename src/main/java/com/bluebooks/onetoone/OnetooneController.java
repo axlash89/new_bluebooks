@@ -30,6 +30,8 @@ public class OnetooneController {
 		
 		int userId = (int)session.getAttribute("userId");
 		
+		String userLoginId = (String)session.getAttribute("userLoginId");
+		
 		// nowPage 현재 페이지
 		// startPage 블럭에서 보여줄 시작 페이지
 		// endPage 블럭에서 보여줄 마지막 페이지
@@ -53,31 +55,33 @@ public class OnetooneController {
 		
 		model.addAttribute("nowPage", nowPage);
 		
-		model.addAttribute("view", "onetoone/onetooneLayout");
-		model.addAttribute("secondView", "onetooneList");
+		model.addAttribute("view", "my/myLayout");
+		model.addAttribute("secondView", "/onetoone/onetooneList");
 		return "template/layout";
 		
 	}
 	
 	@GetMapping("/onetoone_create_view")
 	public String onetooneCreateView(Model model) {
-		model.addAttribute("view", "onetoone/onetooneLayout");
-		model.addAttribute("secondView", "onetooneCreate");
+		
+		model.addAttribute("view", "my/myLayout");
+		model.addAttribute("secondView", "/onetoone/onetooneCreate");
 		return "template/layout";
 	}
 	
 	@GetMapping("/onetoone_detail_view")
 	public String onetooneDetailView(
-			@RequestParam("id") int id,
-			Model model) {
+			@RequestParam("id") int id, Model model) {
+		
 		
 		OnetooneEntity onetooneEntity = onetooneBO.getOnetooneEntityById(id);
 		
 		model.addAttribute("onetooneEntity", onetooneEntity);
 		
-		model.addAttribute("view", "onetoone/onetooneLayout");
-		model.addAttribute("secondView", "onetooneDetail");
+		model.addAttribute("view", "my/myLayout");
+		model.addAttribute("secondView", "/onetoone/onetooneDetail");
 		return "template/layout";
+		
 	}
 
 }

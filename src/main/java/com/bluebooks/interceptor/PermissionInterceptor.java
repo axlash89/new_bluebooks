@@ -27,6 +27,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		// 로그인 여부 확인 - session 확인
 		HttpSession session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		// 비로그인 && /post 온 경우 => 로그인 페이지로 이동, 컨트롤러 수행 방지
 		if (userId == null && uri.startsWith("/onetoone")) {
@@ -40,9 +41,37 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		}
 				
 		// 로그인 && /user로 온 경우 => 글 목록 페이지로 이동, 컨트롤러 수행 방지
-		if (userId != null && uri.startsWith("/user/sign") && !uri.contains("/user/edit_my_info_view")) {
+		if (userId != null && uri.startsWith("/user/sign")) {
 			response.sendRedirect("/main_view");			
 			return false;  // 컨트롤러 수행 안함.
+		}
+		
+		if (userLoginId == null) {
+			if (uri.startsWith("/notice/notice_create_view")) {
+				response.sendRedirect("/notice/notice_list_view");			
+				return false;  // 컨트롤러 수행 안함.
+			}	
+		}
+		
+		if (userLoginId != null) {		
+			if (userLoginId.equals("admin") == false && uri.startsWith("/notice/notice_create_view")) {
+				response.sendRedirect("/notice/notice_list_view");			
+				return false;  // 컨트롤러 수행 안함.
+			}		
+		}
+		
+		if (userLoginId == null) {
+			if (uri.startsWith("/admin")) {
+				response.sendRedirect("/main_view");			
+				return false;  // 컨트롤러 수행 안함.
+			}	
+		}
+		
+		if (userLoginId != null) {		
+			if (userLoginId.equals("admin") == false && uri.startsWith("/admin")) {
+				response.sendRedirect("/main_view");			
+				return false;  // 컨트롤러 수행 안함.
+			}		
 		}
 		
 		return true;

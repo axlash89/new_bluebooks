@@ -83,7 +83,8 @@
 			  </ul>
 			</nav>
 			</c:if>   				
-			
+			<c:if test="${userLoginId ne 'admin'}">
 	    	<div class="d-flex justify-content-end">
 	    		<a href="/onetoone/onetoone_create_view" class="btn btn-info">글쓰기</a>
 	    	</div>
+	    	</c:if>

@@ -48,7 +48,8 @@ public class UserController {
 		UserEntity userEntity = userBO.getUserEntityByLoginId(userLoginId);
 		
 		model.addAttribute("user", userEntity);		
-		model.addAttribute("view", "user/editMyInfo");
+		model.addAttribute("view", "my/myLayout");
+		model.addAttribute("secondView", "/user/editMyInfo");
 		
 		return "template/layout";
 		

@@ -14,7 +14,8 @@ public class WithdrawalController {
 	@RequestMapping("/withdraw_view")
 	public String withdraw(HttpSession session, Model model) {
 		
-		model.addAttribute("view", "user/withdraw");
+		model.addAttribute("view", "my/myLayout");
+		model.addAttribute("secondView", "user/withdraw");
 		
 		return "template/layout";
 		

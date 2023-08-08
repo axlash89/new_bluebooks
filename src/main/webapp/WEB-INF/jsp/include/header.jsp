@@ -36,8 +36,16 @@
 	                    <a href="#"><li class="menus">베스트셀러</li></a>
 	                    <a href="#"><li class="menus">새로나온 책</li></a>
 	                    <a href="#"><li class="menus">이벤트</li></a>
-	                    <a href="#"><li class="menus">공지사항</li></a>
-	                    <a href="/order/my_order_view" id="myPage"><li class="menus">마이페이지</li></a>
+	                    <a href="/notice/notice_list_view"><li class="menus">공지사항</li></a>
+	                    <c:choose>
+	                    <c:when test="${userLoginId ne 'admin'}">
+	                   		<a href="/my/my_view" id="myPage"><li class="menus">마이페이지</li></a>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<a href="/admin/admin_view"><li class="menus">관리자 페이지</li></a>
+	                    </c:otherwise>
+	                    </c:choose>
+	                    
 	                </ul>
 	           	</nav>
 	       	</div>

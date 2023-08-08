@@ -29,13 +29,10 @@ public class OnetooneController {
 		
 		
 		int userId = (int)session.getAttribute("userId");
-		
-		String userLoginId = (String)session.getAttribute("userLoginId");
-		
+				
 		// nowPage 현재 페이지
 		// startPage 블럭에서 보여줄 시작 페이지
 		// endPage 블럭에서 보여줄 마지막 페이지
-		
 		Page<OnetooneEntity> onetooneList = onetooneBO.getOnetooneListByUserId(pageable, userId);
 		
 		int nowPage = onetooneList.getPageable().getPageNumber();
@@ -55,7 +52,7 @@ public class OnetooneController {
 		
 		model.addAttribute("nowPage", nowPage);
 		
-		model.addAttribute("view", "my/myLayout");
+		model.addAttribute("view", "my/myLayout");			
 		model.addAttribute("secondView", "/onetoone/onetooneList");
 		return "template/layout";
 		

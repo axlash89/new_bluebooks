@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bluebooks.notice.bo.NoticeBO;
 import com.bluebooks.notice.entity.NoticeEntity;
-import com.bluebooks.onetoone.entity.OnetooneEntity;
 
 @RequestMapping("/notice")
 @Controller
@@ -31,7 +30,7 @@ public class NoticeController {
 		// nowPage 현재 페이지
 		// startPage 블럭에서 보여줄 시작 페이지
 		// endPage 블럭에서 보여줄 마지막 페이지
-
+		
 		Page<NoticeEntity> noticeList = noticeBO.getNoticeList(pageable);
 
 		int nowPage = noticeList.getPageable().getPageNumber();

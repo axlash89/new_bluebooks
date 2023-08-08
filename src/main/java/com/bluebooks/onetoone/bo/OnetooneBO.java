@@ -1,18 +1,24 @@
 package com.bluebooks.onetoone.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bluebooks.common.FileManagerService;
 import com.bluebooks.onetoone.dao.OnetooneRepository;
+import com.bluebooks.onetoone.domain.OnetooneView;
 import com.bluebooks.onetoone.entity.OnetooneEntity;
+import com.bluebooks.user.bo.UserBO;
+import com.bluebooks.user.entity.UserEntity;
 
 @Service
 public class OnetooneBO {
@@ -21,7 +27,10 @@ public class OnetooneBO {
 	
 	@Autowired
 	private OnetooneRepository onetooneRepository;
-		
+	
+	@Autowired
+	private UserBO userBO;
+	
 	@Autowired
 	private FileManagerService fileManager;
 	
@@ -63,6 +72,29 @@ public class OnetooneBO {
 	
 	public Page<OnetooneEntity> getOnetooneListByUserId(Pageable pageable, int userId) {
 		return onetooneRepository.findAllByUserId(pageable, userId);	
+	}
+	
+	public Page<OnetooneView> getAllOfOnetoone(Pageable pageable) {
+		
+		Page<OnetooneEntity> onetooneList = onetooneRepository.findAll(pageable);
+				
+		List<OnetooneView> onetooneViewList = new ArrayList<>();		
+		for (int i = 0; i < onetooneList.getContent().size(); i++) {
+			OnetooneView onetoone = new OnetooneView();
+			UserEntity user = userBO.getUserEntityById(onetooneList.getContent().get(i).getUserId());
+			onetoone.setUser(user);
+			onetoone.setOnetoone(onetooneList.getContent().get(i));
+			onetooneViewList.add(onetoone);
+		}
+		
+		PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), onetooneList.getSize());
+		
+		int start = (int) pageRequest.getOffset();
+		int end = Math.min((start + pageRequest.getPageSize()), onetooneViewList.size());
+		Page<OnetooneView> pages = new PageImpl<>(onetooneViewList.subList(start, end), pageRequest, onetooneViewList.size());
+		
+		return pages;
+		
 	}
 	
 	public OnetooneEntity getOnetooneEntityById(int id) {

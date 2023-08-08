@@ -30,6 +30,10 @@ public class UserBO {
 		return userRepository.findByLoginId(loginId);
 	}
 	
+	public UserEntity getUserEntityById(int userId) {
+		return userRepository.findById(userId).orElse(null);
+	}
+	
 	
 	public Integer addUser(String loginId, String Password, String name, Date birthDate, String email, String phoneNumber, String zipCode, String address, int point) {
 		

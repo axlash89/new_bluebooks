@@ -12,7 +12,10 @@
 	    		<thead>
 	    			<tr>
 	    				<th>번호</th>
-	    				<th>제목</th>
+	    				<c:if test = "${userLoginId eq 'admin'}">
+	    					<th>작성자</th>
+	    				</c:if>
+	    				<th>제목</th>	    				
 	    				<th>상태</th>
 	    				<th>작성날짜</th>
 	    			</tr>
@@ -20,71 +23,170 @@
 	    		<tbody>
 		    		<c:forEach items="${onetooneList.content}" var="onetoone">
 		    			<tr>
-		    				<td>${onetoone.postNoForOneself}</td>
-		    				<td><a href="/onetoone/onetoone_detail_view?id=${onetoone.id}">${onetoone.subject}</a></td>
+		    				
 		    				<td>
-		    					${onetoone.status}
+		    				<c:choose>
+			    				<c:when test="${userLoginId ne 'admin'}">		    				
+			    					${onetoone.postNoForOneself}
+			    				</c:when>
+			    				<c:otherwise>
+			    					${onetoone.onetoone.id}
+			    				</c:otherwise>
+		    				</c:choose>		    				
+		    				</td>
+		    				<c:if test = "${userLoginId eq 'admin'}">
+			    				<td>
+			    					${onetoone.user.loginId}
+			    				</td>
+		    				</c:if>
+		    				<td>
+		    				
+		    				<c:choose>
+			    				<c:when test="${userLoginId ne 'admin'}">		    				
+			    					<a href="/onetoone/onetoone_detail_view?id=${onetoone.id}">${onetoone.subject}</a>
+			    				</c:when>
+			    				<c:otherwise>
+			    					<a href="/onetoone/onetoone_detail_view?id=${onetoone.onetoone.id}">${onetoone.onetoone.subject}</a>
+			    				</c:otherwise>
+		    				</c:choose>				    				
 		    				</td>
 		    				<td>
-		    					<%-- ZonedDateTime -> Date -> String --%>
-								<fmt:parseDate value="${onetoone.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
-								<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일 HH:mm"/>
+		    				<c:choose>
+			    				<c:when test="${userLoginId ne 'admin'}">		    				
+			    					${onetoone.status}
+			    				</c:when>
+			    				<c:otherwise>
+			    					${onetoone.onetoone.status}
+			    				</c:otherwise>
+		    				</c:choose>	
+		    				</td>
+		    				<td>
+		    				<c:choose>
+			    				<c:when test="${userLoginId ne 'admin'}">		    				
+			    					<%-- ZonedDateTime -> Date -> String --%>
+									<fmt:parseDate value="${onetoone.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
+									<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일 HH:mm"/>
+			    				</c:when>
+			    				<c:otherwise>
+			    					<%-- ZonedDateTime -> Date -> String --%>
+									<fmt:parseDate value="${onetoone.onetoone.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
+									<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일 HH:mm"/>
+			    				</c:otherwise>
+		    				</c:choose>	
+		    				
+		    					
 							</td>
 		    			</tr>
 	    			</c:forEach>
 	    		</tbody>
-	    	</table>
-	    	<c:if test="${endPage eq 0}">
-		    	<nav aria-label="Page navigation example">
-				  <ul class="pagination justify-content-center">
-				    	<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage - 1}">이전</a></li>	
-			      		<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
-				    	<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage + 1}">다음</a></li>	
-				  </ul>
-				</nav>
-	    	</c:if>
-	    	<c:if test="${endPage ne 0}">	 
-	    	<nav aria-label="Page navigation example">
-			  <ul class="pagination justify-content-center">
-		    	<c:choose>
-			    	<c:when test="${nowPage eq 0}">
-			    	<li class="page-item disabled">
-		      			<a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage - 1}">이전</a>
-		      		</li>	
-			    	</c:when>
-			    	<c:otherwise>
-			    	<li class="page-item">
-		      			<a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage - 1}">이전</a>
-		      		</li>	
-			    	</c:otherwise>	
-			    </c:choose>	
-			    <c:forEach begin="${startPage}" end="${endPage}" var="cnt">
-				    <c:choose>
-				    	<c:when test="${cnt eq nowPage}">
-				    		<li class="page-item disabled"><a class="page-link text-white bg-info" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
-				    	</c:when>
-				    	<c:otherwise>
-				    		<li class="page-item"><a class="page-link" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
-				    	</c:otherwise>	
-				    </c:choose>	
-			    </c:forEach>			    
-		    	<c:choose>
-			    	<c:when test="${nowPage eq onetooneList.totalPages - 1}">
-				    	<li class="page-item disabled">
-			      			<a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage + 1}">다음</a>
-			      		</li>	
-			    	</c:when>
-			    	<c:otherwise>
-				    	<li class="page-item">
-			      			<a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage + 1}">다음</a>
-			      		</li>	
-			    	</c:otherwise>	
-			    </c:choose>
-			  </ul>
-			</nav>
-			</c:if>   				
-			<c:if test="${userLoginId ne 'admin'}">
-	    	<div class="d-flex justify-content-end">
-	    		<a href="/onetoone/onetoone_create_view" class="btn btn-info">글쓰기</a>
-	    	</div>
-	    	</c:if>
+	    	</table>    
+   					<c:choose>
+	    				<c:when test="${userLoginId ne 'admin'}">		    				
+	    					<c:if test="${endPage eq 0}">
+						    	<nav aria-label="Page navigation example">
+								  <ul class="pagination justify-content-center">				  
+								    	<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage - 1}">이전</a></li>	
+							      		<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
+								    	<li class="page-item disabled"><a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage + 1}">다음</a></li>	
+								  </ul>
+								</nav>
+					    	</c:if>
+					    	<c:if test="${endPage ne 0}">	 
+					    	<nav aria-label="Page navigation example">
+							  <ul class="pagination justify-content-center">
+						    	<c:choose>
+							    	<c:when test="${nowPage eq 0}">
+							    	<li class="page-item disabled">
+						      			<a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage - 1}">이전</a>
+						      		</li>	
+							    	</c:when>
+							    	<c:otherwise>
+							    	<li class="page-item">
+						      			<a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage - 1}">이전</a>
+						      		</li>	
+							    	</c:otherwise>	
+							    </c:choose>	
+							    <c:forEach begin="${startPage}" end="${endPage}" var="cnt">
+								    <c:choose>
+								    	<c:when test="${cnt eq nowPage}">
+								    		<li class="page-item disabled"><a class="page-link text-white bg-info" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
+								    	</c:when>
+								    	<c:otherwise>
+								    		<li class="page-item"><a class="page-link" href="/onetoone/onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
+								    	</c:otherwise>	
+								    </c:choose>	
+							    </c:forEach>			    
+						    	<c:choose>
+							    	<c:when test="${nowPage eq onetooneList.totalPages - 1}">
+								    	<li class="page-item disabled">
+							      			<a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage + 1}">다음</a>
+							      		</li>	
+							    	</c:when>
+							    	<c:otherwise>
+								    	<li class="page-item">
+							      			<a class="page-link" href="/onetoone/onetoone_list_view?page=${nowPage + 1}">다음</a>
+							      		</li>	
+							    	</c:otherwise>	
+							    </c:choose>
+							  </ul>
+							</nav>
+							</c:if>
+	    				</c:when>
+	    				<c:otherwise>
+	    					<c:if test="${endPage eq 0}">
+						    	<nav aria-label="Page navigation example">
+								  <ul class="pagination justify-content-center">				  
+								    	<li class="page-item disabled"><a class="page-link" href="/admin/manage_onetoone_list_view?page=${nowPage - 1}">이전</a></li>	
+							      		<li class="page-item disabled"><a class="page-link" href="/admin/manage_onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
+								    	<li class="page-item disabled"><a class="page-link" href="/admin/manage_onetoone_list_view?page=${nowPage + 1}">다음</a></li>	
+								  </ul>
+								</nav>
+					    	</c:if>
+					    	<c:if test="${endPage ne 0}">	 
+					    	<nav aria-label="Page navigation example">
+							  <ul class="pagination justify-content-center">
+						    	<c:choose>
+							    	<c:when test="${nowPage eq 0}">
+							    	<li class="page-item disabled">
+						      			<a class="page-link" href="/admin/manage_onetoone_list_view?page=${nowPage - 1}">이전</a>
+						      		</li>	
+							    	</c:when>
+							    	<c:otherwise>
+							    	<li class="page-item">
+						      			<a class="page-link" href="/admin/manage_onetoone_list_view?page=${nowPage - 1}">이전</a>
+						      		</li>	
+							    	</c:otherwise>	
+							    </c:choose>	
+							    <c:forEach begin="${startPage}" end="${endPage}" var="cnt">
+								    <c:choose>
+								    	<c:when test="${cnt eq nowPage}">
+								    		<li class="page-item disabled"><a class="page-link text-white bg-info" href="/admin/manage_onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
+								    	</c:when>
+								    	<c:otherwise>
+								    		<li class="page-item"><a class="page-link" href="/admin/manage_onetoone_list_view?page=${cnt}">${cnt + 1}</a></li>
+								    	</c:otherwise>	
+								    </c:choose>	
+							    </c:forEach>			    
+						    	<c:choose>
+							    	<c:when test="${nowPage eq onetooneList.totalPages - 1}">
+								    	<li class="page-item disabled">
+							      			<a class="page-link" href="/admin/manage_onetoone_list_view?page=${nowPage + 1}">다음</a>
+							      		</li>	
+							    	</c:when>
+							    	<c:otherwise>
+								    	<li class="page-item">
+							      			<a class="page-link" href="/admin/manage_onetoone_list_view?page=${nowPage + 1}">다음</a>
+							      		</li>	
+							    	</c:otherwise>	
+							    </c:choose>
+							  </ul>
+							</nav>
+							</c:if>	    					
+	    				</c:otherwise>
+    				</c:choose>	
+	    	   				
+				<c:if test="${userLoginId ne 'admin'}">
+		    	<div class="d-flex justify-content-end">
+		    		<a href="/onetoone/onetoone_create_view" class="btn btn-info">글쓰기</a>
+		    	</div>
+		    	</c:if>

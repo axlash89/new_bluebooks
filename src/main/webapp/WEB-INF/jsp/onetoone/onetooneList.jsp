@@ -30,51 +30,37 @@
 			    					${onetoone.postNoForOneself}
 			    				</c:when>
 			    				<c:otherwise>
-			    					${onetoone.onetoone.id}
+			    					${onetoone.id}
 			    				</c:otherwise>
 		    				</c:choose>		    				
 		    				</td>
 		    				<c:if test = "${userLoginId eq 'admin'}">
 			    				<td>
-			    					${onetoone.user.loginId}
+			    					<c:forEach items="${userList}" var="user">
+			    						<c:if test="${onetoone.userId eq user.id}">
+			    							${user.loginId}
+			    						</c:if>
+			    					</c:forEach>
 			    				</td>
 		    				</c:if>
 		    				<td>
+		    					<c:choose>
+			    					<c:when test="${userLoginId eq 'admin'}">
+			    						<a href="/admin/onetoone_detail_view?id=${onetoone.id}">${onetoone.subject}</a>
+			    					</c:when>
+			    					<c:otherwise>
+			    						<a href="/onetoone/onetoone_detail_view?id=${onetoone.id}">${onetoone.subject}</a>
+			    					</c:otherwise>
+		    					</c:choose>		    						    				
 		    				
-		    				<c:choose>
-			    				<c:when test="${userLoginId ne 'admin'}">		    				
-			    					<a href="/onetoone/onetoone_detail_view?id=${onetoone.id}">${onetoone.subject}</a>
-			    				</c:when>
-			    				<c:otherwise>
-			    					<a href="/onetoone/onetoone_detail_view?id=${onetoone.onetoone.id}">${onetoone.onetoone.subject}</a>
-			    				</c:otherwise>
-		    				</c:choose>				    				
 		    				</td>
 		    				<td>
-		    				<c:choose>
-			    				<c:when test="${userLoginId ne 'admin'}">		    				
-			    					${onetoone.status}
-			    				</c:when>
-			    				<c:otherwise>
-			    					${onetoone.onetoone.status}
-			    				</c:otherwise>
-		    				</c:choose>	
+		    					${onetoone.status}
 		    				</td>
-		    				<td>
-		    				<c:choose>
-			    				<c:when test="${userLoginId ne 'admin'}">		    				
-			    					<%-- ZonedDateTime -> Date -> String --%>
-									<fmt:parseDate value="${onetoone.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
-									<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일 HH:mm"/>
-			    				</c:when>
-			    				<c:otherwise>
-			    					<%-- ZonedDateTime -> Date -> String --%>
-									<fmt:parseDate value="${onetoone.onetoone.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
-									<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일 HH:mm"/>
-			    				</c:otherwise>
-		    				</c:choose>	
-		    				
-		    					
+		    				<td>  				
+		    					<%-- ZonedDateTime -> Date -> String --%>
+								<fmt:parseDate value="${onetoone.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
+								<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일 HH:mm"/>		    					
 							</td>
 		    			</tr>
 	    			</c:forEach>

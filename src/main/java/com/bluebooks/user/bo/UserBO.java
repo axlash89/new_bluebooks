@@ -2,10 +2,13 @@ package com.bluebooks.user.bo;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,13 @@ public class UserBO {
 		return userRepository.findById(userId).orElse(null);
 	}
 	
+	public List<UserEntity> getUserList() {
+		return userRepository.findAll();
+	}
+	
+	public Page<UserEntity> getAllUserEntity(Pageable pageable) {
+		return userRepository.findAll(pageable);
+	}
 	
 	public Integer addUser(String loginId, String Password, String name, Date birthDate, String email, String phoneNumber, String zipCode, String address, int point) {
 		
@@ -240,6 +250,12 @@ public class UserBO {
 			return null;			
 			
 		}
+		
+	}
+	
+	public Page<UserEntity> userSearchList(String searchKeywordForLoginId, String searchKeywordForName, Pageable pageable) {
+		
+		return userRepository.findByNameOrLoginIdContaining(searchKeywordForLoginId, searchKeywordForName, pageable);
 		
 	}
 		

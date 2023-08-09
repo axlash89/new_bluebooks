@@ -1,17 +1,20 @@
 package com.bluebooks.withdrawal.bo;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bluebooks.onetoone.bo.OnetooneBO;
+import com.bluebooks.paging.Pagination;
 import com.bluebooks.user.bo.UserBO;
 import com.bluebooks.user.entity.UserEntity;
 import com.bluebooks.withdrawal.dao.WithdrawalMapper;
 
 @Service
-public class WithdrawalBO {
+public class WithdrawalBO implements WithdrawalService {
 
 	@Autowired
 	private WithdrawalMapper withdrawalMapper;
@@ -38,6 +41,35 @@ public class WithdrawalBO {
 
 		return row;
 		
+	}
+	
+ 
+//	public List<Withdrawal> getWithdrawalList() {
+//		List<Withdrawal> withdrawalList = withdrawalMapper.selectWithdrawalList();
+//		return withdrawalList;
+//	}
+
+
+
+	@Override
+	public List<Map<String, Object>> selectWithdrawalList() throws Exception {
+		// TODO Auto-generated method stub
+		return withdrawalMapper.selectWithdrawalList();
+	}
+
+
+
+	@Override
+	public List<Map<String, Object>> selectWithdrawalList(Pagination pagination) throws Exception {
+		// TODO Auto-generated method stub
+		return withdrawalMapper.selectWithdrawalList(pagination);
+	}
+
+
+	@Override
+	public int withdrawalCount() throws Exception {
+		// TODO Auto-generated method stub
+		return withdrawalMapper.withdrawalCount();
 	}
 	
 	

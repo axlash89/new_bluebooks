@@ -9,6 +9,7 @@ import lombok.Data;
 public class Withdrawal {
 	
 	private int id;
+	private int userId;
 	private String userLoginId;
 	private Date userCreatedAt;
 	private String reason;

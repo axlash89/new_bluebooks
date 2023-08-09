@@ -27,8 +27,29 @@
 		</div>
 		<c:if test="${not empty onetooneEntity.answer}">
 			<h5>문의하신 내용 답변드립니다.</h5>
-			<textarea id="answer" class="form-control" rows="10" placeholder="내용을 입력하세요">${onetooneEntity.answer}</textarea>		
+			<textarea id="answer" class="form-control" rows="10" placeholder="내용을 입력하세요">${onetooneEntity.answer}</textarea>
+			<c:if test="${userLoginId eq 'admin'}">				
+				<div class="d-flex justify-content-between">		
+					<button type="button" id="deleteBtn" class="btn btn-secondary" data-onetoone-id="${onetooneEntity.id}">답변 삭제</button>			
+					<div>
+						<input type="button" class="btn btn-secondary" value="목록">
+						<button type="button" id="updateBtn" class="btn btn-info" data-onetoone-id="${onetooneEntity.id}">답변 수정</button>
+					</div>			
+				</div>				
+			</c:if>		
 		</c:if>
+		
+		<c:if test="${userLoginId eq 'admin' && empty onetooneEntity.answer}">
+			<div>
+		    	<div>답변 작성</div>
+		    	<textarea id="answerText" class="form-control" placeholder="관리자님의 답변 내용을 입력하세요" rows="3"></textarea>
+		   	</div>
+			<div class="d-flex justify-content-end">
+		   		<input type="button" id="answerUploadBtn" class="btn btn-info" value="업로드" data-onetoone-id="${onetooneEntity.id}">
+		   	</div>	
+		</c:if>
+		
+		
 	</div>
 </div>
 
@@ -149,6 +170,42 @@ $(document).ready(function() {
 		});
 		
 	});
+	
+	
+	$('#answerUploadBtn').on('click', function() {
+		
+		
+		let answer = $('#answerText').val().trim();
+		
+		if (!answer) {
+			alert("답변 내용을 입력하세요");
+			return;
+		}
+				
+		let onetooneId = $(this).data('onetoone-id');
+		
+		$.ajax({
+			
+			// request
+			type: "put"
+			, url: "/onetoone/answer"
+			, data: { "answer": answer, "onetooneId": onetooneId }
+			// response
+			, success:function(data) {
+				if (data.code == 1) {
+					alert("1:1 문의 답변을 업로드 하였습니다.");
+					location.reload(true);
+				} else {
+					alert("서버 에러");
+				}
+			}
+			, error:function(request, status, error) {
+				alert("1:1 문의 답변 업로드를 실패하였습니다.");
+			}
+		});
+		
+	});
+	
 	
 });
 

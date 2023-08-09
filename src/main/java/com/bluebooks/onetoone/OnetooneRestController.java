@@ -92,5 +92,20 @@ public class OnetooneRestController {
 	}
 	
 	
+	@PutMapping("/answer")
+	public Map<String, Object> update(
+			@RequestParam("onetooneId") int onetooneId,
+			@RequestParam("answer") String answer,
+			HttpSession session) {
+		
+		// BO update
+		onetooneBO.answerOnetoone(onetooneId, answer);
+		
+		// 응답
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 1);
+		result.put("result", "성공");
+		return result;
+	}
 	
 }

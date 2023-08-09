@@ -23,28 +23,23 @@
  		)
 	</insert>
 	
-	<select id="selectWithdrawalList" resultType="hashmap">
-		SELECT *
-		FROM (
-			SELECT
-				@row_number := @row_number + 1 AS row_num,
-				`id`
-	 			,`userId`
-				,`userLoginId`
-				,`userCreatedAt`
-				,`reason`
-				,`createdAt`
-	 		FROM
-	 			`withdrawal`
-	 			(SELECT @row_number := 0) AS t
-	 		ORDER BY `createdAt` DESC
- 		) AS numbered_rows
-		<if test="firstRecordIndex != null and lastRecordIndex != null">
-		    HAVING row_num BETWEEN #{firstRecordIndex} AND #{lastRecordIndex}
-		</if> 			
+	
+	
+	<select id="selectWithdrawalList" resultType="hashmap">	
+		SELECT
+			`id`
+ 			,`userId`
+			,`userLoginId`
+			,`userCreatedAt`
+			,`reason`
+			,`createdAt`
+ 		FROM
+ 			`withdrawal`
+ 		ORDER BY `createdAt` DESC
+		LIMIT #{pageStart}, #{perPageNum}	
 	</select>
 		
-	<select id="withdrawalCount" resultType="int">
+	<select id="totalCount" resultType="int">
         SELECT 
         	count(*) 
         FROM

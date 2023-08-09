@@ -78,15 +78,6 @@ public class OnetooneBO {
 	public Page<OnetooneEntity> getAllOfOnetoone(Pageable pageable) {
 		
 		Page<OnetooneEntity> onetooneList = onetooneRepository.findAll(pageable);
-		
-//		List<OnetooneView> onetooneViewList = new ArrayList<>();		
-//		for (int i = 0; i < onetooneList.getContent().size(); i++) {
-//			OnetooneView onetoone = new OnetooneView();
-//			UserEntity user = userBO.getUserEntityById(onetooneList.getContent().get(i).getUserId());
-//			onetoone.setUser(user);
-//			onetoone.setOnetoone(onetooneList.getContent().get(i));
-//			onetooneViewList.add(onetoone);
-//		}
 				
 		return onetooneList;
 		

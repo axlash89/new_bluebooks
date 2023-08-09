@@ -4,13 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.bluebooks.paging.Pagination;
+import com.bluebooks.withdrawal.domain.Criteria;
 
-@Mapper
 @Repository
 public interface WithdrawalMapper {
 
@@ -21,14 +19,10 @@ public interface WithdrawalMapper {
 			@Param("reason") String reason);
 	
 	
-	//select * from Test_Table
-    public List<Map<String, Object>> selectWithdrawalList() throws Exception;
+    public List<Map<String, Object>> selectWithdrawalList(Criteria criteria);
     
-    //Paging
-    public List<Map<String, Object>> selectWithdrawalList(Pagination pagination) throws Exception;
- 
-    //count
-    public int withdrawalCount() throws Exception;
+    
+    public int totalCount();
 	
 	
 	

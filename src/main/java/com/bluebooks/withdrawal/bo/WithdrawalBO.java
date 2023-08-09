@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bluebooks.onetoone.bo.OnetooneBO;
-import com.bluebooks.paging.Pagination;
 import com.bluebooks.user.bo.UserBO;
 import com.bluebooks.user.entity.UserEntity;
 import com.bluebooks.withdrawal.dao.WithdrawalMapper;
+import com.bluebooks.withdrawal.domain.Criteria;
 
 @Service
-public class WithdrawalBO implements WithdrawalService {
+public class WithdrawalBO {
 
 	@Autowired
 	private WithdrawalMapper withdrawalMapper;
@@ -49,28 +49,15 @@ public class WithdrawalBO implements WithdrawalService {
 //		return withdrawalList;
 //	}
 
-
-
-	@Override
-	public List<Map<String, Object>> selectWithdrawalList() throws Exception {
+	public List<Map<String, Object>> selectWithdrawalList(Criteria criteria) {
 		// TODO Auto-generated method stub
-		return withdrawalMapper.selectWithdrawalList();
+		return withdrawalMapper.selectWithdrawalList(criteria);
 	}
 
 
-
-	@Override
-	public List<Map<String, Object>> selectWithdrawalList(Pagination pagination) throws Exception {
+	public int totalCount() {
 		// TODO Auto-generated method stub
-		return withdrawalMapper.selectWithdrawalList(pagination);
+		return withdrawalMapper.totalCount();
 	}
 
-
-	@Override
-	public int withdrawalCount() throws Exception {
-		// TODO Auto-generated method stub
-		return withdrawalMapper.withdrawalCount();
-	}
-	
-	
 }

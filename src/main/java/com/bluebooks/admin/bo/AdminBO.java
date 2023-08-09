@@ -11,8 +11,6 @@ import com.bluebooks.onetoone.bo.OnetooneBO;
 import com.bluebooks.onetoone.entity.OnetooneEntity;
 import com.bluebooks.user.bo.UserBO;
 import com.bluebooks.user.entity.UserEntity;
-import com.bluebooks.withdrawal.bo.WithdrawalBO;
-import com.bluebooks.withdrawal.domain.Withdrawal;
 
 @Service
 public class AdminBO {

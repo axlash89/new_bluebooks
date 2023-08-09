@@ -217,14 +217,13 @@ width: 80%;
 		   				<td>${user.userId}</td>
 		   				<td>${user.userLoginId}</td>
 		   				<td>${user.reason}</td>
-		   				<td>
-		   					<%-- ZonedDateTime -> Date -> String --%>
+		   				<%--<td>
 							<fmt:parseDate value="${user.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
 							<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일"/>
 						</td>
 		   				<td>
 							<fmt:formatDate value="${user.userCreatedAt}" pattern="yyyy년 M월 d일"/>
-						</td>
+						</td> --%>
 		   			</tr>
 	  			</c:forEach>
 	  		</tbody>
@@ -234,23 +233,23 @@ width: 80%;
     <div class="paginate">
         <div class="paging">
             <a class="direction prev" href="javascript:void(0);"
-                onclick="movePage(1,${pagination.cntPerPage},${pagination.pageSize});">
+                onclick="movePage(1,${pagenation.cntPerPage},${pagenation.pageSize});">
                 &lt;&lt; </a> <a class="direction prev" href="javascript:void(0);"
-                onclick="movePage(${pagination.currentPage}<c:if test="${pagination.hasPreviousPage == true}">-1</c:if>,${pagination.cntPerPage},${pagination.pageSize});">
+                onclick="movePage(${pagenation.currentPage}<c:if test="${pagenation.hasPreviousPage == true}">-1</c:if>,${pagenation.cntPerPage},${pagenation.pageSize});">
                 &lt; </a>
  
-            <c:forEach begin="${pagination.firstPage}"
-                end="${pagination.lastPage}" var="idx">
+            <c:forEach begin="${pagenation.firstPage}"
+                end="${pagenation.lastPage}" var="idx">
                 <a
-                    style="color:<c:out value="${pagination.currentPage == idx ? '#cc0000; font-weight:700; margin-bottom: 2px;' : ''}"/> "
+                    style="color:<c:out value="${pagenation.currentPage == idx ? '#cc0000; font-weight:700; margin-bottom: 2px;' : ''}"/> "
                     href="javascript:void(0);"
-                    onclick="movePage(${idx},${pagination.cntPerPage},${pagination.pageSize});"><c:out
+                    onclick="movePage(${idx},${pagenation.cntPerPage},${pagenation.pageSize});"><c:out
                         value="${idx}" /></a>
             </c:forEach>
             <a class="direction next" href="javascript:void(0);"
-                onclick="movePage(${pagination.currentPage}<c:if test="${pagination.hasNextPage == true}">+1</c:if>,${pagination.cntPerPage},${pagination.pageSize});">
+                onclick="movePage(${pagenation.currentPage}<c:if test="${pagenation.hasNextPage == true}">+1</c:if>,${pagenation.cntPerPage},${pagenation.pageSize});">
                 &gt; </a> <a class="direction next" href="javascript:void(0);"
-                onclick="movePage(${pagination.totalRecordCount},${pagination.cntPerPage},${pagination.pageSize});">
+                onclick="movePage(${pagenation.totalRecordCount},${pagenation.cntPerPage},${pagenation.pageSize});">
                 &gt;&gt; </a>
         </div>
     </div>
@@ -260,14 +259,14 @@ width: 80%;
 	  <div class="bottom">
         <div class="bottom-left">
             <select id="cntSelectBox" name="cntSelectBox"
-                onchange="changeSelectBox(${pagination.currentPage},${pagination.cntPerPage},${pagination.pageSize});"
+                onchange="changeSelectBox(${pagenation.currentPage},${pagenation.cntPerPage},${pagenation.pageSize});"
                 class="form-control" style="width: 100px;">
                 <option value="10"
-                    <c:if test="${pagination.cntPerPage == '10'}">selected</c:if>>10개씩</option>
+                    <c:if test="${pagenation.cntPerPage == '10'}">selected</c:if>>10개씩</option>
                 <option value="20"
-                    <c:if test="${pagination.cntPerPage == '20'}">selected</c:if>>20개씩</option>
+                    <c:if test="${pagenation.cntPerPage == '20'}">selected</c:if>>20개씩</option>
                 <option value="30"
-                    <c:if test="${pagination.cntPerPage == '30'}">selected</c:if>>30개씩</option>
+                    <c:if test="${pagenation.cntPerPage == '30'}">selected</c:if>>30개씩</option>
             </select>
         </div>
     </div>
@@ -306,7 +305,7 @@ width: 80%;
    		</div>
 	  	<c:if test="${endPage eq 0}">
 	   	<nav aria-label="Page navigation example">
-		  <ul class="pagination justify-content-center">
+		  <ul class="pagenation justify-content-center">
 		    	<li class="page-item disabled"><a class="page-link" href="/admin/manage_user_view?page=${nowPage - 1}">이전</a></li>	
 	      		<li class="page-item disabled"><a class="page-link" href="/admin/manage_user_view?page=${cnt}">${cnt + 1}</a></li>
 		    	<li class="page-item disabled"><a class="page-link" href="/admin/manage_user_view?page=${nowPage + 1}">다음</a></li>	
@@ -315,7 +314,7 @@ width: 80%;
 	  	</c:if>
 	  	<c:if test="${endPage ne 0}">	 
 	  	<nav aria-label="Page navigation example">
-	  	<ul class="pagination justify-content-center">
+	  	<ul class="pagenation justify-content-center">
 	   	<c:choose>
 	    	<c:when test="${nowPage eq 0}">
 	    	<li class="page-item disabled">

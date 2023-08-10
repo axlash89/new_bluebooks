@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.bluebooks.admin.bo.AdminBO;
 import com.bluebooks.onetoone.entity.OnetooneEntity;
@@ -30,7 +31,7 @@ public class AdminController {
 		model.addAttribute("secondView", "/order/allOrder");		
 		return "template/layout";
 	}
-	
+		
 	@GetMapping("/manage_onetoone_list_view")
 	public String manageOnetooneView(Model model, @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
 			@RequestParam(required = false) String type,

@@ -13,6 +13,7 @@
 				<span class="col-4 d-flex align-items-center">출판사</span><input type="text" id="publisher" class="form-control pl-3 col-8" placeholder="출판사를 입력하세요">
 				<input type="button" class="btn btn-info ml-2" value="찾기">
 			</div>
+			${result}
 			<div class="d-flex">
 				<span class="col-4 d-flex align-items-center">출간일</span>
 				<label><input type="radio" name ="pubPeriod" value="all" checked="checked">전체</label>

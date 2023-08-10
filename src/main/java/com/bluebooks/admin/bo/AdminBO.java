@@ -1,5 +1,6 @@
 package com.bluebooks.admin.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,21 @@ public class AdminBO {
 	
 	public Page<UserEntity> userSearchList(String searchKeywordForLoginId, String searchKeywordForName, Pageable pageable) {
 		return userBO.userSearchList(searchKeywordForLoginId, searchKeywordForName, pageable);
+	}
+	
+	public Page<OnetooneEntity> getOnetooneByLoginId(String searchKeyword, Pageable pageable) {
+		
+		List<UserEntity> userEntityList = userBO.getUserEntityByLoginIdContaining(searchKeyword);
+		
+		List<Integer> userNoList = new ArrayList<>();
+		for (int i = 0; i < userEntityList.size(); i++) {
+			userNoList.add(userEntityList.get(i).getId());
+		}		
+		return onetooneBO.getOnetooneListByUserIdList(pageable, userNoList); 
+	}
+	
+	public Page<OnetooneEntity> getOnetooneBySubject(String searchKeyword, Pageable pageable) {
+		return onetooneBO.getOnetooneListBySubject(searchKeyword, pageable);
 	}
 	
 }

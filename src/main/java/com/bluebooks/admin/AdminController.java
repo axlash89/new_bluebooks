@@ -32,9 +32,25 @@ public class AdminController {
 	}
 	
 	@GetMapping("/manage_onetoone_list_view")
-	public String manageOnetooneView(Model model, @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+	public String manageOnetooneView(Model model, @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(required = false) String type,
+			@RequestParam(required = false) String searchKeyword) {
 		
-		Page<OnetooneEntity> onetooneList = adminBO.getAllOfOnetoone(pageable);		
+		Page<OnetooneEntity> onetooneList = null;
+		
+		if (searchKeyword == null) {
+			onetooneList = adminBO.getAllOfOnetoone(pageable);		
+		} else {
+				
+			if (type.equals("byLoginId")) {		
+				model.addAttribute("searchKeyword", "&type=" + type + "&searchKeyword=" + searchKeyword);
+				onetooneList = adminBO.getOnetooneByLoginId(searchKeyword, pageable);
+			} else {
+				model.addAttribute("searchKeyword", "&type=" + type + "&searchKeyword=" + searchKeyword);
+				onetooneList = adminBO.getOnetooneBySubject(searchKeyword, pageable);
+			}
+			
+		}
 				
 		int nowPage = onetooneList.getPageable().getPageNumber();
 		int startPage = Math.max(0, onetooneList.getPageable().getPageNumber() - 4);

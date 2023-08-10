@@ -1,8 +1,8 @@
 package com.bluebooks.withdrawal.bo;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import com.bluebooks.user.bo.UserBO;
 import com.bluebooks.user.entity.UserEntity;
 import com.bluebooks.withdrawal.dao.WithdrawalMapper;
 import com.bluebooks.withdrawal.domain.Criteria;
+import com.bluebooks.withdrawal.domain.Withdrawal;
 
 @Service
 public class WithdrawalBO {
@@ -31,7 +32,8 @@ public class WithdrawalBO {
 		
 		UserEntity userEntity = userBO.getUserEntityByLoginId(userLoginId);
 		
-		Date userCreatedAt = Date.from(userEntity.getCreatedAt().toInstant());
+		ZonedDateTime zonedDateTime = userEntity.getCreatedAt();
+		Date userCreatedAt = Date.from(zonedDateTime.toInstant());
 		
 		int row = withdrawalMapper.insertWithdrawal(userId, userLoginId, userCreatedAt, reason);
 
@@ -49,15 +51,26 @@ public class WithdrawalBO {
 //		return withdrawalList;
 //	}
 
-	public List<Map<String, Object>> selectWithdrawalList(Criteria criteria) {
-		// TODO Auto-generated method stub
+	public List<Withdrawal> selectWithdrawalList(Criteria criteria) {
 		return withdrawalMapper.selectWithdrawalList(criteria);
 	}
-
-
-	public int totalCount() {
-		// TODO Auto-generated method stub
-		return withdrawalMapper.totalCount();
+	public int getTotalCount() {
+		return withdrawalMapper.getTotalCount();
 	}
+	
+	public List<Withdrawal> selectWithdrawalListByLoginId(Criteria criteria, String searchKeyword) {
+		return withdrawalMapper.selectWithdrawalListByLoginId(criteria, searchKeyword);
+	}
+	public int getTotalCountByLoginId(String searchKeyword) {
+		return withdrawalMapper.getTotalCountByLoginId(searchKeyword);
+	}
+	
+	public List<Withdrawal> selectWithdrawalListByReason(Criteria criteria, String searchKeyword) {
+		return withdrawalMapper.selectWithdrawalListByReason(criteria, searchKeyword);
+	}
+	public int getTotalCountByReason(String searchKeyword) {
+		return withdrawalMapper.getTotalCountByReason(searchKeyword);
+	}
+	
 
 }

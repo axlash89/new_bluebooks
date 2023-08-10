@@ -1,5 +1,7 @@
 package com.bluebooks.withdrawal;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bluebooks.common.PageMaker;
 import com.bluebooks.withdrawal.bo.WithdrawalBO;
 import com.bluebooks.withdrawal.domain.Criteria;
-import com.bluebooks.withdrawal.domain.Pagenation;
+import com.bluebooks.withdrawal.domain.Withdrawal;
 
 @RequestMapping("/withdrawal")
 @Controller
@@ -31,20 +35,38 @@ public class WithdrawalController {
 
 
 	@GetMapping("/witndrawn_user_view")
-	public String withdrawnUserView(Model model, Criteria criteria) throws Exception {
-        
-		Pagenation pageNation = new Pagenation();
-        pageNation.setCriteria(criteria);
-        pageNation.setTotalCount(withdrawalBO.totalCount());
-        
-//        model.addAttribute("lists", withdrawalService.selectWithdrawalList(criteria));
-//        model.addAttribute("pagenation", pageNation);
-////		int listCnt = withdrawalService.totalCount();
-////        Pagination pagination = new Pagination(currentPage, cntPerPage, pageSize);
-////        pagination.setTotalRecordCount(listCnt);
-// 
-        model.addAttribute("pageNation", pageNation);		
-        model.addAttribute("withdrawalList", withdrawalBO.selectWithdrawalList(criteria));
+	public String withdrawnUserView(Model model, Criteria criteria,
+			@RequestParam(required= false) String searchKeyword,
+			@RequestParam(required= false) String type) throws Exception {
+		
+		List<Withdrawal> withdrawalList = null;
+		PageMaker pageMaker = new PageMaker();
+		if (searchKeyword == null) {
+			withdrawalList = withdrawalBO.selectWithdrawalList(criteria);
+			pageMaker.setCri(criteria);
+			pageMaker.setTotalCount(withdrawalBO.getTotalCount());
+		} else {
+			model.addAttribute("searchKeyword", "&type=" + type + "&searchKeyword=" + searchKeyword);			
+			if (type.equals("byLoginId")) {
+				withdrawalList = withdrawalBO.selectWithdrawalListByLoginId(criteria, searchKeyword);
+				pageMaker.setCri(criteria);
+				pageMaker.setTotalCount(withdrawalBO.getTotalCountByLoginId(searchKeyword));
+				if(withdrawalList.isEmpty()) {
+					model.addAttribute("emptyList", "emptyList");
+				}
+			} else {
+				withdrawalList = withdrawalBO.selectWithdrawalListByReason(criteria, searchKeyword);
+				pageMaker.setCri(criteria);
+				pageMaker.setTotalCount(withdrawalBO.getTotalCountByReason(searchKeyword));
+				if(withdrawalList.isEmpty()) {
+					model.addAttribute("emptyList", "emptyList");
+				}
+			}
+		}
+		
+		model.addAttribute("nowPage", criteria.getPage());
+        model.addAttribute("pageMaker", pageMaker);		
+        model.addAttribute("withdrawalList", withdrawalList);
 		model.addAttribute("view", "admin/adminLayout");
 		model.addAttribute("secondView", "/user/withdrawnUser");		
 		return "template/layout";

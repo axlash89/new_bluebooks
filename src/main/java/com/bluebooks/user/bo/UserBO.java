@@ -33,6 +33,10 @@ public class UserBO {
 		return userRepository.findByLoginId(loginId);
 	}
 	
+	public List<UserEntity> getUserEntityByLoginIdContaining(String searchKeyword) {
+		return userRepository.findAllByLoginIdContaining(searchKeyword);
+	}
+	
 	public UserEntity getUserEntityById(int userId) {
 		return userRepository.findById(userId).orElse(null);
 	}
@@ -255,7 +259,7 @@ public class UserBO {
 	
 	public Page<UserEntity> userSearchList(String searchKeywordForLoginId, String searchKeywordForName, Pageable pageable) {
 		
-		return userRepository.findByNameOrLoginIdContaining(searchKeywordForLoginId, searchKeywordForName, pageable);
+		return userRepository.findByNameContainingOrLoginIdContaining(searchKeywordForLoginId, searchKeywordForName, pageable);
 		
 	}
 		

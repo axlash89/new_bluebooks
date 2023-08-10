@@ -22,10 +22,9 @@
  			,now()
  		)
 	</insert>
-	
-	
-	
-	<select id="selectWithdrawalList" resultType="hashmap">	
+		
+	<select id="selectWithdrawalList" resultType="com.bluebooks.withdrawal.domain.Withdrawal">
+	<![CDATA[	
 		SELECT
 			`id`
  			,`userId`
@@ -35,15 +34,81 @@
 			,`createdAt`
  		FROM
  			`withdrawal`
- 		ORDER BY `createdAt` DESC
-		LIMIT #{pageStart}, #{perPageNum}	
-	</select>
-		
-	<select id="totalCount" resultType="int">
+ 		WHERE
+ 			`id` > 0
+ 		ORDER BY `createdAt` DESC 		
+ 		
+		LIMIT #{pageStart}, #{perPageNum}
+	]]>
+	<!-- limit 10, 10의 의미는 11번째 데이터부터 10개를 출력한다. -->
+	</select>	
+	<select id="getTotalCount" resultType="int">
         SELECT 
         	count(*) 
         FROM
         	`withdrawal`
-    </select>	
+    </select>
+    
 	
+	<select id="selectWithdrawalListByLoginId" parameterType="map" resultType="com.bluebooks.withdrawal.domain.Withdrawal">
+	<![CDATA[	
+		SELECT
+			`id`
+ 			,`userId`
+			,`userLoginId`
+			,`userCreatedAt`
+			,`reason`
+			,`createdAt`
+ 		FROM
+ 			`withdrawal`
+ 		WHERE
+ 			`id` > 0 AND `userLoginId` like CONCAT('%',#{searchKeyword},'%')
+ 		ORDER BY `createdAt` DESC 		
+ 		
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+	]]>
+	<!-- limit 10, 10의 의미는 11번째 데이터부터 10개를 출력한다. -->
+	</select>
+	<select id="getTotalCountByLoginId" resultType="int">
+        <![CDATA[	
+		SELECT
+			count(*)
+ 		FROM
+ 			`withdrawal`
+ 		WHERE
+ 			`id` > 0 AND `userLoginId` like CONCAT('%',#{searchKeyword},'%')
+	]]>
+    </select>
+	
+	<select id="selectWithdrawalListByReason" parameterType="map" resultType="com.bluebooks.withdrawal.domain.Withdrawal">
+	<![CDATA[	
+		SELECT
+			`id`
+ 			,`userId`
+			,`userLoginId`
+			,`userCreatedAt`
+			,`reason`
+			,`createdAt`
+ 		FROM
+ 			`withdrawal`
+ 		WHERE
+ 			`id` > 0 AND `reason` like CONCAT('%',#{searchKeyword},'%')
+ 		ORDER BY `createdAt` DESC 		
+ 		
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+	]]>
+	<!-- limit 10, 10의 의미는 11번째 데이터부터 10개를 출력한다. -->
+	</select>
+	<select id="getTotalCountByReason" resultType="int">
+        <![CDATA[	
+		SELECT
+			count(*)
+ 		FROM
+ 			`withdrawal`
+ 		WHERE
+ 			`id` > 0 AND `reason` like CONCAT('%',#{searchKeyword},'%')		
+	]]>
+    </select>
+		
+    
 </mapper>

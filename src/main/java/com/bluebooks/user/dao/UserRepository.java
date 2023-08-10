@@ -1,6 +1,7 @@
 package com.bluebooks.user.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	
 	public UserEntity findByLoginIdAndNameAndBirthDateAndPhoneNumber(String loginId, String name, Date birthDate, String phoneNumber);
 	
-	Page<UserEntity> findByNameOrLoginIdContaining(String searchKeywordForLoginId, String searchKeywordForName, Pageable pageable);
+	Page<UserEntity> findByNameContainingOrLoginIdContaining(String searchKeywordForLoginId, String searchKeywordForName, Pageable pageable);
 
+	public List<UserEntity> findAllByLoginIdContaining(String searchKeyword);
+	
 }

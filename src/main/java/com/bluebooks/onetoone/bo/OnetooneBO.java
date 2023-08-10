@@ -74,6 +74,15 @@ public class OnetooneBO {
 		return onetooneRepository.findAllByUserId(pageable, userId);	
 	}
 	
+	public Page<OnetooneEntity> getOnetooneListByUserIdList(Pageable pageable, List<Integer> userNoList) {
+		return onetooneRepository.findAllByUserIdIn(pageable, userNoList);	
+	}
+	
+	public Page<OnetooneEntity> getOnetooneListBySubject(String subject, Pageable pageable) {
+		return onetooneRepository.findAllBySubjectContaining(subject, pageable);	
+	}
+	
+	
 	
 	public Page<OnetooneEntity> getAllOfOnetoone(Pageable pageable) {
 		

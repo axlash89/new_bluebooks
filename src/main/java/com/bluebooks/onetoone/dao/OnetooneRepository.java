@@ -16,6 +16,10 @@ public interface OnetooneRepository extends JpaRepository<OnetooneEntity, Intege
 	
 	public Page<OnetooneEntity> findAllByUserId(Pageable pageable, int userId);
 	
+	public Page<OnetooneEntity> findAllByUserIdIn(Pageable pageable, List<Integer> userNoList);
+	
+	public Page<OnetooneEntity> findAllBySubjectContaining(String subject, Pageable pageable);
+	
 	public Page<OnetooneEntity> findAll(Pageable pageable);
 		
 }

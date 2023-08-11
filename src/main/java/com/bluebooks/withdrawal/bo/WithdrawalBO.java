@@ -7,11 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bluebooks.common.Criteria;
 import com.bluebooks.onetoone.bo.OnetooneBO;
 import com.bluebooks.user.bo.UserBO;
 import com.bluebooks.user.entity.UserEntity;
 import com.bluebooks.withdrawal.dao.WithdrawalMapper;
-import com.bluebooks.withdrawal.domain.Criteria;
 import com.bluebooks.withdrawal.domain.Withdrawal;
 
 @Service

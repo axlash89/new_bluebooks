@@ -3,12 +3,64 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bluebooks.book.dao.BookMapper">
+
+	<insert id="insertSearchedBook" parameterType="com.bluebooks.book.domain.Book" useGeneratedKeys="true" keyProperty="id">
 	
-	<select id="selectBookList" resultType="map">
+		INSERT INTO `book`
+ 		(
+			`isbn13`
+			,`categoryName`
+			,`title`
+			,`author`
+			,`publisher`
+			,`pubDate`
+			,`description`
+			,`priceStandard`
+			,`priceSales`
+			,`point`
+			,`cover`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{isbn13}
+			,#{categoryName}
+			,#{title}
+			,#{author}
+			,#{publisher}
+			,#{pubDate}
+			,#{description}
+			,#{priceStandard}
+			,#{priceSales}
+			,#{point}
+			,#{cover}
+			,#{createdAt}
+			,#{updatedAt}
+ 		)
+	
+	</insert>
+	
+	<select id="selectCartedBook" parameterType="int" resultType="com.bluebooks.book.domain.Book">
 		SELECT
-			*
+			`id`
+			,`isbn13`
+			,`categoryName`
+			,`title`
+			,`author`
+			,`publisher`
+			,`pubDate`
+			,`description`
+			,`priceStandard`
+			,`priceSales`
+			,`point`
+			,`cover`
+			,`createdAt`
+			,`updatedAt`
 		FROM
 			`book`
+		WHERE
+			`id` = #{bookId}	
 	</select>
 	
 </mapper>

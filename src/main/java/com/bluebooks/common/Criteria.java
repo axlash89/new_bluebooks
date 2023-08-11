@@ -1,4 +1,4 @@
-package com.bluebooks.withdrawal.domain;
+package com.bluebooks.common;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,7 +19,7 @@ public class Criteria {
      
     public Criteria() { // 최초 default 생성자로 기본 객체 생성시 초기값을 지정한다. (1페이지, 10개씩)
         this.page = 1;  // 사용자가 세팅하지 않으면 기본 1
-        this.perPageNum = 5; // 페이지당 기본 10개씩 출력하도록 세팅
+        this.perPageNum = 10; // 페이지당 기본 10개씩 출력하도록 세팅
     }
      
  

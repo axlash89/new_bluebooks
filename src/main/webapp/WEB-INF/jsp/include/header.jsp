@@ -13,15 +13,19 @@
 	       	</div>
 	       	<div class="mt-3">
 	       		<div class="d-flex justify-content-between">
-		       		<input type="text" id="searchBox" class="form-control" placeholder="책의 제목 또는 저자 입력">
-		       		<input type="button" id="searchBoxBtn" class="btn btn-secondary" value="검색">
+					
+		       		<form action="/book/searched_result_view" method="get" class="d-flex">
+			       		<input type="text" id="searchBox" class="form-control" name="searchKeyword" placeholder="책의 제목 또는 저자 입력">
+			       		<input type="submit" id="searchBoxBtn" class="btn btn-secondary" value="검색">
+			       	</form>	
+		       		
 		       		<a href="/book/advanced_search_view" class="ml-2 mt-2 small">상세검색</a>
 		       		
 		       		<c:choose>
 			       		<c:when test="${not empty userName}">
 			       			<div class="ml-5">
 				       			<span class="d-flex justify-content-end text-primary d-block small ml-3">${userName}님 안녕하세요!</span>
-			       				<div class="d-flex justify-content-end"><a href="#" class="small">장바구니</a><a href="/user/sign_out" class="ml-2 small">로그아웃</a></div>
+			       				<div class="d-flex justify-content-end"><a href="/cart/cart_list_view" class="small">장바구니</a><a href="/user/sign_out" class="ml-2 small">로그아웃</a></div>
 		       				</div>
 			       		</c:when>
 			       		<c:otherwise>
@@ -61,6 +65,17 @@ $(document).ready(function() {
 			alert("로그인 후 접근 가능한 메뉴입니다.");
 			return false;
 		}		
+		
+	});
+	
+	$('#searchBoxBtn').on('click', function() {
+		
+		let searchBox = $('#searchBox').val().trim();
+		
+		if (!searchBox) {
+			alert("검색어를 입력하세요.")
+			return false;
+		}
 		
 	});
 	

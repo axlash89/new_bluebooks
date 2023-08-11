@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.bluebooks.withdrawal.domain.Criteria;
+import com.bluebooks.common.Criteria;
 import com.bluebooks.withdrawal.domain.Withdrawal;
 
 @Repository

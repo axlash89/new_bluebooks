@@ -2,13 +2,10 @@ package com.bluebooks.book.domain;
 
 import java.time.ZonedDateTime;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+
 
 @Data
-@AllArgsConstructor
-@RequiredArgsConstructor
 public class Book {
 	
 	private int id;
@@ -19,9 +16,9 @@ public class Book {
 	private String publisher;
 	private String pubDate;
 	private String description;
-	private int priceStandard;
-	private int priceSales;
-	private int mileage;
+	private long priceStandard;
+	private long priceSales;
+	private long point;
 	private String cover;
 	private ZonedDateTime createdAt;
 	private ZonedDateTime updatedAt;

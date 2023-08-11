@@ -3,8 +3,6 @@ package com.bluebooks.common;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.bluebooks.withdrawal.domain.Criteria;
-
 public class PageMaker {
 	
 	private Criteria criteria; // page, perPageNum 을 가지고 있음

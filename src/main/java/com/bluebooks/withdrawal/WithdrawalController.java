@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bluebooks.common.Criteria;
 import com.bluebooks.common.PageMaker;
 import com.bluebooks.withdrawal.bo.WithdrawalBO;
-import com.bluebooks.withdrawal.domain.Criteria;
 import com.bluebooks.withdrawal.domain.Withdrawal;
 
 @RequestMapping("/withdrawal")

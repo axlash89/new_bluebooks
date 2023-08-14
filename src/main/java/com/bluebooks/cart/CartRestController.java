@@ -22,25 +22,56 @@ public class CartRestController {
 	
 	
 	@PostMapping("/add")
-	public Map<String, Object> CartAdd(HttpSession session,
-			@RequestParam("bookId") int bookId) {
+	public Map<String, Object> cartAdd(HttpSession session,
+			@RequestParam("bookIdArr") int[] bookIdArr) {
 		
 		Map<String, Object> result = new HashMap<>();
 		
-		Integer userId = (int)session.getAttribute("userId");
-				
-		int row = cartBO.addToCart(userId, bookId);
+		int userId = (int)session.getAttribute("userId");
 		
-		if (row > 0) {
+			cartBO.addBooksToCart(userId, bookIdArr);
 			result.put("code", 1);
 			result.put("result", "성공");
-		} else {
-			result.put("code", 500);
-			result.put("errorMessage", "장바구니 담기 실패");
-		}
 		
 		return result;
 		
 	}
+	
+	@PostMapping("/delete")
+	public Map<String, Object> cartDelete(HttpSession session,
+			@RequestParam("bookIdArr") int[] bookIdArr) {
+		
+		Integer userId = (int)session.getAttribute("userId");
+		
+		cartBO.deleteFromCart(userId, bookIdArr);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		result.put("code", 1);
+		result.put("result", "성공");
+		
+		return result;
+		
+	}
+	
+	@PostMapping("/count_update")
+	public Map<String, Object> cartCountUpdate(HttpSession session,
+			@RequestParam("bookId") int bookId,
+			@RequestParam("bookCount") int bookCount) {
+		
+		Integer userId = (int)session.getAttribute("userId");
+		
+		cartBO.updateBookCount(userId, bookId, bookCount);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		result.put("code", 1);
+		result.put("result", "성공");
+		
+		return result;
+		
+		
+	}
+	
 	
 }

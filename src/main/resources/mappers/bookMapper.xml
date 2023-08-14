@@ -4,7 +4,31 @@
 
 <mapper namespace="com.bluebooks.book.dao.BookMapper">
 
-	<insert id="insertSearchedBook" parameterType="com.bluebooks.book.domain.Book" useGeneratedKeys="true" keyProperty="id">
+	<select id="isDuplicatedBook" parameterType="String" resultType="com.bluebooks.book.domain.Book">
+	
+		SELECT
+			`id`
+			,`isbn13`
+			,`categoryName`
+			,`title`
+			,`author`
+			,`publisher`
+			,`pubDate`
+			,`description`
+			,`priceStandard`
+			,`priceSales`
+			,`point`
+			,`cover`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`book`
+		WHERE
+			`isbn13` = #{isbn13}	
+	
+	</select>
+
+	<insert id="insertBook" parameterType="com.bluebooks.book.domain.Book" useGeneratedKeys="true" keyProperty="id">
 	
 		INSERT INTO `book`
  		(
@@ -41,7 +65,7 @@
 	
 	</insert>
 	
-	<select id="selectCartedBook" parameterType="int" resultType="com.bluebooks.book.domain.Book">
+	<select id="selectBookById" parameterType="int" resultType="com.bluebooks.book.domain.Book">
 		SELECT
 			`id`
 			,`isbn13`

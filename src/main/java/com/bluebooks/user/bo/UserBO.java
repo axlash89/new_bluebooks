@@ -262,5 +262,24 @@ public class UserBO {
 		return userRepository.findByNameContainingOrLoginIdContaining(searchKeywordForLoginId, searchKeywordForName, pageable);
 		
 	}
+	
+	public void updateUserEntityPointById(int userId, int usedPoint, int totalPoint) {
+		
+		UserEntity user = userRepository.findById(userId).orElse(null);
+		
+		if (user != null) {
+			
+			user = user.toBuilder()
+				.point(user.getPoint() - usedPoint + totalPoint)
+				.build();
+				user = userRepository.save(user);	
+			
+		} else {
+			
+			logger.error("###[UserBO updateUserEntityPointById 유저 가져오기 실패 for 포인트 업데이트] userId:{}", userId);
+			
+		}
+		
+	}
 		
 }

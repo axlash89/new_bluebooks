@@ -15,8 +15,40 @@
 		FROM
 			`cart`
 		WHERE
-			`userId` = #{userId}	
+			`userId` = #{userId}
+		ORDER BY `id` DESC	
 	</select>
+	
+	<select id="isItExists" parameterType="map" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			`cart`
+		WHERE
+			`userId` = #{userId}
+				AND
+			`bookId` = #{bookId}
+	</select>
+	
+	<update id="bookCountPlusOne" parameterType="map">
+		UPDATE
+			`cart`
+		SET `bookCount` = `bookCount` + 1
+		WHERE
+			`userId` = #{userId}
+				AND
+			`bookId` = #{bookId}
+	</update>
+	
+	<update id="updateBookCount" parameterType="map">
+		UPDATE
+			`cart`
+		SET `bookCount` = #{bookCount}
+		WHERE
+			`userId` = #{userId}
+				AND
+			`bookId` = #{bookId}
+	</update>
 	
 	<insert id="insertCart" parameterType="map">
 	
@@ -38,5 +70,33 @@
  		)
 	
 	</insert>
+	
+	<delete id="deleteFromCart" parameterType="map">
+		
+		DELETE FROM 
+			`cart`		
+		WHERE 
+			`userId` = #{userId}
+				AND
+			`bookId` = #{bookId}
+		
+	</delete>
+	
+	<select id="selectOrderedCartListByUserIdAndBookId" parameterType="map" resultType="com.bluebooks.cart.domain.Cart">
+		SELECT
+			`id`
+			,`userId`
+			,`bookId`
+			,`bookCount`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`cart`
+		WHERE
+			`userId` = #{userId}
+				AND
+			`bookId` = #{bookId}
+		ORDER BY `id` DESC	
+	</select>
 	
 </mapper>

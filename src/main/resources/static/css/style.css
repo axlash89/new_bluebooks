@@ -59,11 +59,23 @@ footer {
 .my-page-menus {
 	background-color: darkseagreen;
 	width: 200px;
-	height: 500px;
+	height: 550px;
 }
 
 .my-page-contents {
 	background-color: silver;
-	width: 600px;
+	width: 700px;
+	height: auto;
+}
+
+.book-menus {
+	background-color: darkseagreen;
+	width: 200px;
+	height: 550px;
+}
+
+.book-contents {
+	background-color: silver;
+	width: 700px;
 	height: auto;
 }

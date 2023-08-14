@@ -6,7 +6,7 @@
 		<div class="d-flex justify-content-end mr-5 pt-3">
 			<label>전체선택<input type="checkbox" id="checkAll"></label>
 		</div>
-		<c:forEach items="${searchedBookList}" var="book" varStatus="status">
+		<c:forEach items="${advancedSearchedBookList}" var="book" varStatus="status">
    			
 	   		<div class="d-flex align-items-center pt-4">	
 	   			<div class="h5">
@@ -33,35 +33,39 @@
 	   		</div>	
    			
 	  	</c:forEach>
-		
-		
-		<div class="d-flex justify-content-center">
-		  	<ul class="pagination">
-			    <c:if test="${pageMaker.prev}">
-			        <li>
-			            <a href="/book/searched_result_view${pageMaker.makeQuery(pageMaker.startPage - 1)}&searchKeyword=${searchKeyword}" class="mr-2 text-dark">[이전]</a>
-			        </li>		         
-			    </c:if>
-			 
-			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="index">
-			    	<c:choose>
-			    	<c:when test="${nowPage eq index}">
-			        <a href="/book/searched_result_view${pageMaker.makeQuery(index)}&searchKeyword=${searchKeyword}" class="text-danger">[${index}]</a>
-			        </c:when>
-			        <c:otherwise>
-			        <a href="/book/searched_result_view${pageMaker.makeQuery(index)}&searchKeyword=${searchKeyword}">[${index}]</a>
-			        </c:otherwise>
-			        </c:choose>
-			    </c:forEach>
-			 
-			    <c:if test="${pageMaker.next}">
-			        <li>
-			            <a href="/book/searched_result_view${pageMaker.makeQuery(pageMaker.endPage + 1)}&searchKeyword=${searchKeyword}" class="ml-2 text-dark">[다음]</a>
-			        </li>
-			    </c:if>   
-			</ul>
-		</div>
-
+		<c:choose>
+		<c:when test="${not empty advancedSearchedBookList}">
+			<div class="d-flex justify-content-center">
+			  	<ul class="pagination">
+				    <c:if test="${pageMaker.prev}">
+				        <li>
+				            <a href="/book/advanced_searched_result_view${pageMaker.makeQuery(pageMaker.startPage - 1)}&title=${title}&author=${author}&publisher=${publisher}&pubPeriod=${pubPeriod}" class="mr-2 text-dark">[이전]</a>
+				        </li>		         
+				    </c:if>
+				 
+				    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="index">
+				    	<c:choose>
+				    	<c:when test="${nowPage eq index}">
+				        <a href="/book/advanced_searched_result_view${pageMaker.makeQuery(index)}&title=${title}&author=${author}&publisher=${publisher}&pubPeriod=${pubPeriod}" class="text-danger">[${index}]</a>
+				        </c:when>
+				        <c:otherwise>
+				        <a href="/book/advanced_searched_result_view${pageMaker.makeQuery(index)}&title=${title}&author=${author}&publisher=${publisher}&pubPeriod=${pubPeriod}">[${index}]</a>
+				        </c:otherwise>
+				        </c:choose>
+				    </c:forEach>
+				 
+				    <c:if test="${pageMaker.next}">
+				        <li>
+				            <a href="/book/advanced_searched_result_view${pageMaker.makeQuery(pageMaker.endPage + 1)}&title=${title}&author=${author}&publisher=${publisher}&pubPeriod=${pubPeriod}" class="ml-2 text-dark">[다음]</a>
+				        </li>
+				    </c:if>   
+				</ul>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<h5 class="text-center">검색된 도서가 없습니다.</h5>
+		</c:otherwise>
+		</c:choose>
 <script>
 	$(document).ready(function() {
 		

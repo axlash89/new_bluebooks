@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluebooks.order.dao.OrderMapper">
+	
+	<insert id="insertOrder" parameterType="com.bluebooks.order.domain.Order" useGeneratedKeys="true" keyProperty="id">
+	
+		INSERT INTO `order`
+ 		(
+ 			`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{userId}
+			,#{usedPoint}
+			,#{finalPrice}
+			,#{payBy}
+			,"결제완료"
+			,#{recipientName}
+			,#{recipientZipCode}
+			,#{recipientAddress}
+			,#{recipientPhoneNumber}
+ 			,now()
+ 			,now()
+ 		)
+	
+	</insert>
+	
+</mapper>

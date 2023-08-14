@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-		
-		<div class="d-flex justify-content-end mr-5 pt-3">
+		<h1 class="text-center">모든 책 분야보기</h1>
+		<div class="d-flex justify-content-end mr-5 pt-1">
 			<label>전체선택<input type="checkbox" id="checkAll"></label>
 		</div>
-		<c:forEach items="${searchedBookList}" var="book" varStatus="status">
+		<c:forEach items="${bookListByCategory}" var="book" varStatus="status">
    			
 	   		<div class="d-flex align-items-center pt-4">	
 	   			<div class="h5">
@@ -39,24 +39,24 @@
 		  	<ul class="pagination">
 			    <c:if test="${pageMaker.prev}">
 			        <li>
-			            <a href="/book/searched_result_view${pageMaker.makeQuery(pageMaker.startPage - 1)}&searchKeyword=${searchKeyword}" class="mr-2 text-dark">[이전]</a>
+			            <a href="/book/all_book_view${pageMaker.makeQuery(pageMaker.startPage - 1)}&cid=${cid}" class="mr-2 text-dark">[이전]</a>
 			        </li>		         
 			    </c:if>
 			 
 			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="index">
 			    	<c:choose>
 			    	<c:when test="${nowPage eq index}">
-			        <a href="/book/searched_result_view${pageMaker.makeQuery(index)}&searchKeyword=${searchKeyword}" class="text-danger">[${index}]</a>
+			        <a href="/book/all_book_view${pageMaker.makeQuery(index)}&cid=${cid}" class="text-danger">[${index}]</a>
 			        </c:when>
 			        <c:otherwise>
-			        <a href="/book/searched_result_view${pageMaker.makeQuery(index)}&searchKeyword=${searchKeyword}">[${index}]</a>
+			        <a href="/book/all_book_view${pageMaker.makeQuery(index)}&cid=${cid}">[${index}]</a>
 			        </c:otherwise>
 			        </c:choose>
 			    </c:forEach>
 			 
 			    <c:if test="${pageMaker.next}">
 			        <li>
-			            <a href="/book/searched_result_view${pageMaker.makeQuery(pageMaker.endPage + 1)}&searchKeyword=${searchKeyword}" class="ml-2 text-dark">[다음]</a>
+			            <a href="/book/all_book_view${pageMaker.makeQuery(pageMaker.endPage + 1)}&cid=${cid}" class="ml-2 text-dark">[다음]</a>
 			        </li>
 			    </c:if>   
 			</ul>

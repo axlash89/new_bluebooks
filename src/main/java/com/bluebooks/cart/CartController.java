@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bluebooks.cart.bo.CartBO;
 import com.bluebooks.cart.domain.CartView;
+import com.mysql.cj.Session;
 
 @RequestMapping("/cart")
 @Controller
@@ -21,9 +22,11 @@ public class CartController {
 	private CartBO cartBO;
 	
 	@GetMapping("/cart_list_view")	
-	public String cartView(Model model, HttpSession httpSession) {
+	public String cartView(Model model, HttpSession session) {
 		
-		int userId = (int) httpSession.getAttribute("userId");
+		int userId = (int) session.getAttribute("userId");
+		int RefreshedUserPoint = cartBO.getRefreshedUserPoint(userId);
+		session.setAttribute("userPoint", RefreshedUserPoint);
 		List<CartView> cartViewList = cartBO.getCartViewList(userId);
 		
 		model.addAttribute("cartViewList", cartViewList);

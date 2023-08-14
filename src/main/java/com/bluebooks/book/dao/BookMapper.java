@@ -12,8 +12,10 @@ public interface BookMapper {
 	
 	public List<Map<String, Object>> selectBookList();
 
-	public void insertSearchedBook(Book book);
+	public void insertBook(Book book);
 	
-	public Book selectCartedBook(int bookId);
+	public Book selectBookById(int bookId);
+	
+	public Book isDuplicatedBook(String isbn13);
 	
 }

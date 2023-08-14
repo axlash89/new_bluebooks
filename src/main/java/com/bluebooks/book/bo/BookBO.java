@@ -246,13 +246,11 @@ public class BookBO {
 	}
 	
 	
-//	public int getAdvancedSearchedBookListTotalCount(String title, String author, String publisher, String pubPeriod) {
+	public int getAdvancedSearchedBookListTotalCount(String title, String author, String publisher, String pubPeriod) {
 		
-//		int totalCount = aladinApiBO.getAdvancedSearchedBookListTotalCount(title, author, publisher);
-//		
-//		List<Book> list = 
-//		
-//		return;
-//	}
+		int totalCount = aladinApiBO.getAdvancedSearchedBookListTotalCount(title, author, publisher);
+				
+		return totalCount;
+	}
 	
 }

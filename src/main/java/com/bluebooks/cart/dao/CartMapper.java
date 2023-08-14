@@ -20,10 +20,19 @@ public interface CartMapper {
 			@Param("userId") int userId, 
 			@Param("bookId") int bookId);
 	
+	public int bookCountPlus (
+		@Param("userId") int userId, 
+		@Param("bookId") int bookId,
+		@Param("bookCount") int bookCount);
 	
 	public int insertCart(
 			@Param("userId") int userId, 
 			@Param("bookId") int bookId);
+	
+	public int insertCartByBookCount(
+			@Param("userId") int userId, 
+			@Param("bookId") int bookId,
+			@Param("bookCount") int bookCount);
 	
 	public void deleteFromCart(
 			@Param("userId") int userId,

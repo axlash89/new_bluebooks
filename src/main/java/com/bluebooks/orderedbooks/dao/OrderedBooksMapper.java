@@ -15,4 +15,10 @@ public interface OrderedBooksMapper {
 			@Param("orderId") int orderId, 
 			@Param("bookId") int bookId);
 	
+	public void insertOrderedSingleBookByOrderIdFromBookDetail(
+			@Param("orderId") int orderId, 
+			@Param("bookId") int bookId,
+			@Param("bookCountFromBookDetail") int bookCountFromBookDetail);
+	
+	
 }

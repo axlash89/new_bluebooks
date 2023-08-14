@@ -23,4 +23,8 @@ public class OrderedBooksBO {
 		orderedBooksMapper.insertOrderedSingleBookByOrderId(orderId, bookId);
 	}
 	
+	public void insertOrderedSingleBookByOrderIdFromBookDetail(int orderId, int bookId, int bookCountFromBookDetail) {
+		orderedBooksMapper.insertOrderedSingleBookByOrderIdFromBookDetail(orderId, bookId, bookCountFromBookDetail);
+	}
+	
 }

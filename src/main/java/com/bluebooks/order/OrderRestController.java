@@ -33,14 +33,15 @@ public class OrderRestController {
 			@RequestParam("totalPoint") int totalPoint,
 			@RequestParam(required = false) String bookIdString,
 			@RequestParam(required = false) String bookCount,
-			@RequestParam(required = false) Integer bookId) {
+			@RequestParam(required = false) Integer bookId,
+			@RequestParam(required = false) Integer bookCountFromBookDetail) {
 		
 		Map<String, Object> result = new HashMap<>();
 		
 		int userId = (int) session.getAttribute("userId");
 		
 		orderBO.createOrder(userId, usedPoint, finalPrice, payBy, recipientName, recipientZipCode, 
-				recipientAddress, recipientPhoneNumber, totalPoint, bookIdString, bookCount, bookId);
+				recipientAddress, recipientPhoneNumber, totalPoint, bookIdString, bookCount, bookId, bookCountFromBookDetail);
 		
 			result.put("code", 1);
 			result.put("result", "성공");

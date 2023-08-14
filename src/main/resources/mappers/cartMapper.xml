@@ -40,6 +40,16 @@
 			`bookId` = #{bookId}
 	</update>
 	
+	<update id="bookCountPlus" parameterType="map">
+		UPDATE
+			`cart`
+		SET `bookCount` = `bookCount` + #{bookCount}
+		WHERE
+			`userId` = #{userId}
+				AND
+			`bookId` = #{bookId}
+	</update>
+	
 	<update id="updateBookCount" parameterType="map">
 		UPDATE
 			`cart`
@@ -65,6 +75,27 @@
  			#{userId}
  			,#{bookId}
  			,1
+ 			,now()
+ 			,now()
+ 		)
+	
+	</insert>
+	
+	<insert id="insertCartByBookCount" parameterType="map">
+	
+		INSERT INTO `cart`
+ 		(
+ 			`userId`
+			,`bookId`
+			,`bookCount`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{userId}
+ 			,#{bookId}
+ 			,#{bookCount}
  			,now()
  			,now()
  		)

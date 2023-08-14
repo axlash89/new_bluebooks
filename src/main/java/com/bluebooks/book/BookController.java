@@ -53,15 +53,14 @@ public class BookController {
 				
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(criteria);
-//		pageMaker.setTotalCount(bookBO.getAdvancedSearchedBookListTotalCount(title, author, publisher, pubPeriod));
-		pageMaker.setTotalCount(200);
+		pageMaker.setTotalCount(bookBO.getAdvancedSearchedBookListTotalCount(title, author, publisher, pubPeriod));
 		
 		model.addAttribute("title", title);
 		model.addAttribute("author", author);
 		model.addAttribute("publisher", publisher);
 		model.addAttribute("pubPeriod", pubPeriod);
 		model.addAttribute("nowPage", criteria.getPage());
-        model.addAttribute("pageMaker", pageMaker);	
+        model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("advancedSearchedBookList", advancedSearchedBookList);
 		model.addAttribute("view", "book/advancedSearchedResult");
 		

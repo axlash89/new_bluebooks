@@ -2,9 +2,7 @@ package com.bluebooks.aladin;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -107,8 +105,8 @@ public class AladinApiBO {
 			logger.error("###[AladinApiBO getSearchedBookListTotalCount] searchKeyword:{}", searchKeyword);
 		}
 		
-		if (totalCount > 200) {			
-			totalCount = 200;			
+		if (totalCount > 200) {
+			totalCount = 200;
 		}
 		
 		return totalCount;
@@ -292,7 +290,7 @@ public class AladinApiBO {
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=" + criteria.getPerPageNum() + "&start=" + criteria.getPage() +"&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
 					.bodyToMono(String.class)
-					.block();		
+					.block();
 			
 		} else if (title == "" && publisher == "") {
 			
@@ -358,96 +356,95 @@ public class AladinApiBO {
 	}
 	
 	
-//	public int getAdvancedSearchedBookListTotalCount(String title, String author, String publisher) {
-//		
-//		
-//		String result = null;
-//		
-//		if (author == null && publisher == null) {		
-//		
-//			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
-//					.get()
-//					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
-//					.retrieve()
-//					.bodyToMono(String.class)
-//					.block();		
-//			
-//		} else if (title == null && publisher == null) {
-//			
-//			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
-//					.get()
-//					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + author + "&QueryType=Author&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
-//					.retrieve()
-//					.bodyToMono(String.class)
-//					.block();		
-//			
-//		} else if (title == null && author == null) {
-//
-//			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
-//					.get()
-//					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + publisher + "&QueryType=Publisher&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
-//					.retrieve()
-//					.bodyToMono(String.class)
-//					.block();		
-//			
-//		} else if (title != null && author != null && publisher != null) {
-//
-//			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
-//					.get()
-//					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
-//					.retrieve()
-//					.bodyToMono(String.class)
-//					.block();		
-//		
-//		} else if (title == null && author != null && publisher != null) {
-//
-//			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
-//					.get()
-//					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + author + "&QueryType=Author&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
-//					.retrieve()
-//					.bodyToMono(String.class)
-//					.block();		
-//	
-//		} else if (title != null && author == null && publisher != null) {
-//
-//			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
-//					.get()
-//					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
-//					.retrieve()
-//					.bodyToMono(String.class)
-//					.block();		
-//			
-//		} else if (title != null && author != null && publisher == null) {
-//
-//			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
-//					.get()
-//					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
-//					.retrieve()
-//					.bodyToMono(String.class)
-//					.block();		
-//			
-//		}
-//		
-//		Integer totalCount = null;
-//		
-//		try {			
-//			JSONParser jsonParse = new JSONParser();
-//	        JSONObject jsonObj;
-//			jsonObj = (JSONObject) jsonParse.parse(result);
-//	        long totalResults = (long) jsonObj.get("totalResults");	        
-//	        totalCount = Long.valueOf(totalResults).intValue();	        
-//		} catch (ParseException e) {			
-//			logger.error("###[AladinApiBO getAdvancedSearchedBookListTotalCount]");			
-//		}		
-//		
-//		if (totalCount > 200) {			
-//			totalCount = 200;			
-//		}
-//		
-//		return totalCount;
-//		
-//		
-//	}
+	public int getAdvancedSearchedBookListTotalCount(String title, String author, String publisher) {
+		
+		String result = null;
+		
+		if (author == null && publisher == null) {		
+		
+			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+					.get()
+					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
+					.retrieve()
+					.bodyToMono(String.class)
+					.block();		
+			
+		} else if (title == null && publisher == null) {
+			
+			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+					.get()
+					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + author + "&QueryType=Author&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
+					.retrieve()
+					.bodyToMono(String.class)
+					.block();		
+			
+		} else if (title == null && author == null) {
+
+			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+					.get()
+					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + publisher + "&QueryType=Publisher&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
+					.retrieve()
+					.bodyToMono(String.class)
+					.block();		
+			
+		} else if (title != null && author != null && publisher != null) {
+
+			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+					.get()
+					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
+					.retrieve()
+					.bodyToMono(String.class)
+					.block();		
+		
+		} else if (title == null && author != null && publisher != null) {
+
+			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+					.get()
+					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + author + "&QueryType=Author&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
+					.retrieve()
+					.bodyToMono(String.class)
+					.block();		
+	
+		} else if (title != null && author == null && publisher != null) {
+
+			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+					.get()
+					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
+					.retrieve()
+					.bodyToMono(String.class)
+					.block();		
+			
+		} else if (title != null && author != null && publisher == null) {
+
+			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+					.get()
+					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
+					.retrieve()
+					.bodyToMono(String.class)
+					.block();		
+			
+		}
+		
+		Integer totalCount = null;
+		
+		try {
+			JSONParser jsonParse = new JSONParser();
+	        JSONObject jsonObj;
+			jsonObj = (JSONObject) jsonParse.parse(result);
+	        long totalResults = (long) jsonObj.get("totalResults");
+	        totalCount = Long.valueOf(totalResults).intValue();
+		} catch (ParseException e) {
+			logger.error("###[AladinApiBO getAdvancedSearchedBookListTotalCount]");			
+		}		
+		
+		if (totalCount > 200) {			
+			totalCount = 200;
+		}
+		
+		return totalCount;
+		
+		
+	}
 	
 	
 }

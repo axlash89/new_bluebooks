@@ -34,6 +34,15 @@ public class CartBO {
 			}
 		}
 	}
+		
+	public void addBookToCart(int userId, int bookId, int bookCount) {		
+		if (cartMapper.isItExists(userId, bookId) > 0) {
+			cartMapper.bookCountPlus(userId, bookId, bookCount);
+		} else {
+			cartMapper.insertCartByBookCount(userId, bookId, bookCount);
+		}
+	}
+	
 	
 	public List<CartView> getCartViewList(int userId) {
 		

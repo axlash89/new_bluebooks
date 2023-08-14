@@ -70,7 +70,7 @@ public class OrderBO {
 	
 	public void createOrder(int userId, int usedPoint, int finalPrice, String payBy, 
 			String recipientName, String recipientZipCode, String recipientAddress, 
-			String recipientPhoneNumber, int totalPoint, String bookIdString, String bookCount, Integer bookId) {
+			String recipientPhoneNumber, int totalPoint, String bookIdString, String bookCount, Integer bookId, Integer bookCountFromBookDetail) {
 		
 		Order order= new Order();
 		order.setUserId(userId);
@@ -100,7 +100,11 @@ public class OrderBO {
 			}			
 			orderedBooksBO.insertOrderedBooksByOrderId(order.getId(), bookIdArr, bookCountArr);
 		} else {
-			orderedBooksBO.insertOrderedSingleBookByOrderId(order.getId(), bookId);
+			if (bookCountFromBookDetail != null) {
+				orderedBooksBO.insertOrderedSingleBookByOrderIdFromBookDetail(order.getId(), bookId , bookCountFromBookDetail);
+			} else {
+				orderedBooksBO.insertOrderedSingleBookByOrderId(order.getId(), bookId);
+			}
 		}
 		
 	}

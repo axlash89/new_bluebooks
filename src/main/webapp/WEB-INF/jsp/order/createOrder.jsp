@@ -32,7 +32,15 @@
 		<c:otherwise>
 				<tr>
 					<td><img src="${book.cover}">${book.title}</td>
+					<c:choose>
+					<c:when test="${empty bookCount}">					
 					<td>1</td>
+					</c:when>
+					<c:otherwise>
+					<td>${bookCount}</td>
+					</c:otherwise>
+					</c:choose>
+					
 					<td><del>${book.priceStandard}</del><br>${book.priceSales}</td>
 					<td>내일 도착 예정</td>
 				</tr>
@@ -124,6 +132,7 @@
 			$('.usePoint').attr('disabled', true);
 			$('#finalPrice').text(finalPrice);
 			$('#usablePoint').text(${userPoint} - usePoint);
+			
 		});
 		
 		$('#usePointCancelBtn').on('click', function() {
@@ -191,10 +200,10 @@
 			
 			let finalPrice = ${finalPrice} - usedPoint;
 			let totalPoint = ${totalPoint};
+			
 			if (${empty book}) {
 				
-				let bookCount = ${bookCount}
-				 
+				let bookCount = ${bookCount}  // 이건 위에서 foreach에서 계산한거
 				
 				$.ajax({
 					type: "post"
@@ -219,33 +228,66 @@
 				});
 			
 			} else {
-			
-				let bookId = ${bookId}
 				
-				$.ajax({
-					type: "post"
-					, url: "/order/create"
-					, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
-						"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : payBy,
-						"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookId" : bookId }
+				
+				if (${not empty bookCountFromBookDetail}) {
 					
-					, success: function(data) {
-						if (data.code == 1) {
-							alert("결제가 완료되었습니다.");
-							location.href="/order/my_order_view";
-						} else {
-							alert(data.errorMessage);
+					let bookId = ${bookId}
+					let bookCountFromBookDetail = ${bookCountFromBookDetail}
+					
+					$.ajax({
+						type: "post"
+						, url: "/order/create"
+						, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
+							"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : payBy,
+							"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookId" : bookId, "bookCountFromBookDetail": bookCountFromBookDetail }
+						
+						, success: function(data) {
+							if (data.code == 1) {
+								alert("결제가 완료되었습니다.");
+								location.href="/order/my_order_view";
+							} else {
+								alert(data.errorMessage);
+							}
+						} 
+						
+						, error:function(request, status, error) {
+							alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
 						}
-					} 
+						
+					});	
 					
-					, error:function(request, status, error) {
-						alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
-					}
+				} else {
+				
 			
-					
-				});
+					let bookId = ${bookId}
+				
+					$.ajax({
+						type: "post"
+						, url: "/order/create"
+						, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
+							"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : payBy,
+							"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookId" : bookId }
+						
+						, success: function(data) {
+							if (data.code == 1) {
+								alert("결제가 완료되었습니다.");
+								location.href="/order/my_order_view";
+							} else {
+								alert(data.errorMessage);
+							}
+						} 
+						
+						, error:function(request, status, error) {
+							alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
+						}
+				
+						
+					)}
+				}
+			
+				}
 			}
-		
 		});
 		
 		$('#previousBtn').on('click', function(){

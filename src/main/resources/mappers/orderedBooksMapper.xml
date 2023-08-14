@@ -46,4 +46,25 @@
 		
 	</insert>
 
+	<insert id="insertOrderedSingleBookByOrderIdFromBookDetail" parameterType="map">
+		
+		INSERT INTO `orderedbooks`
+ 		(
+			`orderId`
+			,`bookId`
+			,`bookCount`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{orderId}
+ 			,#{bookId}
+ 			,#{bookCountFromBookDetail}
+ 			,now()
+ 			,now()
+ 		)
+		
+	</insert>
+
 </mapper>

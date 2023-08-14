@@ -38,6 +38,7 @@ public class OrderController {
 	@GetMapping("/create_order_view")
 	public String createOrderView(Model model, HttpSession session,
 			@RequestParam(required=false) Integer bookId,
+			@RequestParam(required=false) Integer bookCount,
 			@RequestParam(required=false) String bookIdString,
 			@RequestParam(required=false) Integer finalPrice) {
 		
@@ -51,6 +52,7 @@ public class OrderController {
 		} else {
 			Book book = orderBO.getOrderedBook(bookId);
 			model.addAttribute("bookId", bookId);
+			model.addAttribute("bookCountFromBookDetail", bookCount);
 			model.addAttribute("book", book);
 		}
 		

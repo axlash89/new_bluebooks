@@ -21,14 +21,9 @@
 				<label><input type="radio" class="pub-period" name="pubPeriod" value="threeM">3개월</label>
 				<label><input type="radio" class="pub-period" name="pubPeriod" value="sixM">6개월</label>
 				<label><input type="radio" class="pub-period" name="pubPeriod" value="nineM">9개월</label>
-				<label><input type="radio" class="pub-period" name="pubPeriod" value="twentyfourM">24개월</label>
+				<label><input type="radio" class="pub-period" name="pubPeriod" value="twentyFourM">24개월</label>
 			</div>
 		</form>	
-			<hr>
-			<div class="d-flex">
-				<span class="col-4 d-flex align-items-center">ISBN 검색</span><input type="text" id="isbn13" class="form-control pl-3 col-8" placeholder="-없이 숫자만 입력하세요">
-				<input type="button" id="isbnSearchBtn" class="btn btn-info ml-2" value="찾기">
-			</div>
 		</div>
 	</div>
 	

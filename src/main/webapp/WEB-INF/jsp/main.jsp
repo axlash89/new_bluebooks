@@ -8,7 +8,7 @@
 				<div class="d-flex justify-content-around">
 				<c:forEach items="${bestSellerTop10List}" var="book">
 					<div class="book-in-best-seller-box bg-warning">
-						<img src="${book.cover}" width="80px" alt="북 커버 이미지">
+						<a href="/book/book_detail_view?bookId=${book.id}"><img src="${book.cover}" width="80px" alt="북 커버 이미지"></a>
 						<div>${book.title}</div>
 					</div>
 				</c:forEach>	
@@ -22,7 +22,7 @@
 				<div class="d-flex justify-content-around">
 				<c:forEach items="${noteworthyNewBookTop5List}" var="book">
 					<div class="book-in-new-book-box bg-warning">
-						<img src="${book.cover}" width="80px" alt="북 커버 이미지">
+						<a href="/book/book_detail_view?bookId=${book.id}"><img src="${book.cover}" width="80px" alt="북 커버 이미지"></a>
 						<div>${book.title}</div>
 					</div>
 				</c:forEach>		

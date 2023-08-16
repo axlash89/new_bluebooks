@@ -46,7 +46,7 @@
 		
 	</insert>
 
-	<insert id="insertOrderedSingleBookByOrderIdFromBookDetail" parameterType="map">
+	<insert id="insertOrderedSingleBookByOrderIdFromDetail" parameterType="map">
 		
 		INSERT INTO `orderedbooks`
  		(
@@ -60,11 +60,41 @@
  		(
  			#{orderId}
  			,#{bookId}
- 			,#{bookCountFromBookDetail}
+ 			,#{bookCountFromDetail}
  			,now()
  			,now()
  		)
 		
 	</insert>
+	
+	<select id="selectOrderedBooksListByOrderId" parameterType="int" resultType="com.bluebooks.orderedbooks.domain.OrderedBooks">
+	
+		SELECT
+			`id`
+			,`orderId`
+			,`bookId`
+			,`bookCount`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`orderedbooks`
+		WHERE
+			`orderId` = #{orderId}		
+		
+	</select>
+
+	<select id="getAllOfOrderedBooks" resultType="com.bluebooks.orderedbooks.domain.OrderedBooks">
+
+		SELECT
+			`id`
+			,`orderId`
+			,`bookId`
+			,`bookCount`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`orderedbooks`	
+	
+	</select>
 
 </mapper>

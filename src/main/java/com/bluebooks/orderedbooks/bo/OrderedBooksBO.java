@@ -1,9 +1,12 @@
 package com.bluebooks.orderedbooks.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bluebooks.orderedbooks.dao.OrderedBooksMapper;
+import com.bluebooks.orderedbooks.domain.OrderedBooks;
 
 @Service
 public class OrderedBooksBO {
@@ -23,8 +26,16 @@ public class OrderedBooksBO {
 		orderedBooksMapper.insertOrderedSingleBookByOrderId(orderId, bookId);
 	}
 	
-	public void insertOrderedSingleBookByOrderIdFromBookDetail(int orderId, int bookId, int bookCountFromBookDetail) {
-		orderedBooksMapper.insertOrderedSingleBookByOrderIdFromBookDetail(orderId, bookId, bookCountFromBookDetail);
+	public void insertOrderedSingleBookByOrderIdFromDetail(int orderId, int bookId, int bookCountFromDetail) {
+		orderedBooksMapper.insertOrderedSingleBookByOrderIdFromDetail(orderId, bookId, bookCountFromDetail);
+	}
+	
+	public List<OrderedBooks> getOrderedBooksListByOrderId(int orderId) {
+		return orderedBooksMapper.selectOrderedBooksListByOrderId(orderId);
+	}
+	
+	public List<OrderedBooks> getAllOfOrderedBooks() {
+		return orderedBooksMapper.getAllOfOrderedBooks();
 	}
 	
 }

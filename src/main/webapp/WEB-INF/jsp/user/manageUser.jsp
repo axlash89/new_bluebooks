@@ -55,29 +55,42 @@
 	  	</table>
 	  	<div class="d-flex justify-content-between">
 		  	<c:choose>
-		  	<c:when test="${empty searchKeyword}">
-		  		<c:choose>
-			  		<c:when test="${nowPage ne 0}">
-			  		<a href="/admin/manage_user_view?page=0">첫 페이지로</a>
-			  		</c:when>
-			  		<c:otherwise>
-			  		첫 페이지로
-			  		</c:otherwise>
-				</c:choose>
-				
-				<c:choose>
-			  		<c:when test="${nowPage eq userList.totalPages - 1}">
-			  		마지막 페이지로  		
-			  		</c:when>
-			  		<c:otherwise>
-			  		<a href="/admin/manage_user_view?page=${userList.totalPages - 1}">마지막 페이지로</a>
-			  		</c:otherwise>
-				</c:choose>
-		  	</c:when>
-		  	<c:otherwise>
-		  		<a href="/admin/manage_user_view?page=${startPage}&searchKeyword=${searchKeyword}">첫 페이지로</a>
-		   		<a href="/admin/manage_user_view?page=${endPage}&searchKeyword=${searchKeyword}" class="float-right">마지막 페이지로</a>
-		  	</c:otherwise>
+			  	<c:when test="${empty searchKeyword}">
+			  		<c:choose>
+				  		<c:when test="${nowPage ne 0}">
+				  			<a href="/admin/manage_user_view?page=0">첫 페이지로</a>
+				  		</c:when>
+				  		<c:otherwise>
+				  			<div>첫 페이지로</div>
+				  		</c:otherwise>
+					</c:choose>
+					<c:choose>
+				  		<c:when test="${nowPage eq userList.totalPages - 1}">
+				  			<div>마지막 페이지로</div>	
+				  		</c:when>
+				  		<c:otherwise>
+				  			<a href="/admin/manage_user_view?page=${userList.totalPages - 1}">마지막 페이지로</a>
+				  		</c:otherwise>
+					</c:choose>
+			  	</c:when>
+			  	<c:otherwise>
+			  		<c:choose>
+						<c:when test="${nowPage ne 0}">
+				  			<a href="/admin/manage_user_view?page=${startPage}&searchKeyword=${searchKeyword}">첫 페이지로</a>
+				  		</c:when>
+				  		<c:otherwise>
+							<div>첫 페이지로</div>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${nowPage eq userList.totalPages - 1}">
+							<div>마지막 페이지로</div>
+						</c:when>
+						<c:otherwise>
+			   				<a href="/admin/manage_user_view?page=${endPage}&searchKeyword=${searchKeyword}" class="float-right">마지막 페이지로</a>
+		   				</c:otherwise>
+			   		</c:choose>
+			  	</c:otherwise>
 	   		</c:choose>
    		</div>
 	  	<c:if test="${endPage eq 0}">
@@ -160,7 +173,9 @@
 		</nav>
 		</c:if>		
 		<c:if test="${not empty searchKeyword}">
-		<a href="/admin/manage_user_view" class="btn btn-secondary">전체 목록으로</a>
+			<div class="d-flex justify-content-center">
+				<a href="/admin/manage_user_view" class="btn btn-secondary">전체 목록으로</a>
+			</div>
 		</c:if>
 <script>
 $(document).ready(function() {

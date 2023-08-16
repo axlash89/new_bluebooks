@@ -14,9 +14,9 @@
 	</thead>
 	<tbody>
 			<tr>				
-				<td><img src="${book.cover}">${book.title}</td>
+				<td>${book.id}<img src="${book.cover}">${book.title}</td>
 				<td><input type="text" id="bookCount" value="1" readOnly><a href="#" id="countUpBtn" class="btn btn-secondary">▲</a><a href="#" id="countDownBtn" class="btn btn-secondary">▼</a></td>
-				<td><del><span>${book.priceStandard}</span></del><br>${book.priceSales}</td>
+				<td><del><span id="bookPriceStandard">${book.priceStandard}</span></del><br><span id="bookPriceSales">${book.priceSales}</span></td>
 				<td>${book.description}</td>
 			</tr>
 	</tbody>
@@ -29,32 +29,39 @@
 			<input type="text" id="bookCountForOrder" name="bookCount" class="d-none">			
 			<input type="submit" id="orderBtn" class="btn btn-info" value="바로 구매하기" data-book-id="${book.id}">
 	</form>
-	<input type="button" class="previous-btn btn btn-secondary ml-5" value="이전으로">
+	<input type="button" id="previousBtn" class="previous-btn btn btn-secondary ml-5" value="이전으로">
 </div>
 
 
 <script>
 $(document).ready(function() {
 	
-	$('#countUpBtn').on('click', function() {
+	$('#countUpBtn').on('click', function(e) {
+		e.preventDefault();
 		
 		let originalCount = parseInt($('#bookCount').val());
 		
+		
+		
 		if (originalCount < 9) {
 			$('#bookCount').val(originalCount + 1);
+		} else {
+			alert("10권 이상 구매는 고객센터로 문의해주세요.");
 		}
-		
+		$('#bookPriceStandard').text(parseInt(${book.priceStandard}) * $('#bookCount').val());
+		$('#bookPriceSales').text(parseInt(${book.priceSales}) * $('#bookCount').val());
 	});
 	
-	$('#countDownBtn').on('click', function() {
+	$('#countDownBtn').on('click', function(e) {
+		e.preventDefault();
 		
 		let originalCount = parseInt($('#bookCount').val());
 		
 		if (originalCount > 1) {
 			$('#bookCount').val(originalCount - 1);
 		}
-		
-		
+		$('#bookPriceStandard').text(parseInt(${book.priceStandard}) * $('#bookCount').val());
+		$('#bookPriceSales').text(parseInt(${book.priceSales}) * $('#bookCount').val());
 	});
 	
 	
@@ -111,7 +118,12 @@ $(document).ready(function() {
 		
 		
 	});
-		
+	
+
+	$('#previousBtn').on('click', function(){
+		history.back();
+	});
+	
 				
 });
 </script>		

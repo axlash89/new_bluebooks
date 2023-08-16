@@ -8,8 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.bluebooks.common.Criteria;
 import com.bluebooks.onetoone.bo.OnetooneBO;
 import com.bluebooks.onetoone.entity.OnetooneEntity;
+import com.bluebooks.order.bo.OrderBO;
+import com.bluebooks.order.domain.OrderView;
 import com.bluebooks.user.bo.UserBO;
 import com.bluebooks.user.entity.UserEntity;
 
@@ -21,6 +24,9 @@ public class AdminBO {
 	
 	@Autowired
 	private UserBO userBO;
+	
+	@Autowired
+	private OrderBO orderBO;
 	
 	
 	public Page<OnetooneEntity> getAllOfOnetoone(Pageable pageable) {
@@ -60,6 +66,22 @@ public class AdminBO {
 	
 	public Page<OnetooneEntity> getOnetooneBySubject(String searchKeyword, Pageable pageable) {
 		return onetooneBO.getOnetooneListBySubject(searchKeyword, pageable);
+	}
+	
+	public List<OrderView> getOrderViewList(Criteria criteria, String type, String searchKeyword, String period) {
+		return orderBO.getOrderViewList(criteria, type, searchKeyword, period);
+	}
+	
+	public int getTotalOrderViewCount(String type, String searchKeyword, String period) {
+		return orderBO.getTotalOrderViewCount(type, searchKeyword, period);
+	}
+	
+	public void updateStatusByOrderId(Integer[] orderIdArr) {
+		orderBO.updateStatusByOrderId(orderIdArr);
+	}
+	
+	public OrderView getOrderView(int orderId) {
+		return orderBO.getOrderView(orderId);
 	}
 	
 }

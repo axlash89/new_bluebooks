@@ -12,7 +12,7 @@
 	   			<div class="h5">
 	   			</div>
 	   			<div>
-	   				<img src="${book.cover}">
+	   				<a href="/book/book_detail_view?bookId=${book.id}"><img src="${book.cover}"></a>
 	   			</div>
 	   			<div>
 	   				<div class="h5">${book.title}</div>

@@ -81,7 +81,72 @@
 		    			</tr>
 	    			</c:forEach>
 	    		</tbody>
-	    	</table>    
+	    	</table>   
+	    	
+	    	
+	    	<div class="d-flex justify-content-between">
+			  	<c:choose>
+			  	<c:when test="${userLoginId ne 'admin'}">
+			  		<c:choose>
+				  		<c:when test="${nowPage ne 0}">
+				  		<a href="/onetoone/onetoone_list_view?page=0">첫 페이지로</a>
+				  		</c:when>
+				  		<c:otherwise>
+				  		첫 페이지로
+				  		</c:otherwise>
+					</c:choose>
+					
+					<c:choose>
+				  		<c:when test="${nowPage eq onetooneList.totalPages - 1}">
+				  				
+				  		</c:when>
+				  		<c:otherwise>
+				  		<a href="/onetoone/onetoone_list_view?page=${onetooneList.totalPages - 1}">마지막 페이지로</a>
+				  		</c:otherwise>
+					</c:choose>
+			  	</c:when>
+			  	<c:otherwise>
+			  		<c:if test="${not empty searchKeyword}">
+			  		<c:choose>
+				  		<c:when test="${nowPage ne 0}">
+			  			<a href="/admin/manage_onetoone_list_view?page=0${searchKeyword}">첫 페이지로</a>
+			  			</c:when>
+				  		<c:otherwise>
+				  		첫 페이지로
+				  		</c:otherwise>
+					</c:choose>
+					<c:choose>
+				  		<c:when test="${nowPage eq onetooneList.totalPages - 1}">
+				  		마지막 페이지로
+			   			</c:when>
+				  		<c:otherwise>
+				  		<a href="/admin/manage_onetoone_list_view?page=${onetooneList.totalPages - 1}${searchKeyword}" class="float-right">마지막 페이지로</a>
+				  		</c:otherwise>
+				  	</c:choose>	
+			   		</c:if>
+			   		<c:if test="${empty searchKeyword}">
+			   		<c:choose>
+				  		<c:when test="${nowPage ne 0}">
+			   			<a href="/admin/manage_onetoone_list_view?page=0">첫 페이지로</a>
+			   			</c:when>
+			   			<c:otherwise>
+				  		첫 페이지로
+				  		</c:otherwise>
+					</c:choose>
+					<c:choose>
+				  		<c:when test="${nowPage eq onetooneList.totalPages - 1}">
+				  		마지막 페이지로
+				  		</c:when>
+				  		<c:otherwise>
+			   			<a href="/admin/manage_onetoone_list_view?page=${onetooneList.totalPages - 1}" class="float-right">마지막 페이지로</a>
+			   			</c:otherwise>
+		   			</c:choose>
+			   		</c:if>
+			  	</c:otherwise>
+		   		</c:choose>
+	   		</div>
+	    	
+	    	 
    					<c:choose>
 	    				<c:when test="${userLoginId ne 'admin'}">		    				
 	    					<c:if test="${endPage eq 0}">
@@ -247,6 +312,13 @@
 		    		<a href="/onetoone/onetoone_create_view" class="btn btn-info">글쓰기</a>
 		    	</div>
 		    	</c:if>
+		    	
+		    	
+		    	<c:if test="${not empty searchKeyword}">
+			    	<div class="d-flex justify-content-center">
+						<a href="/admin/manage_onetoone_list_view" class="btn btn-secondary">목록으로 돌아가기</a>
+					</div>
+				</c:if>
 
 <script>
 $(document).ready(function() {

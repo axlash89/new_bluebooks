@@ -100,7 +100,7 @@
 	<!-- limit 10, 10의 의미는 11번째 데이터부터 10개를 출력한다. -->
 	</select>
 	<select id="getTotalCountByReason" resultType="int">
-        <![CDATA[	
+    <![CDATA[	
 		SELECT
 			count(*)
  		FROM

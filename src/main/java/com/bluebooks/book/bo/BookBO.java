@@ -127,7 +127,7 @@ public class BookBO {
 	}
 	
 	public List<Book> getAdvancedSearchedBookList(String title, String author, String publisher, String pubPeriod, Criteria criteria) {
-		List<Book> advancedSearchedBookListByCategory = aladinApiBO.getAdvancedSearchedBookList(title, author, publisher, pubPeriod, criteria);
+		List<Book> advancedSearchedBookListByCategory = aladinApiBO.getAdvancedSearchedBookList(title, author, publisher, criteria);
 		
 		for (int i = 0; i < advancedSearchedBookListByCategory.size(); i++) {						
 			if(bookMapper.isDuplicatedBook(advancedSearchedBookListByCategory.get(i).getIsbn13()) == null) {
@@ -190,15 +190,15 @@ public class BookBO {
 						i--;
 					}
 					
-				} else if (pubPeriod.equals("twnetyFourM")) {
+				} else if (pubPeriod.equals("twentyFourM")) {
 					
-					Date twnetyFourMAgo = new Date();
+					Date twentyFourMAgo = new Date();
 					Calendar cal = Calendar.getInstance(); 
-					cal.setTime(twnetyFourMAgo);				
+					cal.setTime(twentyFourMAgo);				
 					cal.add(Calendar.YEAR, -2);
-					twnetyFourMAgo = cal.getTime();
+					twentyFourMAgo = cal.getTime();
 					
-					if (bookDate.before(twnetyFourMAgo)) {
+					if (bookDate.before(twentyFourMAgo)) {
 						advancedSearchedBookListByCategory.remove(i);
 						i--;
 					}
@@ -246,7 +246,7 @@ public class BookBO {
 	}
 	
 	
-	public int getAdvancedSearchedBookListTotalCount(String title, String author, String publisher, String pubPeriod) {
+	public int getAdvancedSearchedBookListTotalCount(String title, String author, String publisher) {
 		
 		int totalCount = aladinApiBO.getAdvancedSearchedBookListTotalCount(title, author, publisher);
 				

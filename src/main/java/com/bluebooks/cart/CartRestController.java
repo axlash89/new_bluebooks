@@ -23,16 +23,15 @@ public class CartRestController {
 	
 	@PostMapping("/add")
 	public Map<String, Object> cartAdd(HttpSession session,
-			@RequestParam(required = false) int[] bookIdArr,
+			@RequestParam(required = false) Integer[] bookIdArr,
 			@RequestParam(required = false) Integer bookId,
-			@RequestParam(required = false) int bookCount
-			) {
+			@RequestParam(required = false) Integer bookCount) {
 		
 		Map<String, Object> result = new HashMap<>();
 		
 		int userId = (int)session.getAttribute("userId");
 		
-		if(bookId ==  null) {
+		if(bookIdArr != null) {
 			cartBO.addBooksToCart(userId, bookIdArr);
 			result.put("code", 1);
 			result.put("result", "성공");

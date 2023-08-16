@@ -1,7 +1,11 @@
 package com.bluebooks.orderedbooks.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.bluebooks.orderedbooks.domain.OrderedBooks;
 
 @Repository
 public interface OrderedBooksMapper {
@@ -15,10 +19,14 @@ public interface OrderedBooksMapper {
 			@Param("orderId") int orderId, 
 			@Param("bookId") int bookId);
 	
-	public void insertOrderedSingleBookByOrderIdFromBookDetail(
+	public void insertOrderedSingleBookByOrderIdFromDetail(
 			@Param("orderId") int orderId, 
 			@Param("bookId") int bookId,
-			@Param("bookCountFromBookDetail") int bookCountFromBookDetail);
+			@Param("bookCountFromDetail") int bookCountFromDetail);
 	
+	public List<OrderedBooks> selectOrderedBooksListByOrderId(int orderId);
+	
+	
+	public List<OrderedBooks> getAllOfOrderedBooks();
 	
 }

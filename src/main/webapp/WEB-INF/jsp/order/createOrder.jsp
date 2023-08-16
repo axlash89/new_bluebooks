@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <h3>주문 및 결제하기</h3>
+<h5 class="text-right">상품금액 5만원 이상 구매 시 무료배송</h5>
 <table class="table">
 	<thead>
 		<tr>
@@ -29,25 +30,49 @@
 				<c:set var="totalPoint" value="${totalPoint = totalPoint + (cartView.book.point * cartView.cart.bookCount)}" />
 			</c:forEach>
 		</c:when>
-		<c:otherwise>
+		<c:when test="${empty finalPrice && empty bookCountFromDetail}">
+		
 				<tr>
 					<td><img src="${book.cover}">${book.title}</td>
-					<c:choose>
-					<c:when test="${empty bookCount}">					
 					<td>1</td>
-					</c:when>
-					<c:otherwise>
-					<td>${bookCount}</td>
-					</c:otherwise>
-					</c:choose>
-					
 					<td><del>${book.priceStandard}</del><br>${book.priceSales}</td>
 					<td>내일 도착 예정</td>
 				</tr>
 				<c:set var="totalPrice" value="${book.priceSales}" />
 				<c:set var="totalPoint" value="${book.point}" />
+				<c:choose>
+				<c:when test="${book.priceSales < 50000 }">
 				<c:set var="finalPrice" value="${book.priceSales + 2500}" />
-		</c:otherwise>
+				</c:when>
+				<c:otherwise>
+				<c:set var="finalPrice" value="${book.priceSales}" />
+				</c:otherwise>
+				</c:choose>
+		</c:when>
+		<c:otherwise>
+				<tr>
+					<td><img src="${book.cover}">${book.title}</td>
+					<td>${bookCountFromDetail}</td>
+					<td><del>${book.priceStandard * bookCountFromDetail}</del><br>${book.priceSales * bookCountFromDetail}</td>
+					<td>내일 도착 예정</td>
+				</tr>
+				<c:set var="totalPrice" value="${book.priceSales * bookCountFromDetail}" />
+				<c:set var="totalPoint" value="${book.point * bookCountFromDetail}" />
+				
+				<c:choose>
+				<c:when test="${book.priceSales * bookCountFromDetail < 50000 }">
+				<c:set var="finalPrice" value="${book.priceSales * bookCountFromDetail + 2500}" />
+				</c:when>
+				<c:otherwise>
+				<c:set var="finalPrice" value="${book.priceSales * bookCountFromDetail}" />
+				</c:otherwise>
+				</c:choose>
+								
+				
+				<input type="text" value="${bookCountFromDetail}" id="bookCountFromDetail" class="d-none">
+				
+				
+		</c:otherwise>		
 		</c:choose>	
 	</tbody>
 </table>
@@ -61,18 +86,19 @@
 </c:choose>
 <div class="d-flex justify-content-around h5">
 	<div>총 상품 금액 ${totalPrice}</div>
+	<c:choose>
+	<c:when test="${totalPrice < 50000}">
 	<div>배송비 2,500원</div>
+	</c:when>
+	<c:otherwise>
+	<div>배송비 0원</div>
+	</c:otherwise>
+	</c:choose>
 	<div>사용할 블루북스 포인트<span id="usedPoint"></span></div>	
 	<div>적립 예상 포인트 ${totalPoint}</div>
 </div>
-<c:choose>
-<c:when test="${empty book}">
 <div class="h3 text-center">최종 결제금액 <span id="finalPrice">${finalPrice}</span>원</div>
-</c:when>
-<c:otherwise>
-<div class="h3 text-center">최종 결제금액 <span id="finalPrice">${finalPrice}</span>원</div>
-</c:otherwise>
-</c:choose>
+
 <div class="d-flex justify-content-center">
 	<div>
 		이름 <input type="text" class="form-control col-8 ml-2" name="recipientName" id="recipientName" placeholder="이름 입력" value="${user.name}"> 
@@ -98,6 +124,8 @@
 <%-- 우편번호 검색 API --%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+
+
 <script>
 	$(document).ready(function() {
 		
@@ -117,6 +145,16 @@
 				$('.usePoint').val('');
 				return;
 			}			
+			
+			if(usePoint < 100) {
+				alert("최소 100포인트 이상 사용 가능합니다.");
+				return;
+			}
+			
+			if(usePoint > ${finalPrice}) {
+				alert("포인트는 최종 결제금액 이하로만 사용 가능합니다.");
+				return;
+			}
 			
 			if (${userPoint} < usePoint) {
 				alert("사용가능 포인트를 초과하였습니다.\n고객님의 가용 포인트는 " + userPoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "포인트 입니다.");
@@ -227,41 +265,12 @@
 				
 				});
 			
-			} else {
-				
-				
-				if (${not empty bookCountFromBookDetail}) {
-					
-					let bookId = ${bookId}
-					let bookCountFromBookDetail = ${bookCountFromBookDetail}
-					
-					$.ajax({
-						type: "post"
-						, url: "/order/create"
-						, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
-							"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : payBy,
-							"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookId" : bookId, "bookCountFromBookDetail": bookCountFromBookDetail }
-						
-						, success: function(data) {
-							if (data.code == 1) {
-								alert("결제가 완료되었습니다.");
-								location.href="/order/my_order_view";
-							} else {
-								alert(data.errorMessage);
-							}
-						} 
-						
-						, error:function(request, status, error) {
-							alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
-						}
-						
-					});	
-					
-				} else {
-				
+			}
 			
+			if(${not empty book} && ${empty bookCountFromDetail}) {
+					
 					let bookId = ${bookId}
-				
+					
 					$.ajax({
 						type: "post"
 						, url: "/order/create"
@@ -283,17 +292,53 @@
 						}
 				
 						
-					)}
-				}
+					});
+					
+					
+			} 
 			
-				}
+			if(${not empty book} && ${not empty bookCountFromDetail}) {
+				
+					
+					let bookCountFromDetail = $('#bookCountFromDetail').val();
+					
+
+					let bookId = ${bookId}
+					
+					$.ajax({
+						type: "post"
+						, url: "/order/create"
+						, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
+							"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : payBy,
+							"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookId" : bookId, "bookCountFromDetail": bookCountFromDetail }
+						
+						, success: function(data) {
+							if (data.code == 1) {
+								alert("결제가 완료되었습니다.");
+								location.href="/order/my_order_view";
+							} else {
+								alert(data.errorMessage);
+							}
+						} 
+						
+						, error:function(request, status, error) {
+							alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
+						}
+						
+					});	
+					
+				
+			
 			}
+			
 		});
 		
+
 		$('#previousBtn').on('click', function(){
 			history.back();
-		})
-	
+		});
+		
+	});
 	
 	function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -343,5 +388,5 @@
             }
         }).open();
     }
-});	
+	
 </script>

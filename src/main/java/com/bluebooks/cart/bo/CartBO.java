@@ -25,7 +25,7 @@ public class CartBO {
 	@Autowired
 	private CartMapper cartMapper;
 	
-	public void addBooksToCart(int userId, int[] bookIdArr) {
+	public void addBooksToCart(Integer userId, Integer[] bookIdArr) {
 		for (int i = 0; i < bookIdArr.length; i++) {			
 			if (cartMapper.isItExists(userId, bookIdArr[i]) > 0) {
 				cartMapper.bookCountPlusOne(userId, bookIdArr[i]);
@@ -35,7 +35,7 @@ public class CartBO {
 		}
 	}
 		
-	public void addBookToCart(int userId, int bookId, int bookCount) {		
+	public void addBookToCart(Integer userId, Integer bookId, Integer bookCount) {		
 		if (cartMapper.isItExists(userId, bookId) > 0) {
 			cartMapper.bookCountPlus(userId, bookId, bookCount);
 		} else {

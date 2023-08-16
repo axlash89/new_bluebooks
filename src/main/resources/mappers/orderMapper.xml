@@ -37,4 +37,513 @@
 	
 	</insert>
 	
+	<select id="selectOrderListByUserId" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+			
+		SELECT 
+			`id`
+			,`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`	
+		WHERE
+		<![CDATA[	
+			`id` > 0 AND `userId` = #{userId}
+		]]>			
+		ORDER BY
+			`id` DESC	
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+	
+	</select>
+	
+	
+	<select id="getTotalOrderViewCountByUserId" resultType="int">
+		
+		SELECT
+			count(*)
+ 		FROM
+ 			`order`
+ 		WHERE
+ 		<![CDATA[
+ 			`id` > 0 AND `userId` = #{userId}	
+		]]>	
+	</select>
+		
+	
+	<select id="selectOrderListByUserIdAndByPeriod" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+		
+		SELECT 
+			`id`
+			,`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`	
+		WHERE
+			<![CDATA[    
+			`id` > 0 AND
+			]]>
+		<choose>
+			<when test="period=='week'">
+				<![CDATA[    
+				DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+				]]>	 
+			</when>
+			<when test="period=='oneMonth'">
+				<![CDATA[    
+				DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+				]]>	 
+			</when>
+			<otherwise>
+				<![CDATA[    
+				DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+				]]>	 
+			</otherwise>			
+		</choose>		
+		ORDER BY
+			`id` DESC	
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+	
+	</select>
+		
+	<select id="getTotalOrderViewCountByUserIdAndByPeriod" resultType="int">
+			
+		SELECT
+			count(*)
+ 		FROM
+ 			`order`
+ 		WHERE
+ 		<![CDATA[
+ 			`id` > 0 AND `userId` = #{userId} AND
+ 		]]>		
+		<choose>
+			<when test="period=='week'">
+				<![CDATA[    
+				DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+				]]>	
+			</when>
+			<when test="period=='oneMonth'">
+				<![CDATA[    
+				DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+				]]>	 
+			</when>
+			<otherwise>
+				<![CDATA[    
+				DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+				]]>	 
+			</otherwise>			
+		</choose>				
+	</select>
+	
+	
+	
+	<select id="selectOrderList" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+		
+		SELECT 
+			`id`
+			,`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`	
+		WHERE
+			<![CDATA[	
+			`id` > 0 
+			]]>	
+		ORDER BY
+			`id` DESC	
+		LIMIT #{pageStart}, #{perPageNum}
+	
+	</select>
+	
+	
+	<select id="getTotalOrderViewCount" resultType="int">
+		
+		SELECT
+			count(*)
+ 		FROM
+ 			`order`
+ 		WHERE
+ 		<![CDATA[	
+ 			`id` > 0	
+		]]>	
+	</select>
+		
+	
+	<select id="selectOrderListByPeriod" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+		
+		SELECT 
+			`id`
+			,`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`	
+		WHERE
+			<![CDATA[   
+			`id` > 0 AND
+			]]>
+		<choose>
+			<when test="period=='week'">
+				<![CDATA[    
+				DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+				]]>	
+			</when>
+			<when test="period=='oneMonth'">
+				<![CDATA[    
+				DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+				]]>	 
+			</when>
+			<otherwise>
+				<![CDATA[    
+				DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+				]]>	 
+			</otherwise>			
+		</choose>	
+		ORDER BY
+			`id` DESC	
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+	</select>
+		
+	<select id="getTotalOrderViewCountByPeriod" resultType="int">
+	
+		SELECT
+			count(*)
+ 		FROM
+ 			`order`
+ 		WHERE
+ 	<![CDATA[		
+ 			`id` > 0 AND 
+	]]>	
+	<choose>
+		<when test="period=='week'">
+			<![CDATA[    
+			DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+			]]>	
+		</when>
+		<when test="period=='oneMonth'">
+			<![CDATA[    
+			DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+			]]>	 
+		</when>
+		<otherwise>
+			<![CDATA[    
+			DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+			]]>	 
+		</otherwise>			
+	</choose>	
+	</select>
+	
+	
+	
+	<update id="updateStatusByOrderId" parameterType="int">
+	
+		UPDATE
+			`order`
+		SET `status` = "배송중"
+		WHERE
+			`id` = #{orderId}
+	
+	</update>	
+	
+	
+	<select id="selectOrderListByUserIdList" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+	
+		SELECT 
+			`id`
+			,`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+	    FROM 
+	    	`order`
+	    WHERE 
+	    <![CDATA[	
+	    	`id` > 0 AND
+	    ]]>		
+	    	`userId` IN		    	
+	    <foreach collection="userIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach>
+	  
+		ORDER BY
+			`id` DESC	
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+			   
+	</select>
+	
+	
+	<select id="getTotalOrderViewCountByUserIdList" parameterType="map" resultType="int">
+		
+		SELECT
+			count(*)
+ 		FROM
+ 			`order`
+ 		WHERE
+ 		<![CDATA[
+ 			`id` > 0 AND 
+ 		]]>			
+ 			`userId` IN
+ 		<foreach collection="userIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach> 	
+	</select>
+	
+	<select id="selectOrderByIdList" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+		
+		
+		SELECT 
+			`id`
+			,`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`	
+		WHERE
+		<![CDATA[	
+			`id` > 0 AND 
+		]]>		
+			`id` IN
+		<foreach collection="orderIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach>			
+		ORDER BY
+			`id` DESC	
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+		
+	</select>
+		
+	
+	<select id="selectOrderListByUserIdListAndByPeriod" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+		SELECT 
+			`id`
+			,`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+	    FROM 
+	    	`order`
+		<![CDATA[
+	    WHERE 
+	    	`id` > 0 AND 
+	    	`userId` IN
+		]]>	    	
+	    <foreach collection="userIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach>
+		<choose>
+			<when test="period=='week'">
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+				]]>	 
+			</when>
+			<when test="period=='oneMonth'">
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+				]]>	 
+			</when>
+			<otherwise>
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+				]]>	 
+			</otherwise>			
+		</choose>		
+		ORDER BY
+			`id` DESC	
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}   		
+	</select>	
+	
+	
+	<select id="getTotalOrderViewCountByUserIdListAndByPeriod" parameterType="map" resultType="int">
+		
+		SELECT
+			count(*)
+ 		FROM
+ 			`order`
+ 		WHERE
+ 		<![CDATA[
+ 			`id` > 0 AND 
+ 		]]>			
+ 			`userId` IN
+ 		<foreach collection="userIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach>
+	    <choose>
+			<when test="period=='week'">
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+				]]>	 
+			</when>
+			<when test="period=='oneMonth'">
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+				]]>	 
+			</when>
+			<otherwise>
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+				]]>	 
+			</otherwise>			
+		</choose>		
+	</select>
+	
+	<select id="getTotalOrderViewCountByBookTitleAndByPeriod" parameterType="map" resultType="int">
+		SELECT
+			count(*)
+ 		FROM
+ 			`order`
+ 		WHERE
+ 		<![CDATA[
+ 			`id` > 0 AND 
+ 		]]>			
+ 			`id` IN
+ 		<foreach collection="orderIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach>
+	    <choose>
+			<when test="period=='week'">
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+				]]>	 
+			</when>
+			<when test="period=='oneMonth'">
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+				]]>	 
+			</when>
+			<otherwise>
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+				]]>	 
+			</otherwise>			
+		</choose>		
+	</select>
+	
+	
+	<select id="selectOrderByIdListAndByPeriod" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+		
+		
+		SELECT 
+			`id`
+			,`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`	
+		WHERE
+		<![CDATA[	
+			`id` > 0 AND 
+		]]>		
+			`id` IN
+		<foreach collection="orderIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach>	
+	    <choose>
+			<when test="period=='week'">
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+				]]>	 
+			</when>
+			<when test="period=='oneMonth'">
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+				]]>	 
+			</when>
+			<otherwise>
+				<![CDATA[    
+				AND DATE(`createdAt`) >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+				]]>	 
+			</otherwise>			
+		</choose>	
+		ORDER BY
+			`id` DESC	
+		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+		
+	</select>
+	
+	
+	<select id="getOrderById" parameterType="int">
+	
+		SELECT 
+			`id`
+			,`userId`
+			,`usedPoint`
+			,`finalPrice`
+			,`payBy`
+			,`status`
+			,`recipientName`
+			,`recipientZipCode`
+			,`recipientAddress`
+			,`recipientPhoneNumber`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`order`	
+		WHERE
+			`id` = #{orderId}	
+	
+	</select>
+	
 </mapper>

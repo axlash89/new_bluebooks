@@ -10,14 +10,23 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.bluebooks.book.domain.Book;
 import com.bluebooks.common.Criteria;
+import com.bluebooks.config.ApiAddress;
 
 @Service
+@EnableConfigurationProperties({
+	ApiAddress.class
+})
 public class AladinApiBO {
+	
+	@Autowired
+	private ApiAddress apiAddress;
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -71,7 +80,7 @@ public class AladinApiBO {
 	
 	public List<Book> getSearchedBookList (String searchKeyword, Criteria criteria) {
 
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
 				.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + searchKeyword + "&QueryType=Keyword&MaxResults=" + criteria.getPerPageNum() + "&start=" + criteria.getPage() +"&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
@@ -86,9 +95,9 @@ public class AladinApiBO {
 	
 	public int getSearchedBookListTotalCount(String searchKeyword) {
 		
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
-				.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + searchKeyword + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
+				.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + searchKeyword + "&QueryType=Keyword&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
 				.bodyToMono(String.class)
 				.block();
@@ -116,7 +125,7 @@ public class AladinApiBO {
 	public List<Book> getBestSellerTop10List() {
 		
 
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
 				.uri("ItemList.aspx?ttbkey=ttbrhxodud890305001&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
@@ -132,7 +141,7 @@ public class AladinApiBO {
 	
 	public List<Book> getNoteworthyNewBookTop5List() {
 		
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
 				.uri("ItemList.aspx?ttbkey=ttbrhxodud890305001&QueryType=ItemNewSpecial&MaxResults=5&start=1&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
@@ -148,7 +157,7 @@ public class AladinApiBO {
 	
 	public List<Book> getBookListByCategory(Integer cid, Criteria criteria) {
 		
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
 				.uri("ItemList.aspx?ttbkey=ttbrhxodud890305001&QueryType=ItemNewAll&CategoryId=" + cid + "&MaxResults=" + criteria.getPerPageNum() + "&start="  + criteria.getPage() + "&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
@@ -163,7 +172,7 @@ public class AladinApiBO {
 		
 	public int getBookListByCategoryTotalCount(Integer cid) {
 		
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
 				.uri("ItemList.aspx?ttbkey=ttbrhxodud890305001&QueryType=ItemNewAll&CategoryId=" + cid + "&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
@@ -192,7 +201,7 @@ public class AladinApiBO {
 		
 	public List<Book> getBestBookListByCategory(Integer cid, Criteria criteria) {
 		
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
 				.uri("ItemList.aspx?ttbkey=ttbrhxodud890305001&QueryType=Bestseller&CategoryId=" + cid + "&MaxResults=" + criteria.getPerPageNum() + "&start="  + criteria.getPage() + "&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
@@ -207,7 +216,7 @@ public class AladinApiBO {
 	
 	public int getBestBookListByCategoryTotalCount(Integer cid) {
 		
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
 				.uri("ItemList.aspx?ttbkey=ttbrhxodud890305001&QueryType=Bestseller&CategoryId=" + cid + "&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
@@ -236,7 +245,7 @@ public class AladinApiBO {
 	
 	public List<Book> getNewBookListByCategory(Integer cid, Criteria criteria) {
 		
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
 				.uri("ItemList.aspx?ttbkey=ttbrhxodud890305001&QueryType=ItemNewSpecial&CategoryId=" + cid + "&MaxResults=" + criteria.getPerPageNum() + "&start="  + criteria.getPage() + "&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
@@ -252,7 +261,7 @@ public class AladinApiBO {
 	
 	public int getNewBookListByCategoryTotalCount(Integer cid) {
 		
-		String result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+		String result = WebClient.create(apiAddress.getApiAddress())
 				.get()
 				.uri("ItemList.aspx?ttbkey=ttbrhxodud890305001&QueryType=ItemNewSpecial&CategoryId=" + cid + "&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 				.retrieve()
@@ -279,13 +288,13 @@ public class AladinApiBO {
 		
 	}
 	
-	public List<Book> getAdvancedSearchedBookList(String title, String author, String publisher, String pubPeriod, Criteria criteria) {
+	public List<Book> getAdvancedSearchedBookList(String title, String author, String publisher, Criteria criteria) {
 		
 		String result = null;
 		
 		if (author == "" && publisher == "") {		
 		
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=" + criteria.getPerPageNum() + "&start=" + criteria.getPage() +"&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
@@ -294,7 +303,7 @@ public class AladinApiBO {
 			
 		} else if (title == "" && publisher == "") {
 			
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + author + "&QueryType=Author&MaxResults=" + criteria.getPerPageNum() + "&start=" + criteria.getPage() +"&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
@@ -303,7 +312,7 @@ public class AladinApiBO {
 			
 		} else if (title == "" && author == "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + publisher + "&QueryType=Publisher&MaxResults=" + criteria.getPerPageNum() + "&start=" + criteria.getPage() +"&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
@@ -312,7 +321,7 @@ public class AladinApiBO {
 			
 		} else if (title != "" && author != "" && publisher != "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=" + criteria.getPerPageNum() + "&start=" + criteria.getPage() +"&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
@@ -321,7 +330,7 @@ public class AladinApiBO {
 			
 		} else if (title == "" && author != "" && publisher != "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + author + "&QueryType=Author&MaxResults=" + criteria.getPerPageNum() + "&start=" + criteria.getPage() +"&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
@@ -330,7 +339,7 @@ public class AladinApiBO {
 			
 		} else if (title != "" && author == "" && publisher != "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=" + criteria.getPerPageNum() + "&start=" + criteria.getPage() +"&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
@@ -339,7 +348,7 @@ public class AladinApiBO {
 	
 		} else if (title != "" && author != "" && publisher == "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=" + criteria.getPerPageNum() + "&start=" + criteria.getPage() +"&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
@@ -360,63 +369,63 @@ public class AladinApiBO {
 		
 		String result = null;
 		
-		if (author == null && publisher == null) {		
+		if (author == "" && publisher == "") {		
 		
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
 					.bodyToMono(String.class)
 					.block();		
 			
-		} else if (title == null && publisher == null) {
+		} else if (title == "" && publisher == "") {
 			
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + author + "&QueryType=Author&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
 					.bodyToMono(String.class)
 					.block();		
 			
-		} else if (title == null && author == null) {
+		} else if (title == "" && author == "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + publisher + "&QueryType=Publisher&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
 					.bodyToMono(String.class)
 					.block();		
 			
-		} else if (title != null && author != null && publisher != null) {
+		} else if (title != "" && author != "" && publisher != "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
 					.bodyToMono(String.class)
 					.block();		
 		
-		} else if (title == null && author != null && publisher != null) {
+		} else if (title == "" && author != "" && publisher != "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + author + "&QueryType=Author&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
 					.bodyToMono(String.class)
 					.block();		
 	
-		} else if (title != null && author == null && publisher != null) {
+		} else if (title != "" && author == "" && publisher != "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()
 					.bodyToMono(String.class)
 					.block();		
 			
-		} else if (title != null && author != null && publisher == null) {
+		} else if (title != "" && author != "" && publisher == "") {
 
-			result = WebClient.create("https://www.aladin.co.kr/ttb/api/")
+			result = WebClient.create(apiAddress.getApiAddress())
 					.get()
 					.uri("ItemSearch.aspx?ttbkey=ttbrhxodud890305001&Query=" + title + "&QueryType=Title&MaxResults=100&SearchTarget=Book&output=js&Version=20131101")
 					.retrieve()

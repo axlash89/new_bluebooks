@@ -53,7 +53,7 @@ public class BookController {
 				
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(criteria);
-		pageMaker.setTotalCount(bookBO.getAdvancedSearchedBookListTotalCount(title, author, publisher, pubPeriod));
+		pageMaker.setTotalCount(bookBO.getAdvancedSearchedBookListTotalCount(title, author, publisher));
 		
 		model.addAttribute("title", title);
 		model.addAttribute("author", author);

@@ -27,6 +27,11 @@ public class NoticeBO {
 		return noticeRepository.findAll(pageable);
 	}
 	
+	public Page<NoticeEntity> getNoticeListBySearchKeyword(String searchKeyword, Pageable pageable) {
+		return noticeRepository.findAllBySubjectContaining(searchKeyword, pageable);
+	}
+	
+	
 	public NoticeEntity getNoticeEntityById(int id) {
 		return noticeRepository.findById(id).orElse(null);
 	}

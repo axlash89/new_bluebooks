@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <h3>장바구니</h3>
+<h5 class="text-right">총 상품금액 5만원 이상 주문 시 배송비 무료</h5>
 <table class="table">
 	<thead>
 		<tr>
@@ -18,7 +19,7 @@
 		<c:forEach items="${cartViewList}" var="cartView">
 			<tr>
 				<td class="price-parent"><input type="checkbox" class="check-one" value="${cartView.book.id}"><input type="text" value="${cartView.book.priceSales}" class="price d-none"></td>
-				<td><img src="${cartView.book.cover}">${cartView.book.title}</td>
+				<td><a href="/book/book_detail_view?bookId=${cartView.book.id}"><img src="${cartView.book.cover}">${cartView.book.title}</a></td>
 				<td class="changing-price-parent"><input type="text" class="book-count" value="${cartView.cart.bookCount}" readOnly><a href="#" class="count-up-btn btn btn-secondary" data-book-id="${cartView.book.id}">▲</a><a href="#" class="count-down-btn btn btn-secondary" data-book-id="${cartView.book.id}">▼</a><input type="text" value="${cartView.book.priceSales * cartView.cart.bookCount}" class="changing-price d-none"></td>
 				<td><del>${cartView.book.priceStandard * cartView.cart.bookCount}</del><br>${cartView.book.priceSales * cartView.cart.bookCount}</td>
 				<td>내일 도착 예정</td>
@@ -39,7 +40,7 @@
 <div class="d-flex justify-content-between h5 px-5">
 	<div>
 		<div>총 상품 금액<input type="text" id="totalPrice" readOnly>원</div>
-		<div>배송비 2,500원</div>
+		<div>배송비<input type="text" id="deliveryFee" readOnly>원</div>
 		<div>최종 결제금액<input type="text" id="finalPrice" readOnly value="">원</div>
 	</div>
 	<div>		
@@ -81,10 +82,18 @@ $(document).ready(function() {
 			let changeTotalSum = add(checkArrChange);
 			
 			$('#totalPrice').val(changeTotalSum);
-			$('#finalPrice').val(changeTotalSum + 2500);
+			
+			if($('#totalPrice').val() >= 50000) {
+				$('#deliveryFee').val(0);
+				$('#finalPrice').val(changeTotalSum);
+			} else {
+				$('#deliveryFee').val(2500);
+				$('#finalPrice').val(changeTotalSum + 2500);
+			}
 		} else {
 			$('.check-one').prop('checked', false);
 			$('#totalPrice').val(0);
+			$('#deliveryFee').val(0);
 			$('#finalPrice').val(0);
 		}
 	});
@@ -112,9 +121,16 @@ $(document).ready(function() {
 			let changeSum = add(checkArrChange);
 			$('#totalPrice').val(changeSum);
 			if (checked != 0) {
-				$('#finalPrice').val(changeSum + 2500);
+				if($('#totalPrice').val() >= 50000) {
+					$('#deliveryFee').val(0);
+					$('#finalPrice').val(changeSum);
+				} else {
+					$('#deliveryFee').val(2500);
+					$('#finalPrice').val(changeSum + 2500);
+				}
 			} else {
 				$('#finalPrice').val(0);
+				$('#deliveryFee').val(0);
 			}
 		} else {
 			$("#checkAll").prop("checked", true); 
@@ -132,7 +148,14 @@ $(document).ready(function() {
 			let changeTotalSum = add(checkArrChange);
 			
 			$('#totalPrice').val(changeTotalSum);
-			$('#finalPrice').val(changeTotalSum + 2500);
+			if($('#totalPrice').val() >= 50000) {
+				$('#deliveryFee').val(0);
+				$('#finalPrice').val(changeTotalSum);
+			} else {
+				$('#deliveryFee').val(2500);
+				$('#finalPrice').val(changeTotalSum + 2500);
+			}
+			
 		}
 	});
 	
@@ -175,9 +198,16 @@ $(document).ready(function() {
 		
 		var total = $(".check-one").length;
 		if(total != 0) {
-			$('#finalPrice').val(changeTotalSum + 2500);
+			if($('#totalPrice').val() >= 50000) {
+				$('#deliveryFee').val(0);
+				$('#finalPrice').val(changeTotalSum);
+			} else {
+				$('#deliveryFee').val(2500);
+				$('#finalPrice').val(changeTotalSum + 2500);
+			}
 		} else {
 			$('#finalPrice').val(0);
+			$('#deliveryFee').val(0);
 		}
 		
 		let bookId = $(this).data('book-id');
@@ -241,8 +271,15 @@ $(document).ready(function() {
 		
 		var total = $(".check-one").length;
 		if(total != 0) {
-			$('#finalPrice').val(changeTotalSum + 2500);
+			if($('#totalPrice').val() >= 50000) {
+				$('#deliveryFee').val(0);
+				$('#finalPrice').val(changeTotalSum);
+			} else {
+				$('#deliveryFee').val(2500);
+				$('#finalPrice').val(changeTotalSum + 2500);
+			}
 		} else {
+			$('#deliveryFee').val(0);
 			$('#finalPrice').val(0);
 		}
 		
@@ -328,6 +365,14 @@ $(document).ready(function() {
 	
 	
 	$('#orderBtn').on('click', function() {
+		
+		let checkedBoxCount = $(".check-one:checked").length;
+		
+		if(checkedBoxCount == 0) {
+			alert("선택하신 상품이 없습니다.");
+			return false;
+		}
+		
 		
 		let result = confirm("주문 및 결제 페이지로 이동합니다.");
 		if (!result) {

@@ -25,23 +25,34 @@ public class NoticeController {
 
 	@GetMapping("/notice_list_view")
 	public String onetooneListView(HttpSession session, Model model,
-			@PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+			@RequestParam(required=false) String searchKeyword,
+			@PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
 		// nowPage 현재 페이지
 		// startPage 블럭에서 보여줄 시작 페이지
 		// endPage 블럭에서 보여줄 마지막 페이지
+		Page<NoticeEntity> noticeList = null;
+		if (searchKeyword == null) {			
+			noticeList = noticeBO.getNoticeList(pageable);			
+		} else {
+			noticeList = noticeBO.getNoticeListBySearchKeyword(searchKeyword, pageable);
+			model.addAttribute("searchKeyword", "&searchKeyword=" + searchKeyword);
+		}
 		
-		Page<NoticeEntity> noticeList = noticeBO.getNoticeList(pageable);
-
 		int nowPage = noticeList.getPageable().getPageNumber();
+		if (nowPage > noticeList.getTotalPages() - 1) {
+			nowPage =  noticeList.getTotalPages() - 1;
+		}
+		
 		int startPage = Math.max(0, noticeList.getPageable().getPageNumber() - 4);
+		
 		int endPage;
 		if (noticeList.getTotalPages() != 0) {
 			endPage = Math.min(noticeList.getTotalPages() - 1, nowPage + 4);
 		} else {
 			endPage = 0;
 		}
-
+		
 		model.addAttribute("noticeList", noticeList);
 
 		model.addAttribute("startPage", startPage);

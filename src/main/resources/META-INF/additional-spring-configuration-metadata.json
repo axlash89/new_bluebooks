@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "aladin.api-address",
+  "type": "java.lang.String",
+  "description": "aladin api address"
+}]}

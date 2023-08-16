@@ -39,14 +39,14 @@
 	                    <a href="/book/all_book_view"><li class="menus">분야보기</li></a>
 	                    <a href="/book/best_book_view"><li class="menus">베스트셀러</li></a>
 	                    <a href="/book/new_book_view"><li class="menus">새로나온 책</li></a>
-	                    <a href="#"><li class="menus">이벤트</li></a>
+	                    <a href="/event/event_list_view"><li class="menus">이벤트</li></a>
 	                    <a href="/notice/notice_list_view"><li class="menus">공지사항</li></a>
 	                    <c:choose>
 	                    <c:when test="${userLoginId ne 'admin'}">
 	                   		<a href="/order/my_order_view" id="myPage"><li class="menus">마이페이지</li></a>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<a href="/admin/admin_view"><li class="menus">관리자 페이지</li></a>
+	                    	<a href="/admin/admin_view?period=week"><li class="menus">관리자 페이지</li></a>
 	                    </c:otherwise>
 	                    </c:choose>
 	                    

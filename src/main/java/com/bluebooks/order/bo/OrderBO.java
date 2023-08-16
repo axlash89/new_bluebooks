@@ -117,64 +117,39 @@ public class OrderBO {
 	public List<OrderView> getOrderViewListByUserId(int userId, Criteria criteria, String period) {
 		
 		List<OrderView> orderViewList = new ArrayList<>();	
-		
+		List<Order> orderList = new ArrayList<>();
 		if (period == null) {
 		
-			List<Order> orderList = orderMapper.selectOrderListByUserId(userId, criteria);
-						
-			for (int i = 0; i < orderList.size(); i++) {
-				OrderView orderView = new OrderView();
-								
-				orderView.setOrder(orderList.get(i));
-				
-				List<OrderedBooks> orderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderList.get(i).getId());
-				orderView.setOrderedBooksList(orderedBooksList);
-				
-				List<Book> bookList = new ArrayList<>();
-				for (int j = 0; j < orderedBooksList.size(); j++) {
-					
-					bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
-				}
-				orderView.setBookList(bookList);
-				
-				
-				orderViewList.add(orderView);
-				
-			}
+			orderList = orderMapper.selectOrderListByUserId(userId, criteria);
 		
 		} else {
 			
-			List<Order> orderList = new ArrayList<>();
-			
-			
-			
 			orderList = orderMapper.selectOrderListByUserIdAndByPeriod(userId, period, criteria);
-			
-			
-			for (int i = 0; i < orderList.size(); i++) {
-				OrderView orderView = new OrderView();
-				
-				orderView.setOrder(orderList.get(i));
-				
-				List<OrderedBooks> orderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderList.get(i).getId());
-				orderView.setOrderedBooksList(orderedBooksList);
-				
-				List<Book> bookList = new ArrayList<>();
-				for (int j = 0; j < orderedBooksList.size(); j++) {
-					
-					bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
-				}
-				orderView.setBookList(bookList);
-				
-				
-				orderViewList.add(orderView);
-			
-			}
 		
 		}
 		
-		return orderViewList;
 		
+		for (int i = 0; i < orderList.size(); i++) {
+			OrderView orderView = new OrderView();
+							
+			orderView.setOrder(orderList.get(i));
+			
+			List<OrderedBooks> orderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderList.get(i).getId());
+			orderView.setOrderedBooksList(orderedBooksList);
+			
+			List<Book> bookList = new ArrayList<>();
+			for (int j = 0; j < orderedBooksList.size(); j++) {
+				
+				bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
+			}
+			orderView.setBookList(bookList);
+			
+			
+			orderViewList.add(orderView);
+			
+		}
+		
+		return orderViewList;
 		
 	}
 	
@@ -200,44 +175,21 @@ public class OrderBO {
 	
 	public List<OrderView> getOrderViewList (Criteria criteria, String type, String searchKeyword, String period) {
 	
-		List<OrderView> orderViewList = new ArrayList<>();	
+		List<OrderView> orderViewList = new ArrayList<>();
+
+		List<Order> orderList = new ArrayList<>();
 		
 		if (period == null) {
 			
 			if (searchKeyword == null) {
 		
-				List<Order> orderList = orderMapper.selectOrderList(criteria);
-							
-				for (int i = 0; i < orderList.size(); i++) {
-					OrderView orderView = new OrderView();
-					
-					orderView.setOrder(orderList.get(i));
-					
-					UserEntity user = userBO.getUserEntityById(orderList.get(i).getUserId());
-					orderView.setUser(user);
-					
-					
-					List<OrderedBooks> orderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderList.get(i).getId());
-					orderView.setOrderedBooksList(orderedBooksList);
-					
-					List<Book> bookList = new ArrayList<>();
-					for (int j = 0; j < orderedBooksList.size(); j++) {
-						
-						bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
-					}
-					orderView.setBookList(bookList);
-					
-					
-					orderViewList.add(orderView);
-					
-				}
+				orderList = orderMapper.selectOrderList(criteria);
 			
 			} else {
 					
 				if (type.equals("byLoginId")) {
 					
 					List<UserEntity> searchedUserList = userBO.getUserEntityByLoginIdContaining(searchKeyword);
-					List<Order> orderListByLoginId = new ArrayList<>();
 					
 					if (searchedUserList.size() == 0) {
 						return orderViewList;
@@ -248,27 +200,8 @@ public class OrderBO {
 						userIdArr[i] = searchedUserList.get(i).getId();
 					}
 					
-					orderListByLoginId = orderMapper.selectOrderListByUserIdList(userIdArr, criteria);
+					orderList = orderMapper.selectOrderListByUserIdList(userIdArr, criteria);
 					
-								
-					for (int i = 0; i < orderListByLoginId.size(); i++) {
-						OrderView orderView = new OrderView();
-						
-						orderView.setOrder(orderListByLoginId.get(i));				
-						orderView.setUser(userBO.getUserEntityById(orderListByLoginId.get(i).getUserId()));				
-						
-						List<OrderedBooks> orderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderListByLoginId.get(i).getId());
-						orderView.setOrderedBooksList(orderedBooksList);
-						
-						List<Book> bookList = new ArrayList<>();
-						for (int j = 0; j < orderedBooksList.size(); j++) {
-							
-							bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
-						}
-						orderView.setBookList(bookList);
-						
-						orderViewList.add(orderView);
-					}
 					
 				} else {
 					
@@ -295,7 +228,7 @@ public class OrderBO {
 						bookIdList.add(bookList.get(i).getId());
 					}
 					
-					for (int i = 0; i < orderedBooksList.size(); i++) {						
+					for (int i = 0; i < orderedBooksList.size(); i++) {
 						if (bookIdList.contains(orderedBooksList.get(i).getBookId()) == false) {
 							orderedBooksList.remove(i);
 							i--;
@@ -307,65 +240,17 @@ public class OrderBO {
 						orderIdArr[i] = orderedBooksList.get(i).getOrderId();					
 					}
 					
-					List<Order> orderListByBookTitle = orderMapper.selectOrderByIdList(orderIdArr, criteria);
+					orderList = orderMapper.selectOrderByIdList(orderIdArr, criteria);
 					
-					for (int i = 0; i < orderListByBookTitle.size(); i++) {
-						OrderView orderView = new OrderView();
-						
-						orderView.setOrder(orderListByBookTitle.get(i));				
-						orderView.setUser(userBO.getUserEntityById(orderListByBookTitle.get(i).getUserId()));				
-						
-						List<OrderedBooks> finalOrderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderListByBookTitle.get(i).getId());
-						orderView.setOrderedBooksList(finalOrderedBooksList);
-						
-						List<Book> finalBookList = new ArrayList<>();
-						for (int j = 0; j < finalOrderedBooksList.size(); j++) {
-							
-							finalBookList.add(bookBO.getBookById(finalOrderedBooksList.get(j).getBookId())); 
-						}
-						orderView.setBookList(finalBookList);
-						
-						orderViewList.add(orderView);
-					}					
-					
-				}	
+				}
 				
 			}
 		
 		} else {
 			
 			if (searchKeyword == null) {
-			
-				List<Order> orderList = new ArrayList<>();
-				
 				
 				orderList = orderMapper.selectOrderListByPeriod(period, criteria);
-				
-				
-				for (int i = 0; i < orderList.size(); i++) {
-					OrderView orderView = new OrderView();
-					
-					orderView.setOrder(orderList.get(i));
-					
-					UserEntity user = userBO.getUserEntityById(orderList.get(i).getUserId());
-					orderView.setUser(user);
-					
-					
-					List<OrderedBooks> orderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderList.get(i).getId());
-					orderView.setOrderedBooksList(orderedBooksList);
-					
-					List<Book> bookList = new ArrayList<>();
-					for (int j = 0; j < orderedBooksList.size(); j++) {
-						
-						bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
-					}
-					orderView.setBookList(bookList);
-					
-					
-					orderViewList.add(orderView);
-				
-				}
-				
 			
 			} else {
 				
@@ -383,27 +268,7 @@ public class OrderBO {
 						userIdArr[i] = searchedUserList.get(i).getId();
 					}
 										
-					orderListByLoginId = orderMapper.selectOrderListByUserIdListAndByPeriod(userIdArr, period, criteria);
-													
-					for (int i = 0; i < orderListByLoginId.size(); i++) {
-						OrderView orderView = new OrderView();
-						
-						orderView.setOrder(orderListByLoginId.get(i));				
-						orderView.setUser(userBO.getUserEntityById(orderListByLoginId.get(i).getUserId()));				
-						
-						List<OrderedBooks> orderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderListByLoginId.get(i).getId());
-						orderView.setOrderedBooksList(orderedBooksList);
-						
-						List<Book> bookList = new ArrayList<>();
-						for (int j = 0; j < orderedBooksList.size(); j++) {
-							
-							bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
-						}
-						orderView.setBookList(bookList);
-						
-						orderViewList.add(orderView);
-					}
-					
+					orderList = orderMapper.selectOrderListByUserIdListAndByPeriod(userIdArr, period, criteria);
 				
 				} else {
 					
@@ -442,34 +307,33 @@ public class OrderBO {
 						orderIdArr[i] = orderedBooksList.get(i).getOrderId();					
 					}
 					
-					List<Order> orderListByBookTitle = orderMapper.selectOrderByIdListAndByPeriod(orderIdArr, period, criteria);
-					
-					for (int i = 0; i < orderListByBookTitle.size(); i++) {
-						OrderView orderView = new OrderView();
-						
-						orderView.setOrder(orderListByBookTitle.get(i));				
-						orderView.setUser(userBO.getUserEntityById(orderListByBookTitle.get(i).getUserId()));				
-						
-						List<OrderedBooks> finalOrderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderListByBookTitle.get(i).getId());
-						orderView.setOrderedBooksList(finalOrderedBooksList);
-						
-						List<Book> finalBookList = new ArrayList<>();
-						for (int j = 0; j < finalOrderedBooksList.size(); j++) {
-							
-							finalBookList.add(bookBO.getBookById(finalOrderedBooksList.get(j).getBookId())); 
-						}
-						orderView.setBookList(finalBookList);
-						
-						orderViewList.add(orderView);
-					}
-					
-					
+					orderList = orderMapper.selectOrderByIdListAndByPeriod(orderIdArr, period, criteria);
+										
 				}
 				
-				
+			}
+			
+			
 			}
 		
-		}
+			for (int i = 0; i < orderList.size(); i++) {
+				OrderView orderView = new OrderView();
+				
+				orderView.setOrder(orderList.get(i));				
+				orderView.setUser(userBO.getUserEntityById(orderList.get(i).getUserId()));				
+				
+				List<OrderedBooks> orderedBooksList = orderedBooksBO.getOrderedBooksListByOrderId(orderList.get(i).getId());
+				orderView.setOrderedBooksList(orderedBooksList);
+				
+				List<Book> bookList = new ArrayList<>();
+				for (int j = 0; j < orderedBooksList.size(); j++) {
+					
+					bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
+				}
+				orderView.setBookList(bookList);
+				
+				orderViewList.add(orderView);
+			}
 		
 		return orderViewList;
 		
@@ -480,14 +344,16 @@ public class OrderBO {
 		
 		Integer totalCount = null;
 		
-		if (period == null) {		
-			
+		if (period == null) {
 			
 			if (searchKeyword == null) {
+				
 				totalCount = orderMapper.getTotalOrderViewCount();	
+				
 			} else {
 				
 				if (type.equals("byLoginId")) {
+					
 					List<UserEntity> searchedUserList = userBO.getUserEntityByLoginIdContaining(searchKeyword);
 					
 					if(searchedUserList.size() == 0) {
@@ -500,6 +366,7 @@ public class OrderBO {
 					}
 					
 					totalCount = orderMapper.getTotalOrderViewCountByUserIdList(userIdArr);
+					
 				} else {
 					
 					List<OrderedBooks> orderedBooksList = orderedBooksBO.getAllOfOrderedBooks();
@@ -533,7 +400,7 @@ public class OrderBO {
 					}
 					
 					int[] orderIdArr = new int[orderedBooksList.size()];
-					for (int i = 0; i < orderedBooksList.size(); i++) {						
+					for (int i = 0; i < orderedBooksList.size(); i++) {
 						orderIdArr[i] = orderedBooksList.get(i).getOrderId();					
 					}
 					
@@ -546,7 +413,9 @@ public class OrderBO {
 		} else {
 			
 			if (searchKeyword == null) {
+				
 				totalCount = orderMapper.getTotalOrderViewCountByPeriod(period);
+				
 			} else {
 				
 				if (type.equals("byLoginId")) {
@@ -604,7 +473,7 @@ public class OrderBO {
 										
 				}
 				
-			}				
+			}
 				
 		}
 

@@ -45,6 +45,7 @@ public class OrderController {
 			model.addAttribute("period", "&period=" + period);
 		}
 		
+		model.addAttribute("periodText", period);
 		model.addAttribute("orderViewList", orderViewList);
 		model.addAttribute("nowPage", criteria.getPage());
         model.addAttribute("pageMaker", pageMaker);		

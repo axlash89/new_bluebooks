@@ -48,6 +48,8 @@ public class AdminController {
 		if (searchKeyword != null) {
 			model.addAttribute("searchKeyword", "&searchKeyword=" + searchKeyword);
 		}
+		
+		model.addAttribute("periodText", period);
 		model.addAttribute("type", "&type=" + type);
 		model.addAttribute("orderViewList", orderViewList);
 		model.addAttribute("nowPage", criteria.getPage());

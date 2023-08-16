@@ -12,7 +12,7 @@ public class PageMaker {
     private int endPage; // 게시글 번호에 따른 (보여지는)페이지의 마지막 번호
     private boolean prev; // 이전 버튼을 누를 수 있는 경우/없는 경우 분류를 위함
     private boolean next;
- 
+    
     private int displayPageNum = 10; // 화면 하단에 보여지는 페이지의 개수
     private int tempEndPage;
  

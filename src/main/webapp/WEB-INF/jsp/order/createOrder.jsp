@@ -253,7 +253,7 @@
 					, success: function(data) {
 						if (data.code == 1) {
 							alert("결제가 완료되었습니다.");
-							location.href="/order/my_order_view";
+							location.href="/order/my_order_view?period=week";
 						} else {
 							alert(data.errorMessage);
 						}
@@ -281,7 +281,7 @@
 						, success: function(data) {
 							if (data.code == 1) {
 								alert("결제가 완료되었습니다.");
-								location.href="/order/my_order_view";
+								location.href="/order/my_order_view?period=week";
 							} else {
 								alert(data.errorMessage);
 							}
@@ -315,7 +315,7 @@
 						, success: function(data) {
 							if (data.code == 1) {
 								alert("결제가 완료되었습니다.");
-								location.href="/order/my_order_view";
+								location.href="/order/my_order_view?period=week";
 							} else {
 								alert(data.errorMessage);
 							}

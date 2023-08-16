@@ -1,6 +1,5 @@
 package com.bluebooks.book.bo;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -148,62 +147,35 @@ public class BookBO {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 				try {
 					bookDate = sdf.parse(pubDate);
-				} catch (ParseException e) {
+				} catch (Exception e) {
 					logger.error("###[getAdvancedSearchedBookList 출판 날짜(String pubDate) Date로 변환 실패]");
 				}
-			
-				if (pubPeriod.equals("threeM")) {
-					Date threeMAgo = new Date();
-					Calendar cal = Calendar.getInstance(); 
-					cal.setTime(threeMAgo);				
+				
+				// enum으로 해보기
+				
+				Date timeSet = new Date();
+				Calendar cal = Calendar.getInstance(); 
+				cal.setTime(timeSet);
+				
+				if (pubPeriod.equals("threeM")) {		
 					cal.add(Calendar.MONTH, -3); //3개월 빼기
-					threeMAgo = cal.getTime();
-					 
-					if (bookDate.before(threeMAgo)) {
-						advancedSearchedBookListByCategory.remove(i);
-						i--;
-					}
-					
+					timeSet = cal.getTime();					
 				} else if (pubPeriod.equals("sixM")) {
-					Date sixMAgo = new Date();
-					Calendar cal = Calendar.getInstance(); 
-					cal.setTime(sixMAgo);				
 					cal.add(Calendar.MONTH, -6);
-					sixMAgo = cal.getTime();
-					
-					if (bookDate.before(sixMAgo)) {
-						advancedSearchedBookListByCategory.remove(i);
-						i--;
-					}
-					
-					
-				} else if (pubPeriod.equals("nineM")) {
-					
-					Date nineMAgo = new Date();
-					Calendar cal = Calendar.getInstance(); 
-					cal.setTime(nineMAgo);				
+					timeSet = cal.getTime();					
+				} else if (pubPeriod.equals("nineM")) {					
 					cal.add(Calendar.MONTH, -9);
-					nineMAgo = cal.getTime();
-					
-					if (bookDate.before(nineMAgo)) {
-						advancedSearchedBookListByCategory.remove(i);
-						i--;
-					}
-					
-				} else if (pubPeriod.equals("twentyFourM")) {
-					
-					Date twentyFourMAgo = new Date();
-					Calendar cal = Calendar.getInstance(); 
-					cal.setTime(twentyFourMAgo);				
+					timeSet = cal.getTime();					
+				} else if (pubPeriod.equals("twentyFourM")) {					
 					cal.add(Calendar.YEAR, -2);
-					twentyFourMAgo = cal.getTime();
-					
-					if (bookDate.before(twentyFourMAgo)) {
-						advancedSearchedBookListByCategory.remove(i);
-						i--;
-					}
-					
+					timeSet = cal.getTime();					
 				}
+				
+				if (bookDate.before(timeSet)) {
+					advancedSearchedBookListByCategory.remove(i);
+					i--;
+				}
+				
 			}
 		}
 		

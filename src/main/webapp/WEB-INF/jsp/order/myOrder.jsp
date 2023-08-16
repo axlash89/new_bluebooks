@@ -5,8 +5,22 @@
 	    
 	    <div class="my-page-contents">
 	    	<div>
-		    	<div class="d-flex justify-content-center">${userName}님 안녕하세요!</div>
-		    	<div class="d-flex justify-content-center">내 보유 포인트 : ${userPoint}원</div>
+		    	<div class="d-flex justify-content-center h3">${userName}님 안녕하세요!</div>
+		    	<div class="d-flex justify-content-center h4">내 보유 포인트 : ${userPoint}원</div>
+		    	<c:choose>
+		    		<c:when test="${periodText == 'week'}">
+		    			<div class="h5 text-center">최근 일주일간의 주문 내역입니다.</div>
+		    		</c:when>
+		    		<c:when test="${periodText == 'oneMonth'}">
+		    			<div class="h5 text-center">최근 한달 간의 주문 내역입니다.</div>
+		    		</c:when>
+		    		<c:when test="${periodText == 'threeMonths'}">
+		    			<div class="h5 text-center">최근 3개월 간의 주문 내역입니다.</div>
+		    		</c:when>
+		    		<c:otherwise>
+		    			<div class="h5 text-center">회원님의 전체 주문 내역입니다.</div>
+		    		</c:otherwise>
+		    	</c:choose>
 		    	<div class="d-flex justify-content-between mt-3">
 		    		<div class="d-flex justify-content-center mt-3">내 주문내역</div><div><a href="/order/my_order_view?period=week" class="btn btn-info">최근 1주일</a><a href="/order/my_order_view?period=oneMonth" class="btn btn-info">1개월</a><a href="/order/my_order_view?period=threeMonths" class="btn btn-info">3개월</a><a href="/order/my_order_view" class="btn btn-primary">전체</a></div>
 		    	</div>

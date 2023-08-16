@@ -97,7 +97,7 @@
 			`order`	
 		WHERE
 			<![CDATA[    
-			`id` > 0 AND
+			`id` > 0 AND `userId` = #{userId} AND
 			]]>
 		<choose>
 			<when test="period=='week'">

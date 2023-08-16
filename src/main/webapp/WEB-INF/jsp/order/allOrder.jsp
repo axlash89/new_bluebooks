@@ -11,6 +11,21 @@
 	    	</div>
     	</div>
     	
+ 		<c:choose>
+    		<c:when test="${periodText == 'week'}">
+    			<div class="h5 text-center">최근 일주일간의 주문 내역입니다.</div>
+    		</c:when>
+    		<c:when test="${periodText == 'oneMonth'}">
+    			<div class="h5 text-center">최근 한달 간의 주문 내역입니다.</div>
+    		</c:when>
+    		<c:when test="${periodText == 'threeMonths'}">
+    			<div class="h5 text-center">최근 3개월 간의 주문 내역입니다.</div>
+    		</c:when>
+    		<c:otherwise>
+    			<div class="h5 text-center">전체 주문 내역입니다.</div>
+    		</c:otherwise>
+    	</c:choose>
+    	
     	
 		<form action="/admin/admin_view" method="get" class="d-flex">
 			<select id="searchCondition">
@@ -19,7 +34,7 @@
     		</select>
 			<div class="d-flex mb-2">
 				<input type="text" id="type" name="type" value="byLoginId" class="d-none">
-				<input type="text" id="orderSearchBox" class="form-control" name="searchKeyword" placeholder="아이디를 입력하세요.">
+				<input type="text" id="orderSearchBox" class="form-control" name="searchKeyword" placeholder="아이디로 전체 검색">
 		   		<input type="submit" id="orderSearchBtn" class="btn btn-secondary" value="검색">
 	   		</div>
 		</form>
@@ -195,10 +210,10 @@ $(document).ready(function() {
 	$('#searchCondition').on('change', function(){
 		if ($('#searchCondition').val() == '아이디') {
 			$('#type').val('byLoginId');
-			$('#orderSearchBox').attr('placeholder', '아이디를 입력하세요.');
+			$('#orderSearchBox').attr('placeholder', '아이디로 전체 검색');
 		} else {
 			$('#type').val('byTitle');
-			$('#orderSearchBox').attr('placeholder', '책 제목을 입력하세요.');
+			$('#orderSearchBox').attr('placeholder', '책 제목으로 전체 검색');
 		}
 	});
 	

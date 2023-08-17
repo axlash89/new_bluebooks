@@ -205,39 +205,10 @@ public class OrderBO {
 					
 				} else {
 					
-					List<OrderedBooks> orderedBooksList = orderedBooksBO.getAllOfOrderedBooks();
-					List<Book> bookList = new ArrayList<>();
+					Integer[] orderIdArr = getOrderIdArrBySearchingBookName(searchKeyword);
 					
-					for (int i = 0; i < orderedBooksList.size(); i++) {
-						bookList.add(bookBO.getBookById(orderedBooksList.get(i).getBookId()));
-					}
-					
-					for (int i = 0; i < bookList.size(); i++) {
-						if (bookList.get(i).getTitle().contains(searchKeyword) == false) {
-							bookList.remove(i);
-							i--;
-						}
-					}
-					
-					if (bookList.size() == 0) {
+					if (orderIdArr == null) {
 						return orderViewList;
-					}
-					
-					List<Integer> bookIdList = new ArrayList<>();
-					for (int i = 0; i < bookList.size(); i++) {
-						bookIdList.add(bookList.get(i).getId());
-					}
-					
-					for (int i = 0; i < orderedBooksList.size(); i++) {
-						if (bookIdList.contains(orderedBooksList.get(i).getBookId()) == false) {
-							orderedBooksList.remove(i);
-							i--;
-						}						
-					}
-					
-					int[] orderIdArr = new int[orderedBooksList.size()];
-					for (int i = 0; i < orderedBooksList.size(); i++) {						
-						orderIdArr[i] = orderedBooksList.get(i).getOrderId();					
 					}
 					
 					orderList = orderMapper.selectOrderByIdList(orderIdArr, criteria);
@@ -272,39 +243,10 @@ public class OrderBO {
 				
 				} else {
 					
-					List<OrderedBooks> orderedBooksList = orderedBooksBO.getAllOfOrderedBooks();
-					List<Book> bookList = new ArrayList<>();
+					Integer[] orderIdArr = getOrderIdArrBySearchingBookName(searchKeyword);
 					
-					for (int i = 0; i < orderedBooksList.size(); i++) {
-						bookList.add(bookBO.getBookById(orderedBooksList.get(i).getBookId()));
-					}
-					
-					for (int i = 0; i < bookList.size(); i++) {
-						if (bookList.get(i).getTitle().contains(searchKeyword) == false) {
-							bookList.remove(i);
-							i--;
-						}
-					}
-					
-					if (bookList.size() == 0) {
+					if (orderIdArr == null) {
 						return orderViewList;
-					}
-					
-					List<Integer> bookIdList = new ArrayList<>();
-					for (int i = 0; i < bookList.size(); i++) {
-						bookIdList.add(bookList.get(i).getId());
-					}
-					
-					for (int i = 0; i < orderedBooksList.size(); i++) {						
-						if (bookIdList.contains(orderedBooksList.get(i).getBookId()) == false) {
-							orderedBooksList.remove(i);
-							i--;
-						}						
-					}
-					
-					int[] orderIdArr = new int[orderedBooksList.size()];
-					for (int i = 0; i < orderedBooksList.size(); i++) {						
-						orderIdArr[i] = orderedBooksList.get(i).getOrderId();					
 					}
 					
 					orderList = orderMapper.selectOrderByIdListAndByPeriod(orderIdArr, period, criteria);
@@ -369,39 +311,10 @@ public class OrderBO {
 					
 				} else {
 					
-					List<OrderedBooks> orderedBooksList = orderedBooksBO.getAllOfOrderedBooks();
-					List<Book> bookList = new ArrayList<>();
+					Integer[] orderIdArr = getOrderIdArrBySearchingBookName(searchKeyword);
 					
-					for (int i = 0; i < orderedBooksList.size(); i++) {
-						bookList.add(bookBO.getBookById(orderedBooksList.get(i).getBookId()));
-					}
-					
-					for (int i = 0; i < bookList.size(); i++) {
-						if (bookList.get(i).getTitle().contains(searchKeyword) == false) {
-							bookList.remove(i);
-							i--;
-						}
-					}
-					
-					List<Integer> bookIdList = new ArrayList<>();
-					for (int i = 0; i < bookList.size(); i++) {
-						bookIdList.add(bookList.get(i).getId());
-					}
-					
-					for (int i = 0; i < orderedBooksList.size(); i++) {						
-						if (bookIdList.contains(orderedBooksList.get(i).getBookId()) == false) {
-							orderedBooksList.remove(i);
-							i--;
-						}						
-					}
-					
-					if (orderedBooksList.size() == 0) {
+					if (orderIdArr == null) {
 						return 0;
-					}
-					
-					int[] orderIdArr = new int[orderedBooksList.size()];
-					for (int i = 0; i < orderedBooksList.size(); i++) {
-						orderIdArr[i] = orderedBooksList.get(i).getOrderId();					
 					}
 					
 					return orderIdArr.length; 
@@ -434,39 +347,10 @@ public class OrderBO {
 					
 				} else {
 					
-					List<OrderedBooks> orderedBooksList = orderedBooksBO.getAllOfOrderedBooks();
-					List<Book> bookList = new ArrayList<>();
+					Integer[] orderIdArr = getOrderIdArrBySearchingBookName(searchKeyword);
 					
-					for (int i = 0; i < orderedBooksList.size(); i++) {
-						bookList.add(bookBO.getBookById(orderedBooksList.get(i).getBookId()));
-					}
-					
-					for (int i = 0; i < bookList.size(); i++) {
-						if (bookList.get(i).getTitle().contains(searchKeyword) == false) {
-							bookList.remove(i);
-							i--;
-						}
-					}
-					
-					List<Integer> bookIdList = new ArrayList<>();
-					for (int i = 0; i < bookList.size(); i++) {
-						bookIdList.add(bookList.get(i).getId());
-					}
-					
-					for (int i = 0; i < orderedBooksList.size(); i++) {						
-						if (bookIdList.contains(orderedBooksList.get(i).getBookId()) == false) {
-							orderedBooksList.remove(i);
-							i--;
-						}						
-					}
-					
-					if (orderedBooksList.size() == 0) {
+					if (orderIdArr == null) {
 						return 0;
-					}
-					
-					int[] orderIdArr = new int[orderedBooksList.size()];
-					for (int i = 0; i < orderedBooksList.size(); i++) {						
-						orderIdArr[i] = orderedBooksList.get(i).getOrderId();					
 					}
 					
 					totalCount = orderMapper.getTotalOrderViewCountByBookTitleAndByPeriod(orderIdArr, period);
@@ -479,6 +363,50 @@ public class OrderBO {
 
 		return totalCount;
 			
+	}
+	
+	
+	
+	
+	public Integer[] getOrderIdArrBySearchingBookName(String searchKeyword) {
+		
+		List<OrderedBooks> orderedBooksList = orderedBooksBO.getAllOfOrderedBooks();
+		List<Book> bookList = new ArrayList<>();
+		
+		for (int i = 0; i < orderedBooksList.size(); i++) {
+			bookList.add(bookBO.getBookById(orderedBooksList.get(i).getBookId()));
+		}
+		
+		for (int i = 0; i < bookList.size(); i++) {
+			if (bookList.get(i).getTitle().contains(searchKeyword) == false) {
+				bookList.remove(i);
+				i--;
+			}
+		}
+		
+		if (bookList.size() == 0) {
+			return null;
+		}
+		
+		List<Integer> bookIdList = new ArrayList<>();
+		for (int i = 0; i < bookList.size(); i++) {
+			bookIdList.add(bookList.get(i).getId());
+		}
+		
+		for (int i = 0; i < orderedBooksList.size(); i++) {
+			if (bookIdList.contains(orderedBooksList.get(i).getBookId()) == false) {
+				orderedBooksList.remove(i);
+				i--;
+			}						
+		}
+		
+		Integer[] orderIdArr = new Integer[orderedBooksList.size()];
+		for (int i = 0; i < orderedBooksList.size(); i++) {
+			orderIdArr[i] = orderedBooksList.get(i).getOrderId();
+		}
+		
+		return orderIdArr;
+		
 	}
 		
 	

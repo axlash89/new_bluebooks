@@ -48,7 +48,7 @@ public interface OrderMapper {
 			@Param("userIdArr") int[] userIdArr);
 	
 	public List<Order> selectOrderByIdList(
-			@Param("orderIdArr") int[] orderIdArr, 
+			@Param("orderIdArr") Integer[] orderIdArr, 
 			@Param("criteria") Criteria criteria);
 		
 	public List<Order> selectOrderListByUserIdListAndByPeriod(
@@ -61,12 +61,12 @@ public interface OrderMapper {
 			@Param("period") String period);
 	
 	public List<Order> selectOrderByIdListAndByPeriod(
-			@Param("orderIdArr") int[] orderIdArr, 
+			@Param("orderIdArr") Integer[] orderIdArr, 
 			@Param("period") String period,
 			@Param("criteria") Criteria criteria);
 
 	public int getTotalOrderViewCountByBookTitleAndByPeriod(
-			@Param("orderIdArr") int[] orderIdArr, 
+			@Param("orderIdArr") Integer[] orderIdArr, 
 			@Param("period") String period);
 	
 	public Order getOrderById(int orderId);

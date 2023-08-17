@@ -14,6 +14,7 @@ import com.bluebooks.aladin.AladinApiBO;
 import com.bluebooks.book.dao.BookMapper;
 import com.bluebooks.book.domain.Book;
 import com.bluebooks.common.Criteria;
+import com.bluebooks.common.PubPeriod;
 
 @Service
 public class BookBO {
@@ -26,16 +27,20 @@ public class BookBO {
 	@Autowired
 	private BookMapper bookMapper;
 	
-	public List<Book> getSearchedBookList(String searchKeyword, Criteria criteria) {	
-		List<Book> searchedBookList = aladinApiBO.getSearchedBookList(searchKeyword, criteria);
-		for (int i = 0; i < searchedBookList.size(); i++) {						
-			if(bookMapper.isDuplicatedBook(searchedBookList.get(i).getIsbn13()) == null) {
-				bookMapper.insertBook(searchedBookList.get(i));				
+	public List<Book> isDuplicatedOrNot(List<Book> bookList) {		
+		for (int i = 0; i < bookList.size(); i++) {						
+			if(bookMapper.isDuplicatedBook(bookList.get(i).getIsbn13()) == null) {
+				bookMapper.insertBook(bookList.get(i));				
 			} else {				
-				searchedBookList.get(i).setId(bookMapper.isDuplicatedBook(searchedBookList.get(i).getIsbn13()).getId());	
+				bookList.get(i).setId(bookMapper.isDuplicatedBook(bookList.get(i).getIsbn13()).getId());	
 			}
-		}
-		return searchedBookList;
+		}		
+		return bookList;
+	}
+	
+	public List<Book> getSearchedBookList(String searchKeyword, Criteria criteria) {	
+		List<Book> searchedBookList = aladinApiBO.getSearchedBookList(searchKeyword, criteria);		
+		return isDuplicatedOrNot(searchedBookList);
 	}
 	
 	public int getSearchedBookListTotalCount(String searchKeyword) {
@@ -47,42 +52,18 @@ public class BookBO {
 	}
 	
 	public List<Book> getBestSellerTop10List() {
-		List<Book> bestSellerTop10List = aladinApiBO.getBestSellerTop10List();
-		
-		for (int i = 0; i < bestSellerTop10List.size(); i++) {						
-			if(bookMapper.isDuplicatedBook(bestSellerTop10List.get(i).getIsbn13()) == null) {
-				bookMapper.insertBook(bestSellerTop10List.get(i));				
-			} else {				
-				bestSellerTop10List.get(i).setId(bookMapper.isDuplicatedBook(bestSellerTop10List.get(i).getIsbn13()).getId());	
-			}
-		}		
-		return bestSellerTop10List;		
+		List<Book> bestSellerTop10List = aladinApiBO.getBestSellerTop10List();		
+		return isDuplicatedOrNot(bestSellerTop10List);		
 	}
 	
 	public List<Book> getNoteworthyNewBookTop5List() {
-		List<Book> noteworthyNewBookTop5List = aladinApiBO.getNoteworthyNewBookTop5List();
-		
-		for (int i = 0; i < noteworthyNewBookTop5List.size(); i++) {						
-			if(bookMapper.isDuplicatedBook(noteworthyNewBookTop5List.get(i).getIsbn13()) == null) {
-				bookMapper.insertBook(noteworthyNewBookTop5List.get(i));				
-			} else {				
-				noteworthyNewBookTop5List.get(i).setId(bookMapper.isDuplicatedBook(noteworthyNewBookTop5List.get(i).getIsbn13()).getId());	
-			}
-		}		
-		return noteworthyNewBookTop5List;		
+		List<Book> noteworthyNewBookTop5List = aladinApiBO.getNoteworthyNewBookTop5List();		
+		return isDuplicatedOrNot(noteworthyNewBookTop5List);		
 	}
 	
 	public List<Book> getBookListByCategory(Integer cid, Criteria criteria) {
-		List<Book> bookListByCategory = aladinApiBO.getBookListByCategory(cid, criteria);
-		
-		for (int i = 0; i < bookListByCategory.size(); i++) {						
-			if(bookMapper.isDuplicatedBook(bookListByCategory.get(i).getIsbn13()) == null) {
-				bookMapper.insertBook(bookListByCategory.get(i));				
-			} else {				
-				bookListByCategory.get(i).setId(bookMapper.isDuplicatedBook(bookListByCategory.get(i).getIsbn13()).getId());	
-			}
-		}		
-		return bookListByCategory;		
+		List<Book> bookListByCategory = aladinApiBO.getBookListByCategory(cid, criteria);		
+		return isDuplicatedOrNot(bookListByCategory);		
 	}
 	
 	
@@ -92,16 +73,8 @@ public class BookBO {
 	
 	
 	public List<Book> getBestBookListByCategory(Integer cid, Criteria criteria) {
-		List<Book> bestBookListByCategory = aladinApiBO.getBestBookListByCategory(cid, criteria);
-		
-		for (int i = 0; i < bestBookListByCategory.size(); i++) {						
-			if(bookMapper.isDuplicatedBook(bestBookListByCategory.get(i).getIsbn13()) == null) {
-				bookMapper.insertBook(bestBookListByCategory.get(i));				
-			} else {				
-				bestBookListByCategory.get(i).setId(bookMapper.isDuplicatedBook(bestBookListByCategory.get(i).getIsbn13()).getId());	
-			}
-		}		
-		return bestBookListByCategory;		
+		List<Book> bestBookListByCategory = aladinApiBO.getBestBookListByCategory(cid, criteria);		
+		return isDuplicatedOrNot(bestBookListByCategory);		
 	}
 
 	public int getBestBookListByCategoryTotalCount(Integer cid) {
@@ -109,16 +82,8 @@ public class BookBO {
 	}
 	
 	public List<Book> getNewBookListByCategory(Integer cid, Criteria criteria) {
-		List<Book> newBookListByCategory = aladinApiBO.getNewBookListByCategory(cid, criteria);
-		
-		for (int i = 0; i < newBookListByCategory.size(); i++) {						
-			if(bookMapper.isDuplicatedBook(newBookListByCategory.get(i).getIsbn13()) == null) {
-				bookMapper.insertBook(newBookListByCategory.get(i));				
-			} else {				
-				newBookListByCategory.get(i).setId(bookMapper.isDuplicatedBook(newBookListByCategory.get(i).getIsbn13()).getId());	
-			}
-		}		
-		return newBookListByCategory;		
+		List<Book> newBookListByCategory = aladinApiBO.getNewBookListByCategory(cid, criteria);		
+		return isDuplicatedOrNot(newBookListByCategory);		
 	}
 	
 	public int getNewBookListByCategoryTotalCount(Integer cid) {
@@ -126,16 +91,8 @@ public class BookBO {
 	}
 	
 	public List<Book> getAdvancedSearchedBookList(String title, String author, String publisher, String pubPeriod, Criteria criteria) {
-		List<Book> advancedSearchedBookListByCategory = aladinApiBO.getAdvancedSearchedBookList(title, author, publisher, criteria);
-		
-		for (int i = 0; i < advancedSearchedBookListByCategory.size(); i++) {						
-			if(bookMapper.isDuplicatedBook(advancedSearchedBookListByCategory.get(i).getIsbn13()) == null) {
-				bookMapper.insertBook(advancedSearchedBookListByCategory.get(i));				
-			} else {				
-				advancedSearchedBookListByCategory.get(i).setId(bookMapper.isDuplicatedBook(advancedSearchedBookListByCategory.get(i).getIsbn13()).getId());	
-			}
-		}		
-		
+		List<Book> advancedSearchedBookListByCategory = aladinApiBO.getAdvancedSearchedBookList(title, author, publisher, criteria);		
+		advancedSearchedBookListByCategory = isDuplicatedOrNot(advancedSearchedBookListByCategory);		
 		
 		if (pubPeriod.equals("all") == false) {
 		
@@ -151,25 +108,15 @@ public class BookBO {
 					logger.error("###[getAdvancedSearchedBookList 출판 날짜(String pubDate) Date로 변환 실패]");
 				}
 				
-				// enum으로 해보기
+				String pubPeriodForEnum = pubPeriod.toUpperCase();
+				int numberOfmonths = PubPeriod.valueOf(pubPeriodForEnum).getValue();
 				
 				Date timeSet = new Date();
 				Calendar cal = Calendar.getInstance(); 
 				cal.setTime(timeSet);
 				
-				if (pubPeriod.equals("threeM")) {		
-					cal.add(Calendar.MONTH, -3); //3개월 빼기
-					timeSet = cal.getTime();					
-				} else if (pubPeriod.equals("sixM")) {
-					cal.add(Calendar.MONTH, -6);
-					timeSet = cal.getTime();					
-				} else if (pubPeriod.equals("nineM")) {					
-					cal.add(Calendar.MONTH, -9);
-					timeSet = cal.getTime();					
-				} else if (pubPeriod.equals("twentyFourM")) {					
-					cal.add(Calendar.YEAR, -2);
-					timeSet = cal.getTime();					
-				}
+				cal.add(Calendar.MONTH, - numberOfmonths); //3개월 빼기
+				timeSet = cal.getTime();				
 				
 				if (bookDate.before(timeSet)) {
 					advancedSearchedBookListByCategory.remove(i);

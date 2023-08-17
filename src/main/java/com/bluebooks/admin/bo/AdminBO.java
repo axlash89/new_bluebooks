@@ -76,8 +76,12 @@ public class AdminBO {
 		return orderBO.getTotalOrderViewCount(type, searchKeyword, period);
 	}
 	
-	public void updateStatusByOrderId(Integer[] orderIdArr) {
-		orderBO.updateStatusByOrderId(orderIdArr);
+	public void updateStatusByOrderId(int orderId, String status) {
+		orderBO.updateStatusByOrderId(orderId, status);
+	}
+	
+	public void updateStatusByOrderIdArr(Integer[] orderIdArr) {
+		orderBO.updateStatusByOrderIdArr(orderIdArr);
 	}
 	
 	public OrderView getOrderView(int orderId) {

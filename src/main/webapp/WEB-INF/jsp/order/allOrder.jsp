@@ -49,8 +49,8 @@
     				<th>수량</th>
     				<th>결제금액</th>
     				<th>주문상세</th>
-    				<th>배송정보</th>
-    				<th><input type="checkbox" id="checkAll"></th>
+    				<th>상태</th>
+    				<th><input type="checkbox" id="checkAll" class="d-none"></th>
     				<th>처리</th>
     			</tr>
     		</thead>
@@ -71,10 +71,26 @@
 							</td>
 		    				<td>${orderView.order.finalPrice}</td>
 		    				<td><a href="/admin/order_detail_view?orderId=${orderView.order.id}">상세보기</a></td>
-		    				<td>${orderView.order.status}</td>
-		    				<td><input type="checkbox" class="check-one" value="${orderView.order.id}"></td>
+		    				<td>
+		    					<c:choose>
+		    					<c:when test="${orderView.order.status eq '결제완료'}">
+			    					<select class="statusData" data-order-id="${orderView.order.id}">
+			    						<option value="paid" selected>결제완료</option>
+			    						<option value="delivering">배송중</option>
+			    					</select>
+		    					</c:when>
+		    					<c:otherwise>
+			    					<select class="statusData" data-order-id="${orderView.order.id}">
+			    						<option value="paid">결제완료</option>
+			    						<option value="delivering" selected>배송중</option>
+			    					</select>
+		    					</c:otherwise>
+		    					</c:choose>
+		    				</td>
+		    				<td><c:if test="${orderView.order.status eq '결제완료'}"><input type="checkbox" class="check-one" value="${orderView.order.id}"></c:if></td>
 		    				<td><c:if test="${orderView.order.status eq '결제완료'}"><button class="send" class="btn btn-info" data-order-id="${orderView.order.id}">배송처리</button></c:if></td>
 		    			</tr>
+		    			<c:if test="${orderView.order.status eq '결제완료'}"><script>$('#checkAll').removeClass('d-none');</script></c:if>
 	    			</c:forEach>
     		</tbody>
     	</table>
@@ -224,6 +240,40 @@ $(document).ready(function() {
 			return false;			
 		}				
 	})
+		
+	
+	$('.statusData').on('change', function(){
+		
+		let orderId = $(this).data('order-id').toString();
+		
+		let status = $(this).find(':selected').val();
+		
+		if (status == 'paid') {
+			status = '결제완료';
+		} else {
+			status = '배송중';
+		}
+				
+		$.ajax({
+			type: "post"
+			, url: "/admin/order_status_change"
+			, data: { "orderId": orderId, "status": status }		
+			, success: function(data) {
+				if (data.code == 1) {
+					location.reload(true);
+				} else {
+					alert(data.errorMessage);
+				}
+			} 
+			
+			, error:function(request, status, error) {
+				alert("배송처리 실패, 관리자에게 문의하세요.")
+			}
+		
+		});
+		
+		
+	});
 	
 	
 	$('#checkAll').on('change', function() {
@@ -246,7 +296,7 @@ $(document).ready(function() {
 		} else {
 			$("#checkAll").prop("checked", true); 			
 		}
-	});
+	});	
 	
 	
 	
@@ -270,7 +320,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type: "post"
-			, url: "/admin/send"
+			, url: "/admin/order_status_delivering"
 			, traditional: true
 			, data: { orderIdArr: checkArr }			
 			, success: function(data) {

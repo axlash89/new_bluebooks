@@ -410,12 +410,21 @@ public class OrderBO {
 	}
 		
 	
-	public void updateStatusByOrderId(Integer[] orderIdArr) {
+	public void updateStatusByOrderId(int orderId, String status) {
+		
+			orderMapper.updateStatusByOrderId(orderId, status);
+		
+	}
+	
+	
+	public void updateStatusByOrderIdArr(Integer[] orderIdArr) {
 		
 		for (int i = 0; i < orderIdArr.length; i++) {
-			orderMapper.updateStatusByOrderId(orderIdArr[i]);
+			
+			orderMapper.updateStatusByOrderIdArr(orderIdArr[i]);
+			
 		}
-		
+	
 	}
 	
 	

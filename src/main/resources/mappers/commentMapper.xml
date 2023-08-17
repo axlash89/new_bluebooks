@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluebooks.comment.dao.CommentMapper">
+
+	<insert id="insertComment" parameterType="map">
+	
+		INSERT INTO `comment`
+ 		(
+			`eventId`
+			,`userId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{eventId}
+ 			,#{userId}
+ 			,#{content}
+ 			,now()
+ 			,now()
+ 		)
+	
+	</insert>
+
+	<delete id="deleteCommentById" parameterType="int">
+ 		
+ 		DELETE FROM 
+ 			`comment`
+ 		WHERE
+ 			`id` = #{commentId} 			
+ 	
+ 	</delete>
+ 	
+ 	<delete id="deleteCommentByEventId" parameterType="int">
+ 		DELETE FROM 
+ 			`comment`
+ 		WHERE
+ 			`eventId` =	#{eventId}
+ 	</delete>
+ 	
+ 	<select id="selectCommentListByEventId" parameterType="int" resultType="com.bluebooks.comment.domain.Comment">
+ 		SELECT 
+			`id`
+			,`eventId`
+			,`userId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`comment`	
+		WHERE
+			`eventId` = #{eventId}
+ 	</select>
+
+</mapper>

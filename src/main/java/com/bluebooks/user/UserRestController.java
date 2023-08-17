@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bluebooks.common.SHA256;
 import com.bluebooks.user.bo.UserBO;
-import com.bluebooks.user.dto.MailDTO;
 import com.bluebooks.user.entity.UserEntity;
 
 @RequestMapping("/user")
@@ -103,6 +103,35 @@ public class UserRestController {
 		return result;
 		
 	}
+	
+	
+	@PostMapping("/sign_up_by_kakao")
+	public Map<String, Object> signUpByKakao(
+			@RequestParam("loginId") String loginId,
+			@RequestParam("password") String password,
+			@RequestParam("name") String name,
+			@RequestParam("birthDate") @DateTimeFormat(pattern = "yyyy/MM/dd") Date birthDate,
+			@RequestParam("email") String email,
+			@RequestParam("phoneNumber") String phoneNumber,
+			@RequestParam("zipCode") String zipCode,
+			@RequestParam("address") String address) {
+			
+		Integer userId = userBO.addUser(loginId, password, name, birthDate, email, phoneNumber, zipCode, address, 1000);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		if (userId != null) {
+			result.put("code", 1);
+			result.put("result", "성공");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "회원가입 실패");
+		}		
+		
+		return result;
+		
+	}
+	
 	
 	/**
 	 * 로그인 API
@@ -307,6 +336,8 @@ public class UserRestController {
 		return result;
 		
 	}
+	
+	
 	
 	
 }

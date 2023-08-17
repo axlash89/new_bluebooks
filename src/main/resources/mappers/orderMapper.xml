@@ -268,16 +268,25 @@
 	
 	
 	
-	<update id="updateStatusByOrderId" parameterType="int">
+	<update id="updateStatusByOrderId" parameterType="map">
 	
 		UPDATE
 			`order`
-		SET `status` = "배송중"
+		SET `status` = #{status}
 		WHERE
 			`id` = #{orderId}
 	
 	</update>	
 	
+	<update id="updateStatusByOrderIdArr" parameterType="int">
+	
+		UPDATE
+			`order`
+		SET `status` = '배송중'
+		WHERE
+			`id` = #{orderId}
+	
+	</update>	
 	
 	<select id="selectOrderListByUserIdList" parameterType="map" resultType="com.bluebooks.order.domain.Order">
 	

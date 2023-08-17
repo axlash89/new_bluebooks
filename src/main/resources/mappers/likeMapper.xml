@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluebooks.like.dao.LikeMapper">
+
+<select id="selectLikeCountByCommentId" parameterType="int">
+	
+	SELECT
+		count(*)
+	FROM
+		`like`
+	WHERE
+		`commentId` = #{commentId}
+	
+</select>
+
+<select id="selectLikeByCommentIdAndUserId" parameterType="map" resultType="com.bluebooks.like.domain.Like">
+	
+	SELECT
+		`commentId`
+		,`userId`
+		,`createdAt`
+	FROM
+		`like`
+	WHERE
+		`commentId` = #{commentId}
+			AND
+		`userId` = #{userId}
+	
+</select>
+
+
+<insert id="insertLikeByCommentIdAndUserId" parameterType="map">
+		
+		INSERT INTO `like`
+		(
+			`commentId`
+			,`userId`
+			,`createdAt`
+		)
+		VALUES
+		(
+			#{commentId}
+			,#{userId}
+			,now()
+		)
+
+</insert>
+	
+<delete id="deleteLikeByCommentIdAndUserId" parameterType="map">
+
+	DELETE FROM 
+		`like`
+	WHERE 
+		`commentId` = #{commentId}
+			AND
+		`userId` = #{userId}	
+		
+</delete>
+
+
+</mapper>

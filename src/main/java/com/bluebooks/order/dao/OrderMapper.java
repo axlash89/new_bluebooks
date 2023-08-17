@@ -38,7 +38,11 @@ public interface OrderMapper {
 
 	public int getTotalOrderViewCountByPeriod(String period);
 	
-	public void updateStatusByOrderId(Integer orderId);
+	public void updateStatusByOrderId(
+			@Param("orderId") int orderId,
+			@Param("status") String status);
+	
+	public void updateStatusByOrderIdArr(Integer orderId);
 	
 	public List<Order> selectOrderListByUserIdList(
 			@Param("userIdArr") int[] userIdArr, 

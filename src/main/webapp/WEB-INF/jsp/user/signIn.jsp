@@ -15,6 +15,9 @@
 					
 				<input class="btn btn-info d-block w-100 mt-3" type="submit" value="로그인"> 
 				<a href="/user/sign_up_view" class="btn btn-secondary d-block w-100 mt-2">회원가입</a>
+				<div class="d-flex justify-content-center pt-3 pb-3">
+					<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1f3a717bfeb202d1b0336161e6208697&redirect_uri=http://localhost/auth/kakao/callback"><img src="/static/img/kakaoLoginBtn.png"></a>
+				</div>
 			</form>
 			<div class="d-flex">
 				<div><a href="#" id="#findIdAnchorTag" data-toggle="modal" data-target="#findIdModal">아이디 찾기</a></div>

@@ -1,34 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<div id="signUpBox" class="d-flex justify-content-center align-items-center pt-5">
 
-		<table class="table">
-			<tr>
-				<th class="text-center pt-4">* 아이디</th>
-				<td>
-					<div class="d-flex">
-						<input type="text" class="form-control col-8 ml-2" name="loginId" id="loginId" placeholder="아이디 입력"> 
-						<input type="button" class="btn btn-info ml-3" id="duplicatedIdCheckBtn" value="중복확인">
-					</div>
-					<div class="pt-1">					
-						<div id="msgSpace" class="small">&nbsp;</div>
-						<%-- 아이디 체크 결과 --%>
-						<%-- d-none 클래스: display none (보이지 않게) --%>
-						<div id="msgWrongIdLength" class="small text-danger d-none ml-3">ID는 5~8자 영어 소문자, 숫자만 사용 가능합니다.</div>
-						<div id="msgAlreadyUsedId" class="small text-danger d-none ml-3">이미 사용중인 ID입니다.</div>
-						<div id="msgUsableId" class="small text-success d-none ml-3">사용 가능한 ID 입니다.</div>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th class="text-center pt-4">* 비밀번호</th>
-				<td><input type="password" class="form-control col-8 ml-2" name="password" placeholder="비밀번호 입력"></td>
-			</tr>
-			<tr>
-				<th class="text-center pt-4">* 비밀번호 확인</th>
-				<td><input type="password" class="form-control col-8 ml-2" id="passwordCheck" placeholder="비밀번호 입력"></td>
-			</tr>
+<h3 class="text-center">블루북스에서 회원님의 추가 정보가 필요합니다.</h3>
+
+<div id="signUpBox" class="d-flex justify-content-center align-items-center pt-5">
+	
+		
+		<div class="d-none">
+			<input type="text" id="loginId" value="${kakaoId}">
+			<input type="text" id="email" value="${kakaoEmail}">
+			<input type="text" id="password" value="${kakaoPassword}">
+		</div>
+
+		<table class="table">			
 			<tr>
 				<th class="text-center pt-4">* 이름</th>
 				<td><input type="text" class="form-control col-8 ml-2" name="name" placeholder="이름 입력">
@@ -38,10 +22,6 @@
 				<th class="text-center pt-4">* 생년월일</th>
 				<td><input type="text" class="form-control col-8 ml-2" name="birthDate" id="birthDate" placeholder="생년월일 입력" readOnly>
 				</td>
-			</tr>
-			<tr>
-				<th class="text-center pt-4">* 이메일주소</th>
-				<td><input type="text" class="form-control col-8 ml-2" name="email" placeholder="이메일 주소 입력"></td>
 			</tr>
 			<tr>
 				<th class="text-center pt-4">* 휴대폰번호</th>
@@ -73,65 +53,14 @@
 <script>
 	$(document).ready(function() {
 		
-		$('#duplicatedIdCheckBtn').on('click', function() {
-			
-			let loginId = $('#loginId').val().trim();
-			
-			$('#msgWrongIdLength').addClass('d-none');
-			$('#msgAlreadyUsedId').addClass('d-none');
-			$('#msgUsableId').addClass('d-none');
-			$('#msgSpace').removeClass('d-none');
-			
-			let upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			let special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;			
-			let korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-			
-			if (loginId.length < 5 || loginId.length > 10 || special_pattern.test(loginId) || korean.test(loginId)) {
-				$('#msgWrongIdLength').removeClass('d-none');
-				$('#msgSpace').addClass('d-none');
-				return;
-			}
-			
-			let loginIdArr = loginId.split("");
-			for (let i = 0; i < loginIdArr.length; i++) {
-				if (upperCase.includes(loginIdArr[i])) {
-					$('#msgWrongIdLength').removeClass('d-none');
-					$('#msgSpace').addClass('d-none');
-					return;	
-				}
-			}
-			
-			$.ajax({
-				
-				url : "/user/is_duplicated_id"
-				, data : { "loginId" : loginId }
-				, success : function(data) {
-					if (data.isDuplicatedId) {
-						$('#msgAlreadyUsedId').removeClass('d-none');
-						$('#msgSpace').addClass('d-none');
-					} else {
-						$('#msgUsableId').removeClass('d-none');
-						$('#msgSpace').addClass('d-none');
-					}
-				}
-				
-				, error : function(request, status, error) {
-					alert("중복확인에 실패했습니다. 관리자에게 문의하세요.");
-				}
-				
-			});
-			
-		});
-		
 		
 		$('#signUpBtn').on('click', function() {
 			
 			let loginId = $('#loginId').val().trim();
-			let password = $('input[name = password]').val();
-			let passwordCheck = $('#passwordCheck').val();
+			let password = $('#password').val();
 			let name = $('input[name = name]').val().trim();
 			let birthDate = $('input[name = birthDate]').val().trim();
-			let email = $('input[name = email]').val().trim();
+			let email = $('#email').val().trim();
 			let phoneNumber = $('input[name = phoneNumber]').val().trim();
 			let zipCode = $('input[name = zipCode]').val().trim();
 			let address1 = $('input[name = address1]').val().trim();
@@ -143,14 +72,6 @@
 			if (!loginId) {
 				alert("아이디를 입력하세요");
  				return false;
-			}
-			if (!password || !passwordCheck) {
-				alert("비밀번호를 입력하세요");
-				return false;
-			}
-			if (password != passwordCheck) {
-				alert("비밀번호가 일치하지 않습니다");
-				return false;
 			}
 			if (!name) {
 				alert("이름을 입력하세요");
@@ -167,16 +88,6 @@
 				return false;
 			}	
 			
-			if (!email) {
-				alert("이메일을 입력하세요");
-				return false;
-			}
-			var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-			if (email.match(regExp) == null) {
-				alert('올바른 형식의 이메일주소를 입력하세요.');
-				return false;
-			}
-			
 			if (/^[0-9]{3}[0-9]{4}[0-9]{4}$/.test(phoneNumber) == false) {
 				alert('휴대폰번호가 올바르지 않습니다.\n-없이 11자리 숫자로 입력해주세요.');
 				return false;
@@ -191,22 +102,17 @@
 				alert("나머지 주소를 입력해주세요");
 				return false;
 			}
-			
-			if ($('#msgUsableId').hasClass('d-none')) {
-				alert('아이디를 확인하세요.');
-				return false;
-			}			
-			
+						
 			
 			$.ajax({
 				type: "post"
-				, url: "/user/sign_up"
+				, url: "/user/sign_up_by_kakao"
 				, data : { "loginId" : loginId, "password" : password, "name" : name, "birthDate" : birthDate, 
 					"email" :  email, "phoneNumber" : phoneNumber, "zipCode" : zipCode, "address" : address }
 				
 				, success: function(data) {
 					if (data.code == 1) {
-						alert("블루북스의 회원이 되어주셔서 감사합니다.\n포인트 1,000원이 지급되었습니다.\n\n로그인 해주세요");
+						alert("추가 정보 기입이 완료되었습니다.\n포인트 1,000원이 지급되었습니다.\n\n다시 로그인 해주세요");
 						location.href="/user/sign_in_view";
 					} else {
 						alert(data.errorMessage);

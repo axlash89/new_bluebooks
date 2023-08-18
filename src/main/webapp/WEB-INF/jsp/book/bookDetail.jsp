@@ -34,6 +34,7 @@
 
 
 <script>
+	
 $(document).ready(function() {
 	
 	$('#countUpBtn').on('click', function(e) {

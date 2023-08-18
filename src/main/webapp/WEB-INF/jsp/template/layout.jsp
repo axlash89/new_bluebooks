@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +36,93 @@
 		</footer>
 		
 	</div>
+
+<div>
+<div>최근 본 상품</div>
+	<div><img src="" alt="최근 본 상품 1" id="recentBook1"></div>
+	<input type="text" id="img">
+	<input type="text" id="img2">
+	<input type="text" id="img3">
+</div>
+
+
+<script>
+	
+function onPageLoad() {
+	  var url = window.location.href;
+	  var bookId = getBookIDFromURL(url);
+	  console.log("bookId::" + bookId);
+	  
+	  if (bookId) {
+	    var recentBooks = getCookie('recent_books');
+	    var recentBookIds = recentBooks ? recentBooks.split('/') : [];
+	   
+	    if (!recentBookIds.includes(bookId)) {
+	      recentBookIds.push(bookId);
+	    }
+	
+	    // 최대 10개까지 유지
+	    if (recentBookIds.length > 3) {
+	      recentBookIds.shift();
+	    }
+	
+	    recentBooks = recentBookIds.join('/');
+	
+	    // 24시간 후의 시간 객체 생성
+	    var expirationDate = new Date();
+	    expirationDate.setTime(expirationDate.getTime() + (24 * 60 * 60 * 1000));
+	    console.log("expirationDate::" + expirationDate);
+	
+	    // 쿠키에 recent_products 저장 (유효기간: 24시간)
+	    setCookie('recent_books', recentBooks, expirationDate);
+	  }
+	  
+
+	  $('#img').val(recentBookIds[0]);
+	  $('#img2').val(recentBookIds[1]);
+	  $('#img3').val(recentBookIds[2]);
+		  
+	  
+	
+	// 페이지 로드 이벤트 리스너 등록
+	window.addEventListener('load', onPageLoad);
+	
+	
+	function setCookie(cookieName, value, expirationDate) {
+	  var cookieValue = escape(value) + ((expirationDate == null) ? '' : '; expires=' + expirationDate.toUTCString());
+	  document.cookie = cookieName + '=' + cookieValue;
+	}
+	
+	function getCookie(cookieName) {
+	  var name = cookieName + '=';
+	  var decodedCookie = decodeURIComponent(document.cookie);
+	  var cookieArray = decodedCookie.split(';');
+	
+	  for (var i = 0; i < cookieArray.length; i++) {
+	    var cookie = cookieArray[i];
+	    while (cookie.charAt(0) == ' ') {
+	      cookie = cookie.substring(1);
+	    }
+	    if (cookie.indexOf(name) == 0) {
+	      return cookie.substring(name.length, cookie.length);
+	    }
+	  }
+	  return '';
+	}
+	
+	//url에서 productId를 가져오는 함수
+	function getBookIDFromURL(url) {
+	  var regex = /[?&]bookId=(\d+)/;
+	  var match = regex.exec(url);
+	  if (match && match[1]) {
+	     return match[1];		  
+	  }
+	  return null;
+	}
+	
+	
+</script>
+
 
 </body>
 </html>

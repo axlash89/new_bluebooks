@@ -172,4 +172,11 @@ public class BookBO {
 		return totalCount;
 	}
 	
+	public List<String> getCoverByRecentBookIds(Integer[] recentBookIds) {
+		
+		List<String> coverImagePathList = bookMapper.selectBookByRecentBookIds(recentBookIds);
+		
+		return coverImagePathList;		
+	}
+	
 }

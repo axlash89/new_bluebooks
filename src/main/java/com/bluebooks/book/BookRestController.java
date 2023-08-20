@@ -1,7 +1,6 @@
 package com.bluebooks.book;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +18,19 @@ public class BookRestController {
 	@Autowired
 	private BookBO bookBO;
 	
-	@PostMapping("/get_book_cover")
+	@PostMapping("/recent_products")
 	public Map<String, Object> getBookImagePath(
-			@RequestParam("recentBookIds") Integer[] recentBookIds) {
+			@RequestParam("bookId") int bookId) {
 		
-		List<String> coverImagePathList = bookBO.getCoverByRecentBookIds(recentBookIds);
+		String coverImagePath = bookBO.getCoverByRecentBookId(bookId);
 		
 		Map<String, Object> result = new HashMap<>();
 		
-		if (coverImagePathList != null) {
+		if (coverImagePath != null) {
 			result.put("code", 1);
 			result.put("result", "성공");
-			result.put("coverImagePathList", coverImagePathList);
+			result.put("cover", coverImagePath);
+			
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "북 커버 이미지 경로 가져오기 실패");

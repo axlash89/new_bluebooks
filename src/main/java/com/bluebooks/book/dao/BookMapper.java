@@ -19,7 +19,6 @@ public interface BookMapper {
 	
 	public Book isDuplicatedBook(String isbn13);
 	
-	public List<String> selectBookByRecentBookIds(
-			@Param("recentBookIds") Integer[] recentBookIds);
+	public String selectBookByRecentBookId(int bookId);
 	
 }

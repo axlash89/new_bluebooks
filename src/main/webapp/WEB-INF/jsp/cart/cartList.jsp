@@ -1,28 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<h3>장바구니</h3>
-<h5 class="text-right">총 상품금액 5만원 이상 주문 시 배송비 무료</h5>
-<table class="table">
-	<thead>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt"%>
+<div>
+   	<div class="h3 normal-text text-center pt-4 pb-2">장바구니</div>
+</div>
+<h5 class="normal-text text-right mb-2 mt-4 mr-2">총 상품금액 5만원 이상 주문 시 배송비 무료</h5>
+<table class="table cart-table">
+	<thead class="board-head">
 		<tr>
 			<th><c:if test="${not empty cartViewList}"><input type="checkbox" id="checkAll"></c:if></th>
-			<th>상품정보</th>
-			<th>수량</th>
-			<th>상품금액</th>
-			<th>배송정보</th>
+			<th></th>
+			<th class="book-info-in-table">상품정보</th>
+			<th class="book-count-in-table">수량</th>
+			<th class="book-price-in-table">금액</th>
+			<th class="book-delivery-in-table">배송</th>
 			<th></th>
 		</tr>	
 	</thead>
-	<tbody>
+	<tbody class="board-body">
 		<c:forEach items="${cartViewList}" var="cartView">
 			<tr>
 				<td class="price-parent"><input type="checkbox" class="check-one" value="${cartView.book.id}"><input type="text" value="${cartView.book.priceSales}" class="price d-none"></td>
-				<td><a href="/book/book_detail_view?bookId=${cartView.book.id}"><img src="${cartView.book.cover}">${cartView.book.title}</a></td>
-				<td class="changing-price-parent"><input type="text" class="book-count" value="${cartView.cart.bookCount}" readOnly><a href="#" class="count-up-btn btn btn-secondary" data-book-id="${cartView.book.id}">▲</a><a href="#" class="count-down-btn btn btn-secondary" data-book-id="${cartView.book.id}">▼</a><input type="text" value="${cartView.book.priceSales * cartView.cart.bookCount}" class="changing-price d-none"></td>
-				<td><del>${cartView.book.priceStandard * cartView.cart.bookCount}</del><br>${cartView.book.priceSales * cartView.cart.bookCount}</td>
-				<td>내일 도착 예정</td>
+				<td><a href="/book/book_detail_view?bookId=${cartView.book.id}" class="ml-2"><img src="${cartView.book.cover}"></a></td>
+				<td><a href="/book/book_detail_view?bookId=${cartView.book.id}" class="a-tag-deco-none-category">${cartView.book.title}</a></td>
+				<td class="changing-price-parent text-center"><a href="#" class="count-up-btn" data-book-id="${cartView.book.id}"><img src="/static/img/upArrow.png" alt="수량 증가 버튼" width="40px"></a><input type="text" class="book-count text-center w-25 text-dark" value="${cartView.cart.bookCount}" readOnly><a href="#" class="count-down-btn" data-book-id="${cartView.book.id}"><img src="/static/img/downArrow.png" alt="수량 감소 버튼" width="40px"></a><input type="text" value="${cartView.book.priceSales * cartView.cart.bookCount}" class="changing-price d-none"></td>
+				<td class="text-center normal-text"><c:if test="${cartView.book.priceStandard ne cartView.book.priceSales}"><del><fmt:formatNumber value="${cartView.book.priceStandard * cartView.cart.bookCount}" pattern="#,###" />원</del><br></c:if><fmt:formatNumber value="${cartView.book.priceSales * cartView.cart.bookCount}" pattern="#,###" />원</td>
+				<td class="text-center normal-text">내일<br>도착</td>
 				<td><input type="button" class="cart-del-btn btn btn-sm btn-info" value="삭제" data-book-id="${cartView.book.id}"></td>
 			</tr>
 			<c:set var="totalPrice" value="${totalPrice + cartView.book.priceSales}" />
@@ -31,31 +35,34 @@
 </table>
 <c:choose>
 <c:when test="${empty cartViewList}">
-	<div class="text-center h5">장바구니가 비어있습니다.</div>
+	<div class="text-center h5 normal-text">장바구니가 비어있습니다.</div>
 <div class="d-flex justify-content-center pb-3">
-	<input type="button" class="previous-btn btn-secondary ml-5" value="이전으로">
+	<input type="button" class="previous-btn btn-secondary ml-5 mt-3" value="이전으로">
 </div>
 </c:when>
 <c:otherwise>
 <div class="d-flex justify-content-between h5 px-5">
+<div>
 	<div>
-		<div>총 상품 금액<input type="text" id="totalPrice" readOnly>원</div>
-		<div>배송비<input type="text" id="deliveryFee" readOnly>원</div>
-		<div>최종 결제금액<input type="text" id="finalPrice" readOnly value="">원</div>
+		<div class="normal-text">총 상품 금액은<br><input type="text" id="totalPrice" class="cart-list-calculate" readOnly>원,</div>
+		<div class="normal-text mt-2">배송비는<br><input type="text" id="deliveryFee" class="cart-list-calculate"  readOnly>원,</div>
+		<div class="normal-text mt-2 mb-3">최종 결제금액은<br><input type="text" id="finalPrice" class="cart-list-calculate"  readOnly value="">원 입니다.</div>
 	</div>
-	<div>		
-		<div>현재 사용가능 포인트 : ${userPoint}</div>
+	
+</div>	
+	<div class="d-flex">
+		<form action="/order/create_order_view" method="get">
+		        <input type="text" id="sendBookIdString" name="bookIdString" class="d-none">
+		        <input type="text" id="sendFinalPrice" name="finalPrice" class="d-none">
+		<div class="normal-text text-right mb-4">현재 사용가능 포인트 : <fmt:formatNumber value="${userPoint}" pattern="#,###" />원</div>
+		<input type="submit" id="orderBtn" class="btn btn-info cart-list-order-btn" value="주문하기">
+		<input type="button" class="previous-btn btn btn-secondary cart-list-previous-btn" value="이전으로">
+		</form>
 	</div>
 </div>
-
-<div class="d-flex justify-content-center pb-3">
-	<form action="/order/create_order_view" method="get">
-	        <input type="text" id="sendBookIdString" name="bookIdString" class="d-none">
-	        <input type="text" id="sendFinalPrice" name="finalPrice" class="d-none">
-			<input type="submit" id="orderBtn" class="btn btn-info" value="주문하기">
-	</form>
-	<input type="button" class="previous-btn btn btn-secondary ml-5" value="이전으로">
-</div>
+<div>		
+		
+	</div>
 </c:otherwise>
 </c:choose>
 

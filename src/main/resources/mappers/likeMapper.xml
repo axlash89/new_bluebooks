@@ -59,5 +59,27 @@
 		
 </delete>
 
+<delete id="deleteLikeByCommentIdArr" parameterType="map">
+
+	DELETE FROM 
+		`like`
+	WHERE 
+		`commentId` IN		    	
+	    <foreach collection="commentIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach>
+
+</delete>
+
+
+<delete id="deleteLikeByUserId" parameterType="int">
+
+
+	DELETE FROM 
+		`like`
+	WHERE 
+		`userId` = #{userId}	
+
+</delete>
 
 </mapper>

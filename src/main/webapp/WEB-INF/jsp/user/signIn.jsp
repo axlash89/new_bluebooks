@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<div class="d-flex justify-content-center pt-5">
-	<div id="loginBox" class="border d-flex justify-content-center align-items-center">
+<div class="sign-up-text h3 text-center pt-5">블루북스 로그인</div>
+<div class="d-flex justify-content-center pt-3">
+	<div id="loginBox" class="d-flex justify-content-center align-items-center">
 		<div>
 			<form method="post" action="/user/sign_in" id="loginForm">
 				<div>
@@ -20,7 +20,7 @@
 				</div>
 			</form>
 			<div class="d-flex">
-				<div><a href="#" id="#findIdAnchorTag" data-toggle="modal" data-target="#findIdModal">아이디 찾기</a></div>
+				<div class="pr-2"><a href="#" id="#findIdAnchorTag" data-toggle="modal" data-target="#findIdModal" class="a-tag-deco-none-category">아이디 찾기&nbsp;</a></div>
 				<div class="modal fade" id="findIdModal">
 					<div class="modal-dialog modal-sm modal-dialog-centered">
 						<div class="modal-content text-center">								
@@ -39,7 +39,7 @@
 						</div>
 					</div>
 				</div>	
-				<div><a href="#" data-toggle="modal" data-target="#rePWModal">비밀번호 재발급</a></div>
+				<div class="pl-2"><a href="#" data-toggle="modal" data-target="#rePWModal" class="a-tag-deco-none-category">비밀번호 재발급</a></div>
 				<div class="modal fade" id="rePWModal">
 					<div class="modal-dialog modal-sm modal-dialog-centered">
 						<div class="modal-content text-center">								

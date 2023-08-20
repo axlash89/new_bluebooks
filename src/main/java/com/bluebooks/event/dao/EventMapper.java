@@ -25,5 +25,7 @@ public interface EventMapper {
 	
 	public void deleteEventById(int eventId);
 	
+	public List<Event> selectEventListForMain();
+	
 	
 }

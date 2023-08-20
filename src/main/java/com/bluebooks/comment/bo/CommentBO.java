@@ -92,4 +92,15 @@ public class CommentBO {
 		return commentViewList;
 	}
 	
+	
+	public List<Comment> getCommentListByEventId(int eventId) {
+		
+		return commentMapper.selectCommentListByEventId(eventId);
+		
+	}
+	
+	public void deleteCommentByUserId(int userId) {
+		commentMapper.deleteCommentByUserId(userId);		
+	}
+	
 }

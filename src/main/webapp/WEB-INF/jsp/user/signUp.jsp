@@ -1,70 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<div id="signUpBox" class="d-flex justify-content-center align-items-center pt-5">
-
-		<table class="table">
+<div class="sign-up-text h3 text-center pt-3 pb-3">블루북스 회원가입</div> 
+<span class="sign-up-text d-block mt-2 mb-2 text-center">카카오 아이디가 있다면, "카카오 로그인"</span><span class="sign-up-text d-block mt-2 mb-2 text-center">몇가지 추가정보 기입만으로 간편가입 완료!</span>
+<div class="d-flex justify-content-center mb-3"><a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1f3a717bfeb202d1b0336161e6208697&redirect_uri=http://localhost/auth/kakao/callback" class="ml-3"><img src="/static/img/kakaoLoginBtn.png"></a></div>   
+<div id="signUpBox" class="d-flex justify-content-center align-items-center pl-5 pr-5 pb-5">
+		<div id="signUpTable">
+		<table class="table pt-3">
 			<tr>
-				<th class="text-center pt-4">* 아이디</th>
+				<th class="text-center pt-4 pl-5">아이디</th>
 				<td>
 					<div class="d-flex">
-						<input type="text" class="form-control col-8 ml-2" name="loginId" id="loginId" placeholder="아이디 입력"> 
+						<input type="text" class="form-control col-8 ml-2 ml-4" name="loginId" id="loginId" placeholder="아이디 입력"> 
 						<input type="button" class="btn btn-info ml-3" id="duplicatedIdCheckBtn" value="중복확인">
 					</div>
-					<div class="pt-1">					
+					<div class="pt-2">					
 						<div id="msgSpace" class="small">&nbsp;</div>
 						<%-- 아이디 체크 결과 --%>
 						<%-- d-none 클래스: display none (보이지 않게) --%>
-						<div id="msgWrongIdLength" class="small text-danger d-none ml-3">ID는 5~8자 영어 소문자, 숫자만 사용 가능합니다.</div>
-						<div id="msgAlreadyUsedId" class="small text-danger d-none ml-3">이미 사용중인 ID입니다.</div>
-						<div id="msgUsableId" class="small text-success d-none ml-3">사용 가능한 ID 입니다.</div>
+						<div id="msgWrongIdLength" class="small text-danger d-none ml-4">ID는 5~8자 영어 소문자, 숫자만 사용 가능합니다.</div>
+						<div id="msgAlreadyUsedId" class="small text-danger d-none ml-4">이미 사용중인 ID입니다.</div>
+						<div id="msgUsableId" class="small text-success d-none ml-4">사용 가능한 ID 입니다.</div>
 					</div>
 				</td>
 			</tr>
 			<tr>
-				<th class="text-center pt-4">* 비밀번호</th>
-				<td><input type="password" class="form-control col-8 ml-2" name="password" placeholder="비밀번호 입력"></td>
+				<th class="text-center pt-3 pl-5">비밀번호</th>
+				<td><input type="password" class="form-control col-8 ml-2 ml-4" name="password" placeholder="비밀번호 입력"></td>
 			</tr>
 			<tr>
-				<th class="text-center pt-4">* 비밀번호 확인</th>
-				<td><input type="password" class="form-control col-8 ml-2" id="passwordCheck" placeholder="비밀번호 입력"></td>
+				<th class="text-center pt-3 pl-5">비밀번호 확인</th>
+				<td><input type="password" class="form-control col-8 ml-2 ml-4" id="passwordCheck" placeholder="비밀번호 입력"></td>
 			</tr>
 			<tr>
-				<th class="text-center pt-4">* 이름</th>
-				<td><input type="text" class="form-control col-8 ml-2" name="name" placeholder="이름 입력">
+				<th class="text-center pt-3 pl-5">이름</th>
+				<td><input type="text" class="form-control col-8 ml-2 ml-4" name="name" placeholder="이름 입력">
 				</td>
 			</tr>
 			<tr>
-				<th class="text-center pt-4">* 생년월일</th>
-				<td><input type="text" class="form-control col-8 ml-2" name="birthDate" id="birthDate" placeholder="생년월일 입력" readOnly>
+				<th class="text-center pt-3 pl-5">생년월일</th>
+				<td><input type="text" class="form-control col-8 ml-2 ml-4" name="birthDate" id="birthDate" placeholder="생년월일 입력" readOnly>
 				</td>
 			</tr>
 			<tr>
-				<th class="text-center pt-4">* 이메일주소</th>
-				<td><input type="text" class="form-control col-8 ml-2" name="email" placeholder="이메일 주소 입력"></td>
+				<th class="text-center pt-3 pl-5">이메일주소</th>
+				<td><input type="text" class="form-control col-8 ml-2 ml-4" name="email" placeholder="이메일 주소 입력"></td>
 			</tr>
 			<tr>
-				<th class="text-center pt-4">* 휴대폰번호</th>
-				<td><input type="text" class="form-control col-8 ml-2" name="phoneNumber" placeholder="-없이 숫자만 입력"></td>
+				<th class="text-center pt-3 pl-5">휴대폰번호</th>
+				<td><input type="text" class="form-control col-8 ml-2 ml-4" name="phoneNumber" placeholder="-없이 숫자만 입력"></td>
 			</tr>
 			<tr>
-				<th class="text-center pt-4">* 우편번호</th>
-				<td><input type="text" class="form-control col-4 ml-2 d-inline" name="zipCode" id="sample6_postcode" onclick="sample6_execDaumPostcode()" placeholder="우편번호" readonly><input type="button" class="btn btn-info d-inline" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td>
+				<th class="text-center pt-3 pl-5">우편번호</th>
+				<td><input type="text" class="form-control col-4 ml-2 d-inline ml-4" name="zipCode" id="sample6_postcode" onclick="sample6_execDaumPostcode()" placeholder="우편번호" readonly><input type="button" class="btn btn-info d-inline" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td>
 			</tr>
 			<tr>
-				<th class="text-center pt-4">* 주소</th>
-				<td><input type="text" class="form-control col-8 ml-2" name="address1" id="sample6_address" placeholder="주소" readonly></td>
+				<th class="text-center pt-3 pl-5">주소</th>
+				<td><input type="text" class="form-control col-8 ml-2 ml-4" name="address1" id="sample6_address" placeholder="주소" readonly></td>
 			</tr>
 			<tr>
-				<th class="text-center pt-4">* 나머지 주소</th>
-				<td><input type="text" class="form-control col-8 ml-2" name="address3" id="sample6_extraAddress" placeholder="(참고항목)" readonly><input type="text" class="form-control col-8 ml-2" name="address2" id="sample6_detailAddress" placeholder="나머지 주소 입력"></td>
+				<th class="text-center pt-3 pl-5">나머지 주소</th>
+				<td><input type="text" class="form-control col-8 ml-2 ml-4" name="address3" id="sample6_extraAddress" placeholder="(참고항목)" readonly><input type="text" class="form-control col-8 ml-4" name="address2" id="sample6_detailAddress" placeholder="나머지 주소 입력"></td>
 			</tr>
 			<tr>
 				<th></th>
-				<td><input type="button" class="btn btn-primary col-4" id="signUpBtn" value="회원가입"></td>
+				<td class="ml-5"><input type="button" class="btn btn-primary col-3 ml-5" id="signUpBtn" value="회원가입"></td>
 			</tr>
-		</table>
-		
+			
+		</table>			
+		</div>
 </div>
 
 <%-- 우편번호 검색 API --%>
@@ -148,6 +151,13 @@
 				alert("비밀번호를 입력하세요");
 				return false;
 			}
+			
+			var reg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
+			if(!reg.test(password)) {
+				alert("비밀번호는 8자 이상 20자 이하, 최소 하나의 문자 및 하나의 숫자를 포함하여 입력해주세요.");
+				return false;
+			}
+			
 			if (password != passwordCheck) {
 				alert("비밀번호가 일치하지 않습니다");
 				return false;

@@ -2,17 +2,23 @@
     pageEncoding="UTF-8"%>
 
 
-	<div>
-    	<div>공지사항 작성</div>
-    	<input type="text" id="subject" class="form-control" placeholder="제목을 입력하세요">
-    	<textarea id="content" class="form-control" placeholder="내용을 입력하세요" rows="3"></textarea>
+	<div class="text-center">
+    	<h4 class="normal-text text-center pt-4 pb-2">공지사항 작성</h4>
    	</div>
-   	<input type="file" id="file" accept=".jpg, .jpeg, .png, .gif">
-	<div class="d-flex justify-content-end">
-		<a href="/notice/notice_list_view" class="btn btn-secondary">이전</a>
-   		<input type="button" id="uploadBtn" class="btn btn-info" value="업로드">
+   	<div class="d-flex justify-content-center">
+   		<div>
+		   	<span class="normal-text">제목</span>
+		   	<input type="text" id="subject" class="form-control mb-2" placeholder="제목을 입력하세요">
+		    <span class="normal-text">내용</span>
+		    <textarea id="content" class="form-control" placeholder="내용을 입력하세요" rows="7"></textarea>
+		   	
+		   	<input type="file" id="file" accept=".jpg, .jpeg, .png, .gif" class="mt-1 mb-3">
+			<div class="d-flex justify-content-end">
+				<a href="/notice/notice_list_view" class="btn btn-secondary">이전</a>
+		   		<input type="button" id="uploadBtn" class="btn btn-info ml-3" value="업로드">
+		   	</div>
+	   	</div>
    	</div>
-   	
    	
 <script>
 $(document).ready(function() {

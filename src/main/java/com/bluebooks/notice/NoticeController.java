@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bluebooks.common.PageMaker;
 import com.bluebooks.notice.bo.NoticeBO;
 import com.bluebooks.notice.entity.NoticeEntity;
 
@@ -39,19 +40,21 @@ public class NoticeController {
 			model.addAttribute("searchKeyword", "&searchKeyword=" + searchKeyword);
 		}
 		
+		
 		int nowPage = noticeList.getPageable().getPageNumber();
 		if (nowPage > noticeList.getTotalPages() - 1) {
 			nowPage =  noticeList.getTotalPages() - 1;
 		}
 		
-		int startPage = Math.max(0, noticeList.getPageable().getPageNumber() - 4);
+		int startPage = Math.max(0, noticeList.getPageable().getPageNumber() - 3);
 		
 		int endPage;
 		if (noticeList.getTotalPages() != 0) {
-			endPage = Math.min(noticeList.getTotalPages() - 1, nowPage + 4);
+			endPage = Math.min(noticeList.getTotalPages() - 1, nowPage + 3);
 		} else {
 			endPage = 0;
 		}
+				
 		
 		model.addAttribute("noticeList", noticeList);
 

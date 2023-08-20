@@ -42,7 +42,8 @@ public interface OrderMapper {
 			@Param("orderId") int orderId,
 			@Param("status") String status);
 	
-	public void updateStatusByOrderIdArr(Integer orderId);
+	public void updateStatusByOrderIdArr(
+			@Param("orderIdArr") Integer[] orderIdArr);
 	
 	public List<Order> selectOrderListByUserIdList(
 			@Param("userIdArr") int[] userIdArr, 

@@ -5,7 +5,7 @@
 
 
 		<div>
-	   	<div class="h3 d-flex justify-content-center mb-3">탈퇴한 회원 리스트</div>
+	   	<div class="h3 d-flex normal-text justify-content-center pt-3 mb-4">탈퇴한 회원 리스트</div>
 	  	</div>	  	
 	  	
   		<div>		
@@ -24,7 +24,7 @@
    		
    		
 	  	<table class="table text-center">
-	  		<thead>
+	  		<thead class="board-head">
 	  			<tr>
 	  				<th>회원번호</th>
 	  				<th>아이디</th>
@@ -33,7 +33,7 @@
 	  				<th>가입일</th>
 	  			</tr>
 	  		</thead>
-	  		<tbody>
+	  		<tbody class="board-body">
 		   		<c:forEach items="${withdrawalList}" var="user">
 		   			<tr>
 		   				<td>${user.userId}</td>
@@ -51,11 +51,11 @@
 	  		</tbody>
 	  	</table>
 	  	<c:if test="${not empty emptyList}">
-	  	<div class="d-flex justify-content-center">검색 결과가 없습니다.</div>
+	  	<div class="d-flex justify-content-center normal-text">검색 결과가 없습니다.</div>
 	  	</c:if>
 	  	<c:choose>
 	  	<c:when test="${empty searchKeyword}">
-	  	<div class="d-flex justify-content-center">
+	  	<div class="d-flex justify-content-center mb-1">
 		  	<ul class="pagination">
 			    <c:if test="${pageMaker.prev}">
 			        <li>
@@ -83,7 +83,7 @@
 		</div>
 		</c:when>
 		<c:otherwise>
-		<div class="d-flex justify-content-center">
+		<div class="d-flex justify-content-center mb-1">
 		  	<ul class="pagination">
 			    <c:if test="${pageMaker.prev}">
 			        <li>
@@ -111,6 +111,13 @@
 		</div>
 		</c:otherwise>
 		</c:choose>
+		
+		
+		<c:if test="${not empty searchKeyword}">
+	    	<div class="d-flex justify-content-center">
+				<a href="/withdrawal/witndrawn_user_view" class="btn btn-secondary mb-3">목록으로 돌아가기</a>
+			</div>
+		</c:if>
 	  			
 <script>
 $(document).ready(function() {

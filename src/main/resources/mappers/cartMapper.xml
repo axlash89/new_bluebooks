@@ -109,7 +109,10 @@
 		WHERE 
 			`userId` = #{userId}
 				AND
-			`bookId` = #{bookId}
+			`bookId` IN
+ 		<foreach collection="bookIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach> 	
 		
 	</delete>
 	
@@ -128,6 +131,15 @@
 				AND
 			`bookId` = #{bookId}
 		ORDER BY `id` DESC	
-	</select>
+	</select>	
+	
+	<delete id="deleteCartByUserId" parameterType="int">
+		
+		DELETE FROM 
+			`cart`		
+		WHERE 
+			`userId` = #{userId}
+		
+	</delete>
 	
 </mapper>

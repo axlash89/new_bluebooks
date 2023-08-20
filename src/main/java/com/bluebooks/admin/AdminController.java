@@ -92,20 +92,22 @@ public class AdminController {
 			}
 			
 		}
-				
+
+		
 		int nowPage = onetooneList.getPageable().getPageNumber();
 		if (nowPage > onetooneList.getTotalPages() - 1) {
 			nowPage =  onetooneList.getTotalPages() - 1;
 		}
 		
-		int startPage = Math.max(0, onetooneList.getPageable().getPageNumber() - 4);
+		int startPage = Math.max(0, onetooneList.getPageable().getPageNumber() - 3);
 		
 		int endPage;
 		if (onetooneList.getTotalPages() != 0) {
-			endPage = Math.min(onetooneList.getTotalPages() - 1, nowPage + 4);
+			endPage = Math.min(onetooneList.getTotalPages() - 1, nowPage + 3);
 		} else {
 			endPage = 0;
 		}
+				
 		
 		List<UserEntity> userList = adminBO.getWriterList();
 		
@@ -155,14 +157,18 @@ public class AdminController {
 			nowPage =  userList.getTotalPages() - 1;
 		}
 		
-		int startPage = Math.max(0, userList.getPageable().getPageNumber() - 4);
+		int startPage = Math.max(0, userList.getPageable().getPageNumber() - 3);
 		
 		int endPage;
 		if (userList.getTotalPages() != 0) {
-			endPage = Math.min(userList.getTotalPages() - 1, nowPage + 4);
+			endPage = Math.min(userList.getTotalPages() - 1, nowPage + 3);
 		} else {
 			endPage = 0;
-		}	
+		}
+		
+		if(userList.isEmpty()) {
+			model.addAttribute("emptyList", "emptyList");
+		}
 		
 		model.addAttribute("userList", userList);
 				

@@ -5,9 +5,9 @@
     
 <div>
 
-	<h3>회원정보</h3>
+	<div class="h3 normal-text text-center pt-3 pb-2">회원정보</div>
 	
-	<table class="table table-border">
+	<table class="table table-border board-body text-center">
 		<tr>
 			<th>회원번호</th>
 			<td>${user.id}</td>
@@ -47,7 +47,7 @@
 		</tr>
 	</table>
 	<div class="d-flex justify-content-center">
-	<input type="button" class="btn btn-info" id="previousBtn" value="이전으로">
+	<input type="button" class="btn btn-secondary" id="previousBtn" value="이전으로">
 	</div>
 </div>
 

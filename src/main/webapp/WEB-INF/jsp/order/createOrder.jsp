@@ -2,28 +2,31 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt"%>
 
-<h3>주문 및 결제하기</h3>
-<h5 class="text-right">상품금액 5만원 이상 구매 시 무료배송</h5>
-<table class="table">
-	<thead>
+<h3 class="normal-text text-center pt-4 pb-2">주문 및 결제하기</h3>
+
+<h5 class="normal-text text-right mb-2 mt-4 mr-2">총 상품금액 5만원 이상 주문 시 무료배송</h5>
+<table class="table order-create-table">
+	<thead class="board-head">
 		<tr>
 			
 			<th>상품정보</th>
 			<th>수량</th>
 			<th>상품금액</th>
-			<th>배송정보</th>
+			<th>배송</th>
 		</tr>	
 	</thead>
-	<tbody>
+	<tbody class="board-body">
 		<c:choose>
 		<c:when test="${empty book}">
 			<c:forEach items="${orderedCartViewList}" var="cartView">
 				<tr>
-					<td><img src="${cartView.book.cover}">${cartView.book.title}</td>
-					<td>${cartView.cart.bookCount}</td>
-					<td><del>${cartView.book.priceStandard * cartView.cart.bookCount}</del><br>${cartView.book.priceSales * cartView.cart.bookCount}</td>
-					<td>내일 도착 예정</td>
+					<td class="pl-3"><img src="${cartView.book.cover}" class="ml-2"><span class="pl-3 normal-text">${cartView.book.title}</span></td>
+					<td class="book-count-in-order-create-table normal-text">${cartView.cart.bookCount}</td>
+					<td class="text-center normal-text"><c:if test="${cartView.book.priceStandard ne cartView.book.priceSales}"><del><fmt:formatNumber value="${cartView.book.priceStandard * cartView.cart.bookCount}" pattern="#,###" />원</del><br></c:if><fmt:formatNumber value="${cartView.book.priceSales * cartView.cart.bookCount}" pattern="#,###" />원</td>
+					<td class="text-center normal-text">내일<br>도착</td>
+				
 				</tr>
 				<c:set var="totalPrice" value="${totalPrice = totalPrice + (cartView.book.priceSales * cartView.cart.bookCount)}" />
 				<c:set var="bookCount" value="${bookCount += cartView.cart.bookCount}" />
@@ -33,10 +36,10 @@
 		<c:when test="${empty finalPrice && empty bookCountFromDetail}">
 		
 				<tr>
-					<td><img src="${book.cover}">${book.title}</td>
-					<td>1</td>
-					<td><del>${book.priceStandard}</del><br>${book.priceSales}</td>
-					<td>내일 도착 예정</td>
+					<td class="pl-3"><img src="${book.cover}">${book.title}</td>
+					<td class="book-count-in-order-create-table normal-text">1</td>
+					<td class="text-center normal-text"><c:if test="${book.priceStandard ne book.priceSales}"><del><fmt:formatNumber value="${book.priceStandard}" pattern="#,###" />원</del><br></c:if><fmt:formatNumber value="${book.priceSales}" pattern="#,###" />원</td>
+					<td class="text-center normal-text">내일<br>도착</td>
 				</tr>
 				<c:set var="totalPrice" value="${book.priceSales}" />
 				<c:set var="totalPoint" value="${book.point}" />
@@ -51,10 +54,10 @@
 		</c:when>
 		<c:otherwise>
 				<tr>
-					<td><img src="${book.cover}">${book.title}</td>
-					<td>${bookCountFromDetail}</td>
-					<td><del>${book.priceStandard * bookCountFromDetail}</del><br>${book.priceSales * bookCountFromDetail}</td>
-					<td>내일 도착 예정</td>
+					<td class="pl-3"><img src="${book.cover}">${book.title}</td>
+					<td class="book-count-in-order-create-table normal-text">${bookCountFromDetail}</td>
+					<td class="text-center normal-text"><c:if test="${book.priceStandard ne book.priceSales}"><del><fmt:formatNumber value="${book.priceStandard * bookCountFromDetail}" pattern="#,###" />원</del><br></c:if><fmt:formatNumber value="${book.priceSales * bookCountFromDetail}" pattern="#,###" />원</td>
+					<td class="text-center normal-text">내일<br>도착</td>
 				</tr>
 				<c:set var="totalPrice" value="${book.priceSales * bookCountFromDetail}" />
 				<c:set var="totalPoint" value="${book.point * bookCountFromDetail}" />
@@ -78,36 +81,37 @@
 </table>
 <c:choose>
 <c:when test="${userPoint ne 0}">
-<div class="pb-5 h5">사용할 포인트 입력<input type="text" class="usePoint" placeholder="숫자만 입력하세요."><input type="button" class="usePointBtn btn btn-info" value="사용하기"><input type="button" id="usePointCancelBtn" class="btn btn-secondary d-none" value="취소">현재 사용가능 포인트 : <span id="usablePoint">${userPoint}</span></div>
+<div class="pb-5 h5 normal-text ml-2">사용할 포인트 입력<input type="text" class="usePoint ml-2 use-point-text-in-order-create" placeholder="숫자만 입력"><input type="button" class="usePointBtn use-point-btn btn btn-info" value="사용하기"><input type="button" id="usePointCancelBtn" class="btn btn-secondary d-none" value="취소">( 현재 사용가능 포인트 : <span id="usablePoint">${userPoint}</span><span> )</span></div>
 </c:when>
 <c:otherwise>
-<div class="pb-5 h5">사용할 포인트 입력<input type="text" class="usePoint" placeholder="숫자만 입력하세요." disabled><input type="button" class="usePointBtn btn btn-info" value="사용하기" disabled><input type="button" id="usePointCancelBtn" class="btn btn-secondary d-none" value="취소">현재 사용가능 포인트 : <span id="usablePoint">${userPoint}</span></div>
+<div class="pb-5 h5 normal-text ml-2">사용할 포인트 입력<input type="text" class="usePoint ml-2 use-point-text-in-order-create" placeholder="숫자만 입력" disabled><input type="button" class="usePointBtn use-point-btn btn btn-info" value="사용하기" disabled><input type="button" id="usePointCancelBtn" class="btn btn-secondary d-none" value="취소">( 현재 사용가능 포인트 : <span id="usablePoint">${userPoint}</span><span> )</span></div>
 </c:otherwise>
 </c:choose>
-<div class="d-flex justify-content-around h5">
-	<div>총 상품 금액 ${totalPrice}</div>
+<div class="d-flex justify-content-around align-items-center">
+<div class="h5 normal-text ml-2">
+	<div class="mb-2">총 상품 금액은 ${totalPrice}원</div>
 	<c:choose>
 	<c:when test="${totalPrice < 50000}">
-	<div>배송비 2,500원</div>
+	<div class="mb-2">배송비는 2,500원</div>
 	</c:when>
 	<c:otherwise>
-	<div>배송비 0원</div>
+	<div class="mb-2">배송비는 0원</div>
 	</c:otherwise>
 	</c:choose>
-	<div>사용할 블루북스 포인트<span id="usedPoint"></span></div>	
-	<div>적립 예상 포인트 ${totalPoint}</div>
+	<div id="goingToUsePoint" class="mb-2 d-none">사용할 블루북스 포인트는 <span id="usedPoint"></span></div>	
+	<div class="mb-2">적립 예상 포인트는 ${totalPoint}입니다.</div>
 </div>
-<div class="h3 text-center">최종 결제금액 <span id="finalPrice">${finalPrice}</span>원</div>
-
-<div class="d-flex justify-content-center">
+<div class="h3 text-center normal-text font-weight-bold">최종 결제금액 <span id="finalPrice" class="normal-text">&nbsp;&nbsp;${finalPrice}</span>원</div>
+</div>
+<div class="d-flex justify-content-center mt-3 ml-5 normal-text">
 	<div>
-		이름 <input type="text" class="form-control col-8 ml-2" name="recipientName" id="recipientName" placeholder="이름 입력" value="${user.name}"> 
-		휴대폰번호 <input type="text" class="form-control col-8 ml-2" name="recipientPhoneNumber" placeholder="-없이 숫자만 입력" value="${user.phoneNumber}">
-		주소<input type="text" class="form-control col-4 ml-2 d-inline" name="recipientZipCode" id="sample6_postcode" onclick="sample6_execDaumPostcode()" placeholder="우편번호" value="${user.zipCode}" readonly><input type="button" class="btn btn-info" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-		<div class="text-center"><div>회원님의 기본 주소지가 입력되어있습니다.</div><div>수령지가 다르다면 '우편번호 찾기' 버튼을 눌러 변경해주세요.</div></div>
-		<input type="text" class="form-control col-8 ml-2" name="address1" id="sample6_address" placeholder="자동 입력" readonly>
-		나머지 주소 <input type="text" class="form-control col-8 ml-2" name="address3" id="sample6_extraAddress" placeholder="자동 입력" readonly><input type="text" class="form-control col-8 ml-2" name="address2" id="sample6_detailAddress" value="${user.address}" placeholder="나머지 주소 입력">
-		결제 수단 선택
+		이름 <input type="text" class="form-control col-8 ml-2 mb-3" name="recipientName" id="recipientName" placeholder="이름 입력" value="${user.name}"> 
+		휴대폰번호 <input type="text" class="form-control col-8 ml-2 mb-3" name="recipientPhoneNumber" placeholder="-없이 숫자만 입력" value="${user.phoneNumber}">
+		주소<input type="text" class="form-control col-4 ml-2 d-inline mb-1" name="recipientZipCode" id="sample6_postcode" onclick="sample6_execDaumPostcode()" placeholder="우편번호" value="${user.zipCode}" readonly><input type="button" class="btn btn-info" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+		<div class="small font-weight-bold mt-1"><div>회원님의 기본 주소지가 입력되어있습니다.</div><div>수령지가 다르다면 '우편번호 찾기' 버튼을 눌러 변경해주세요.</div></div>
+		<input type="text" class="form-control col-8 ml-2 mt-1 mb-2" name="address1" id="sample6_address" placeholder="자동 입력" readonly>
+		나머지 주소 <input type="text" class="form-control col-8 ml-2 mb-1" name="address3" id="sample6_extraAddress" placeholder="자동 입력" readonly><input type="text" class="form-control col-8 ml-2 mb-2" name="address2" id="sample6_detailAddress" value="${user.address}" placeholder="나머지 주소 입력">
+		결제 수단 선택 
 		<select id="payBy">
 			<option>선택</option>
 			<option>신용카드</option>
@@ -117,9 +121,9 @@
 		</select>
 	</div>
 </div>
-<div class="d-flex justify-content-center pb-3 pt-3">
-	<input type="button" id="payBtn" value="결제하기" class="btn btn-info">
-	<input type="button" id="previousBtn" value="이전으로" class="btn btn-secondary ml-5">
+<div class="order-create-final-btn pb-5 pt-3">
+	<input type="button" id="payBtn" value="결제하기" class="btn btn-info mr-5">
+	<input type="button" id="previousBtn" value="이전으로" class="btn btn-secondary">
 </div>
 <%-- 우편번호 검색 API --%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -164,6 +168,7 @@
 
 			let finalPrice = ${finalPrice} - usePoint;
 			
+			$('#goingToUsePoint').removeClass('d-none');
 			$('#usedPoint').text(usePoint);			
 			$('.usePointBtn').addClass('d-none');
 			$('#usePointCancelBtn').removeClass('d-none');
@@ -182,6 +187,7 @@
 			$('#usedPoint').text(usePoint);
 			$('#finalPrice').text(${finalPrice});
 			$('#usablePoint').text(${userPoint});
+			$('#goingToUsePoint').addClass('d-none');
 		});
 		
 		
@@ -335,6 +341,10 @@
 		
 
 		$('#previousBtn').on('click', function(){
+			let result = confirm("이전 화면으로 돌아갑니다.");
+			if (!result) {
+				return;
+			}
 			history.back();
 		});
 		

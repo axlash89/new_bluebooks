@@ -7,16 +7,16 @@
 	    
 	    <div class="my-page-contents">
 	    	<div>
-		    	<div class="d-flex justify-content-center">회원정보 수정</div>
+		    	<div class="d-flex justify-content-center normal-text text-center pt-4 pb-3 h3">회원정보 수정</div>
 	    	</div>
-	    	<table class="table mt-4">
+	    	<table class="table mt-4 board-body">
 				<tr>
 					<th class="text-center">아이디</th>
 					<td>${user.loginId}</td>
 				</tr>
 				<tr>
 					<th></th>
-					<td><button id="passwordChangeOpenBtn" class="btn btn-primary btn-sm">비밀번호 변경</button></td>
+					<td><button id="passwordChangeOpenBtn" class="btn btn-info btn-sm">비밀번호 변경</button></td>
 				</tr>			
 				<tr class="password-change d-none">
 					<th class="text-center pt-4">기존 비밀번호</th>
@@ -27,12 +27,12 @@
 					<td><input type="password" id="newPassword" class="form-control col-10 ml-2" placeholder="수정할 비밀번호 입력"></td>
 				</tr>
 				<tr class="password-change d-none">
-					<th class="text-center pt-4">* 새 비밀번호 확인</th>
+					<th class="text-center pt-4">* 비밀번호 확인</th>
 					<td><input type="password" id="newPasswordCheck" class="form-control col-10 ml-2" placeholder="수정할 비밀번호 확인"></td>
 				</tr>
 				<tr class="password-change d-none">
 					<th></th>
-					<td><button id="passwordChangeBtn" class="btn btn-dark btn-sm float-right mr-5">변경</button></td>
+					<td><button id="passwordChangeBtn" class="btn btn-dark btn mr-5">변경</button></td>
 				</tr>
 				<tr>
 					<th class="text-center">이름</th>
@@ -40,31 +40,31 @@
 				</tr>
 				<tr>
 					<th class="text-center">이메일</th>
-					<td>${user.email}<button id="emailChangeOpenBtn" class="btn btn-primary btn-sm">이메일 변경</button></td>
+					<td>${user.email}<button id="emailChangeOpenBtn" class="btn btn-info btn-sm ml-2">이메일 변경</button></td>
 				</tr>
 				<tr class="email-change d-none">
-					<th class="text-center pt-4">* 새로운 이메일주소 입력</th>
-					<td><input type="text" id="email" class="form-control col-10 ml-2" placeholder="이메일 입력"></td>
+					<th class="text-center pt-3">* 새 이메일주소</th>
+					<td><input type="text" id="email" class="form-control col-10 ml-2" placeholder="새로운 이메일주소 입력"></td>
 				</tr>
 				<tr class="email-change d-none">
 					<th></th>
-					<td><button id="emailChangeBtn" class="btn btn-dark btn-sm float-right mr-5">변경</button></td>
+					<td><button id="emailChangeBtn" class="btn btn-dark mr-5 pr-3">변경</button></td>
 				</tr>
 				<tr>
 					<th class="text-center">휴대폰 번호</th>
-					<td>${user.phoneNumber}<button id="phoneChangeOpenBtn" class="btn btn-primary btn-sm">휴대폰 번호 변경</button></td>
+					<td>${user.phoneNumber}<button id="phoneChangeOpenBtn" class="btn btn-info btn-sm ml-2">휴대폰 번호 변경</button></td>
 				</tr>
 				<tr class="phone-change d-none">
-					<th class="text-center pt-4">* 새로운 휴대폰 번호 입력</th>
-					<td><input type="text" id="phoneNumber" class="form-control col-10 ml-2" placeholder="-없이 휴대폰 번호 입력"></td>
+					<th class="text-center pt-3">* 새 휴대폰 번호</th>
+					<td><input type="text" id="phoneNumber" class="form-control col-10 ml-2" placeholder="-없이 새로운 휴대폰 번호 입력"></td>
 				</tr>
 				<tr class="phone-change d-none">
 					<th></th>
-					<td><button id="phoneChangeBtn" class="btn btn-dark btn-sm float-right mr-5">변경</button></td>
+					<td><button id="phoneChangeBtn" class="btn btn-dark mr-5">변경</button></td>
 				</tr>
 				<tr>
 					<th class="text-center">주소</th>
-					<td>${user.address}<button id="addressChangeOpenBtn" class="btn btn-primary btn-sm">주소 변경</button></td>
+					<td>${user.address}<button id="addressChangeOpenBtn" class="btn btn-info btn-sm ml-2">주소 변경</button></td>
 				</tr>
 				<tr class="address-change d-none">
 					<th class="text-center pt-4">* 우편번호</th>
@@ -80,7 +80,7 @@
 				</tr>
 				<tr class="address-change d-none">
 					<th></th>
-					<td><button id="addressChangeBtn" class="btn btn-dark btn-sm float-right mr-5">변경</button></td>
+					<td><button id="addressChangeBtn" class="btn btn-dark mr-5">변경</button></td>
 				</tr>
 				
 				<tr>

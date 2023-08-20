@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bluebooks.comment.bo.CommentBO;
+import com.bluebooks.comment.domain.Comment;
 import com.bluebooks.comment.domain.CommentView;
 import com.bluebooks.common.Criteria;
 import com.bluebooks.common.FileManagerService;
 import com.bluebooks.event.dao.EventMapper;
 import com.bluebooks.event.domain.Event;
 import com.bluebooks.event.domain.EventView;
+import com.bluebooks.like.bo.LikeBO;
 
 @Service
 public class EventBO {
@@ -26,6 +28,9 @@ public class EventBO {
 	
 	@Autowired
 	private CommentBO commentBO;
+	
+	@Autowired
+	private LikeBO likeBO;
 	
 	
 	public int addEvent(MultipartFile file) {
@@ -82,15 +87,27 @@ public class EventBO {
 	
 	public void deleteEventById(int eventId) {
 		
+		// like 삭제
+		List<Comment> commentListByEventId = commentBO.getCommentListByEventId(eventId);
+		
+		if (commentListByEventId.size() != 0) {
+			int[] commentIdArr = new int[commentListByEventId.size()];
+			for (int i = 0; i < commentListByEventId.size(); i++) {
+				commentIdArr[i] = commentListByEventId.get(i).getId();
+			}			
+			likeBO.deleteLikeByCommentIdArr(commentIdArr);			
+		}
+		
 		// comment 삭제
 		commentBO.deleteCommentByEventId(eventId);
 		
-		// like 삭제
-		
 		
 		eventMapper.deleteEventById(eventId);
-		
-		
+				
+	}
+	
+	public List<Event> getEventListForMain() {
+		return eventMapper.selectEventListForMain();
 	}
 	
 	

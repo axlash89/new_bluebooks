@@ -2,12 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 	    	<div>
-		    	<div>1:1 문의</div>
+		    	<div class="h3 normal-text text-center pt-3 pb-2">1:1 문의 게시판</div>
 	    	</div>
 	    	<div class="d-flex justify-content-between">
-		    	<div class="pt-2">총 게시물 수 : ${onetooneList.totalElements}</div>
+		    	<div class="pt-2 normal-text pl-1 pb-1">총 게시물 수 : ${onetooneList.totalElements}</div>
 		    	<div>
 		    	<c:if test="${userLoginId eq 'admin'}">		    		
 					<form action="/admin/manage_onetoone_list_view" method="get" class="d-flex">
@@ -24,8 +25,8 @@
 				</c:if>	 
 				</div>   	
 			</div>
-	    	<table class="table">
-	    		<thead>
+	    	<table class="table text-center">
+	    		<thead class="board-head">
 	    			<tr>
 	    				<th>번호</th>
 	    				<c:if test = "${userLoginId eq 'admin'}">
@@ -36,7 +37,7 @@
 	    				<th>작성날짜</th>
 	    			</tr>
 	    		</thead>
-	    		<tbody>
+	    		<tbody class="board-body">
 		    		<c:forEach items="${onetooneList.content}" var="onetoone">
 		    			<tr>
 		    				
@@ -62,10 +63,10 @@
 		    				<td>
 		    					<c:choose>
 			    					<c:when test="${userLoginId eq 'admin'}">
-			    						<a href="/admin/onetoone_detail_view?id=${onetoone.id}">${onetoone.subject}</a>
+			    						<a href="/admin/onetoone_detail_view?id=${onetoone.id}" class="a-tag-deco-none-board">${onetoone.subject}</a>
 			    					</c:when>
 			    					<c:otherwise>
-			    						<a href="/onetoone/onetoone_detail_view?id=${onetoone.id}">${onetoone.subject}</a>
+			    						<a href="/onetoone/onetoone_detail_view?id=${onetoone.id}" class="a-tag-deco-none-board">${onetoone.subject}</a>
 			    					</c:otherwise>
 		    					</c:choose>		    						    				
 		    				
@@ -83,69 +84,69 @@
 	    		</tbody>
 	    	</table>   
 	    	
-	    	
+	    	<c:if test="${onetooneList.totalElements ne 0}">
 	    	<div class="d-flex justify-content-between">
 			  	<c:choose>
-			  	<c:when test="${userLoginId ne 'admin'}">
-			  		<c:choose>
-				  		<c:when test="${nowPage ne 0}">
-				  		<a href="/onetoone/onetoone_list_view?page=0">첫 페이지로</a>
-				  		</c:when>
-				  		<c:otherwise>
-				  		첫 페이지로
-				  		</c:otherwise>
-					</c:choose>
-					
-					<c:choose>
-				  		<c:when test="${nowPage eq onetooneList.totalPages - 1}">
-				  				
-				  		</c:when>
-				  		<c:otherwise>
-				  		<a href="/onetoone/onetoone_list_view?page=${onetooneList.totalPages - 1}">마지막 페이지로</a>
-				  		</c:otherwise>
-					</c:choose>
-			  	</c:when>
-			  	<c:otherwise>
-			  		<c:if test="${not empty searchKeyword}">
-			  		<c:choose>
-				  		<c:when test="${nowPage ne 0}">
-			  			<a href="/admin/manage_onetoone_list_view?page=0${searchKeyword}">첫 페이지로</a>
-			  			</c:when>
-				  		<c:otherwise>
-				  		첫 페이지로
-				  		</c:otherwise>
-					</c:choose>
-					<c:choose>
-				  		<c:when test="${nowPage eq onetooneList.totalPages - 1}">
-				  		마지막 페이지로
-			   			</c:when>
-				  		<c:otherwise>
-				  		<a href="/admin/manage_onetoone_list_view?page=${onetooneList.totalPages - 1}${searchKeyword}" class="float-right">마지막 페이지로</a>
-				  		</c:otherwise>
-				  	</c:choose>	
-			   		</c:if>
-			   		<c:if test="${empty searchKeyword}">
-			   		<c:choose>
-				  		<c:when test="${nowPage ne 0}">
-			   			<a href="/admin/manage_onetoone_list_view?page=0">첫 페이지로</a>
-			   			</c:when>
-			   			<c:otherwise>
-				  		첫 페이지로
-				  		</c:otherwise>
-					</c:choose>
-					<c:choose>
-				  		<c:when test="${nowPage eq onetooneList.totalPages - 1}">
-				  		마지막 페이지로
-				  		</c:when>
-				  		<c:otherwise>
-			   			<a href="/admin/manage_onetoone_list_view?page=${onetooneList.totalPages - 1}" class="float-right">마지막 페이지로</a>
-			   			</c:otherwise>
-		   			</c:choose>
-			   		</c:if>
-			  	</c:otherwise>
+				  	<c:when test="${userLoginId ne 'admin'}">
+				  		<c:choose>
+					  		<c:when test="${nowPage ne 0}">
+					  		<a href="/onetoone/onetoone_list_view?page=0">첫 페이지로</a>
+					  		</c:when>
+					  		<c:otherwise>
+					  		<div>첫 페이지로</div>
+					  		</c:otherwise>
+						</c:choose>
+						<c:choose>
+					  		<c:when test="${nowPage eq onetooneList.totalPages - 1}">
+					  		<div>마지막 페이지로</div>
+					  		</c:when>
+					  		<c:otherwise>
+					  		<a href="/onetoone/onetoone_list_view?page=${onetooneList.totalPages - 1}">마지막 페이지로</a>
+					  		</c:otherwise>
+						</c:choose>
+				  	</c:when>
+				  	<c:otherwise>
+				  		<c:if test="${not empty searchKeyword}">
+				  		<c:choose>
+					  		<c:when test="${nowPage ne 0}">
+				  			<a href="/admin/manage_onetoone_list_view?page=0${searchKeyword}">첫 페이지로</a>
+				  			</c:when>
+					  		<c:otherwise>
+					  		<div>첫 페이지로</div>
+					  		</c:otherwise>
+						</c:choose>
+						<c:choose>
+					  		<c:when test="${nowPage eq onetooneList.totalPages - 1}">
+					  		<div>마지막 페이지로</div>
+				   			</c:when>
+					  		<c:otherwise>
+					  		<a href="/admin/manage_onetoone_list_view?page=${onetooneList.totalPages - 1}${searchKeyword}" class="float-right">마지막 페이지로</a>
+					  		</c:otherwise>
+					  	</c:choose>	
+				   		</c:if>
+				   		<c:if test="${empty searchKeyword}">
+				   		<c:choose>
+					  		<c:when test="${nowPage ne 0}">
+				   			<a href="/admin/manage_onetoone_list_view?page=0">첫 페이지로</a>
+				   			</c:when>
+				   			<c:otherwise>
+					  		<div>첫 페이지로</div>
+					  		</c:otherwise>
+						</c:choose>
+						<c:choose>
+					  		<c:when test="${nowPage eq onetooneList.totalPages - 1}">
+					  		<div>마지막 페이지로</div>
+					  		</c:when>
+					  		<c:otherwise>
+				   			<a href="/admin/manage_onetoone_list_view?page=${onetooneList.totalPages - 1}" class="float-right">마지막 페이지로</a>
+				   			</c:otherwise>
+			   			</c:choose>
+				   		</c:if>
+				  	</c:otherwise>
 		   		</c:choose>
 	   		</div>
 	    	
+	    	   	</c:if>
 	    	 
    					<c:choose>
 	    				<c:when test="${userLoginId ne 'admin'}">		    				

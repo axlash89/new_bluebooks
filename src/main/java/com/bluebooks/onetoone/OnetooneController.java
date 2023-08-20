@@ -25,7 +25,7 @@ public class OnetooneController {
 	
 	// /onetoone/onetoone_list_view?page=2
 	@GetMapping("/onetoone_list_view")
-	public String onetooneListView(HttpSession session, Model model, @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+	public String onetooneListView(HttpSession session, Model model, @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
 		
 		
 		int userId = (int)session.getAttribute("userId");
@@ -40,11 +40,11 @@ public class OnetooneController {
 			nowPage =  onetooneList.getTotalPages() - 1;
 		}
 		
-		int startPage = Math.max(0, onetooneList.getPageable().getPageNumber() - 4);
+		int startPage = Math.max(0, onetooneList.getPageable().getPageNumber() - 3);
 		
 		int endPage;
 		if (onetooneList.getTotalPages() != 0) {
-			endPage = Math.min(onetooneList.getTotalPages() - 1, nowPage + 4);
+			endPage = Math.min(onetooneList.getTotalPages() - 1, nowPage + 3);
 		} else {
 			endPage = 0;
 		}

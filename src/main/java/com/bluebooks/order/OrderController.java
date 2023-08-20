@@ -1,13 +1,16 @@
 package com.bluebooks.order;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -54,6 +57,29 @@ public class OrderController {
 		return "template/layout";
 	}
 	
+	@GetMapping("/my_order_more_detail")
+	public String myOrderMoreDetail(Model model, HttpSession session,
+			HttpServletResponse response,
+			@RequestParam("userId") int userId,
+			@RequestParam("orderId") int orderId) {
+		
+		int currUserId = (int) session.getAttribute("userId");
+		if (currUserId != userId) {
+			try {
+				response.sendRedirect("/order/my_order_view");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		OrderView orderView = orderBO.getOrderView(orderId);
+		
+		model.addAttribute("orderView", orderView);
+		model.addAttribute("view", "my/myLayout");
+		model.addAttribute("secondView", "order/myOrderDetail");
+		return "template/layout";
+		
+	}
 	
 	@GetMapping("/create_order_view")
 	public String createOrderView(Model model, HttpSession session,

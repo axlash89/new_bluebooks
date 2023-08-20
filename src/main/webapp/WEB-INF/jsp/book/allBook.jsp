@@ -2,32 +2,36 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-		<h1 class="text-center">모든 책 분야보기</h1>
+
+		<h3 class="text-center pt-3 category-guide font-weight-bold"><c:if test="${not empty categoryName}">${categoryName} ></c:if>&nbsp;분야보기</h3>
+		
+		
+		<hr class="mb-3">
 		<div class="d-flex justify-content-end mr-5 pt-1">
-			<label>전체선택<input type="checkbox" id="checkAll"></label>
+			<label><input type="checkbox" id="checkAll">&nbsp;전체선택</label>
 		</div>
+		
+		
+		
 		<c:forEach items="${bookListByCategory}" var="book" varStatus="status">
    			
-	   		<div class="d-flex align-items-center pt-4">	
-	   			<div class="h5">
-	   			</div>
+	   		<div class="book-box-in-list d-flex align-items-center stop-drag">	
 	   			<div>
-	   				<a href="/book/book_detail_view?bookId=${book.id}"><img src="${book.cover}"></a>
+	   				<a href="/book/book_detail_view?bookId=${book.id}"><img src="${book.cover}" width="100px" class="ml-2 mr-2"></a>
 	   			</div>
-	   			<div>
-	   				<div class="h5">${book.title}</div>
-	   				<div>${book.author}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${book.publisher}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${book.pubDate}</div>
-	   				<div class="small">${fn:substring(book.description, 0, 80)}...</div>
-	   				
+	   			<div class="book-info-in-book-box pl-2">
+	   				<a href="/book/book_detail_view?bookId=${book.id}" class="a-tag-deco-none"><div class="book-title-in-book-box"><c:choose><c:when test="${fn:length(book.title) > 20}">${fn:substring(book.title, 0, 21)}..</c:when><c:otherwise>${book.title}</c:otherwise></c:choose></div></a>
+	   				<hr>
+	   				<div class="book-author-in-book-box"><c:choose><c:when test="${fn:length(book.author) > 10}">${fn:substring(book.author, 0, 11)}..</c:when><c:otherwise>${book.author}</c:otherwise></c:choose>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<c:choose><c:when test="${fn:length(book.publisher) > 6}">${fn:substring(book.publisher, 0, 7)}..</c:when><c:otherwise>${book.publisher}</c:otherwise></c:choose>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${book.pubDate}</div>
+	   				<hr>
+	   				<div class="small"><c:choose><c:when test="${empty book.description}"><span class="font-italic text-secondary">책 설명이 없습니다.</span></c:when><c:otherwise>${fn:substring(book.description, 0, 95)}...</c:otherwise></c:choose></div>
 	   			</div>
-	   			<div>
-	   				<input class="check-one form-control" type="checkbox" value="${book.id}">
-	   			</div>
-	   			<div>
-	  				<button class="add-cart-btn form-control btn btn-sm btn-info d-block" data-book-id="${book.id}">장바구니 담기</button>
+	   				<input class="check-one ml-2 mr-1" type="checkbox" value="${book.id}">
+	   			<div class="api-in-book-box">
+	  				<button class="add-cart-btn api-btn-in-book-box form-control btn btn-sm btn-info d-block" data-book-id="${book.id}">장바구니로</button>
 	  				<form action="/order/create_order_view" method="get">
 	  					<input type="text" class="d-none" name="bookId" value="${book.id}">
-	  					<button type="submit" class="purchase-btn form-control btn btn-sm btn-secondary d-block">바로 구매하기</button>
+	  					<button type="submit" class="purchase-btn api-btn-in-book-box form-control btn btn-sm btn-secondary d-block">바로 구매</button>
 	   				</form>
 	   			</div>
 	   		</div>	
@@ -35,28 +39,28 @@
 	  	</c:forEach>
 		
 		
-		<div class="d-flex justify-content-center">
+		<div class="d-flex justify-content-center mt-3 mb-2">
 		  	<ul class="pagination">
 			    <c:if test="${pageMaker.prev}">
 			        <li>
-			            <a href="/book/all_book_view${pageMaker.makeQuery(pageMaker.startPage - 1)}&cid=${cid}" class="mr-2 text-dark">[이전]</a>
+			            <a href="/book/all_book_view${pageMaker.makeQuery(pageMaker.startPage - 1)}&cid=${cid}&cname=${categoryName}" class="a-tag-deco-prev-paging">[이전]</a>
 			        </li>		         
 			    </c:if>
 			 
 			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="index">
 			    	<c:choose>
 			    	<c:when test="${nowPage eq index}">
-			        <a href="/book/all_book_view${pageMaker.makeQuery(index)}&cid=${cid}" class="text-danger">[${index}]</a>
+			        <a href="/book/all_book_view${pageMaker.makeQuery(index)}&cid=${cid}&cname=${categoryName}" class="a-tag-deco-now-paging">[${index}]</a>
 			        </c:when>
 			        <c:otherwise>
-			        <a href="/book/all_book_view${pageMaker.makeQuery(index)}&cid=${cid}">[${index}]</a>
+			        <a href="/book/all_book_view${pageMaker.makeQuery(index)}&cid=${cid}&cname=${categoryName}" class="a-tag-deco-paging">[${index}]</a>
 			        </c:otherwise>
 			        </c:choose>
 			    </c:forEach>
 			 
 			    <c:if test="${pageMaker.next}">
 			        <li>
-			            <a href="/book/all_book_view${pageMaker.makeQuery(pageMaker.endPage + 1)}&cid=${cid}" class="ml-2 text-dark">[다음]</a>
+			            <a href="/book/all_book_view${pageMaker.makeQuery(pageMaker.endPage + 1)}&cid=${cid}&cname=${categoryName}" class="a-tag-deco-next-paging">[다음]</a>
 			        </li>
 			    </c:if>   
 			</ul>
@@ -90,7 +94,7 @@
 			
 			if(${empty userId}) {
 				alert("로그인이 필요합니다.");
-				return;
+				return false;
 			}
 			
 			var checkArr = [];
@@ -133,7 +137,7 @@
 			
 			if(${empty userId}) {
 				alert("로그인이 필요합니다.");
-				return;
+				return false;
 			}
 			
 		});

@@ -22,4 +22,6 @@ public interface CommentMapper {
 	
 	public List<Comment> selectCommentListByEventId(int eventId);
 	
+	public void deleteCommentByUserId(int userId);
+	
 }

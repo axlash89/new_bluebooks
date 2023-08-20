@@ -1,41 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<h3 class="text-center pt-3">이벤트 게시판</h3>
-
-<c:if test="${userLoginId eq 'admin'}">
-<div class="d-flex justify-content-center">
-	<div class="file-upload d-flex ml-3">				
-		<input type="file" id="file" accept=".jpg, .jpeg, .png, .gif">
-		<div class="ml-2 d-flex align-items-center" id="fileName"></div>				
-	</div>
-	<button type="button" id="uploadBtn" class="btn btn-info mr-2">올리기</button>
-</div>	
-</c:if>
-
+<div class="text-center">
+   	<h3 class="normal-text text-center pt-4">이벤트 게시판</h3>
+</div>
 <div class="d-flex justify-content-center">
 	<div class="w-75">
 		<c:forEach items="${eventViewList}" var="eventView">
-			<div class="event">
-				<div class="event-img">
+			<div class="event event-box-in-event-board mt-5">
+				<div class="event-image-in-event-board">
 					<img src="${eventView.event.imagePath}" class="w-100" alt="이벤트 이미지">
 				</div>
 				<c:if test="${userLoginId eq 'admin'}">
-				<div class="d-flex justify-content-end font-weight-bold border w-100 pl-3 py-2 mt-3 mb-1">
-					<div class="file-upload d-flex ml-3">				
-						<input type="file" class="updateFile" accept=".jpg, .jpeg, .png, .gif">
-						<div class="ml-2 d-flex align-items-center" class="updatefileName"></div>				
-					</div>
-					<button type="button" class="updateBtn btn btn-info mr-2" data-event-id="${eventView.event.id}">수정</button>
-					<button type="button" class="deleteBtn btn btn-danger mr-2" data-event-id="${eventView.event.id}">삭제</button>
-				</div>	
+					<div class="d-flex justify-content-end font-weight-bold w-100 pl-3 py-2 mt-3 mb-1">
+						<div class="file-upload d-flex ml-3">				
+							<input type="file" class="updateFile" accept=".jpg, .jpeg, .png, .gif">
+							<div class="ml-2 d-flex align-items-center" class="updatefileName"></div>				
+						</div>
+						<button type="button" class="updateBtn btn btn-info mr-2" data-event-id="${eventView.event.id}">수정</button>
+						<button type="button" class="deleteBtn btn btn-danger mr-2" data-event-id="${eventView.event.id}">삭제</button>
+					</div>	
 				</c:if>
-				<div class="font-weight-bold border w-100 pl-3 py-2 mt-3 mb-1">
+				<div class="font-weight-bold border w-100 pl-3 py-2 mt-3 mb-1 event-comment-in-event-board">
 					댓글
 				</div>
-				<div class="card-comment-list px-2">
+				<div class="card-comment-list px-2 py-2 border event-comment-list-in-event-board">
+					
+					<c:choose>
+					<c:when test="${not empty eventView.commentViewList}">
 					<c:forEach items="${eventView.commentViewList}" var="commentView" varStatus="status">	
-						<div class=".comment-box">					
+						<div class="comment-box mt-1">					
 							<c:choose>
 							<c:when test="${userLoginId eq commentView.user.loginId}">
 							<span class="font-weight-bold mr-1 text-info">${commentView.user.loginId}</span>
@@ -44,26 +38,32 @@
 							<span class="font-weight-bold mr-1">${commentView.user.loginId}</span>
 							</c:otherwise>
 							</c:choose>
-							<span>좋아요<c:choose>
+							<span class="small">좋아요</span>
+							<c:choose>
 								<c:when test="${commentView.filledLike}">
-									<a href="#" class="like-btn" data-comment-id="${commentView.comment.id}" data-user-id="${commentView.user.id}"><img src="/static/img/filledHeart.png" width="15px" alt="채워진 하트"></a>
+									<a href="#" class="like-btn" data-comment-id="${commentView.comment.id}" data-user-id="${commentView.user.id}"><img src="/static/img/filledHeart.png" width="17px" alt="채워진 하트"></a>
 								</c:when>
 								<c:otherwise>
-									<a href="#" class="like-btn" data-comment-id="${commentView.comment.id}" data-user-id="${commentView.user.id}"><img src="/static/img/emptyHeart.png" width="15px" alt="채워진 하트"></a>
+									<a href="#" class="like-btn" data-comment-id="${commentView.comment.id}" data-user-id="${commentView.user.id}"><img src="/static/img/emptyHeart.png" width="17px" alt="채워진 하트"></a>
 								</c:otherwise>
-							</c:choose>${commentView.likeCount}개</span>							
-							<span>${commentView.comment.content}</span>
+							</c:choose><span class="small">${commentView.likeCount}개</span>					
+							${commentView.comment.content}
 							<c:if test="${commentView.user.id eq userId}">
-							<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}"><img src="/static/img/x-icon.png" width="12px" alt="삭제 버튼"></a>
+							<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}"><img src="/static/img/x-icon.png" class="event-comment-del-img" width="12px" alt="삭제 버튼"></a>
 							</c:if>
 						</div>
 					</c:forEach>
+					</c:when>
+					<c:otherwise>
+					<span class="pl-2">댓글을 아무도 게시하지 않았어요.</span>
+					</c:otherwise>
+					</c:choose>
 				</div>
 				
 				<div class="comment-write m-1 d-flex justify-content-between">
-					<input type="text" placeholder="댓글 내용을 입력하세요" class="comment-input form-control w-100 mb-1">
+					<input type="text" placeholder="댓글 내용을 입력하세요" class="comment-input form-control mb-1">
 					<!-- <input type="text" class="postIdValue d-none" value="${post.id}"> -->
-					<button type="button" class="comment-btn btn btn-secondary" data-event-id="${eventView.event.id}">올리기</button>
+					<button type="button" class="comment-btn btn btn-secondary" data-event-id="${eventView.event.id}">게시</button>
 				</div>
 				<div class="card-bottom"></div>
 			</div>
@@ -71,7 +71,7 @@
 	</div>
 </div>
 
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center pt-3 pb-3">
   	<ul class="pagination">
 	    <c:if test="${pageMaker.prev}">
 	        <li>
@@ -98,9 +98,19 @@
 	</ul>
 </div>
 
+<c:if test="${userLoginId eq 'admin'}">
+<div id="eventUploadForm" class="d-flex justify-content-center pt-3 pb-5">
+	<div class="file-upload d-flex ml-3">				
+		<input type="file" id="file" accept=".jpg, .jpeg, .png, .gif">
+		<div class="ml-2 d-flex align-items-center" id="fileName"></div>				
+	</div>
+	<button type="button" id="uploadBtn" class="btn btn-primary mr-2">이벤트 업로드</button>
+</div>	
+</c:if>
 
 <script>
 $(document).ready(function() {
+	
 	
 	$('#uploadBtn').on('click', function() {
 		let file = $('#file').val();
@@ -179,6 +189,11 @@ $(document).ready(function() {
 	
 	
 	$('.updateBtn').on('click', function() {
+		
+		let result = confirm("이벤트를 수정하시겠습니까?");
+		if (!result) {
+			return;
+		}
 		
 		let eventId = $(this).data('event-id');
 		

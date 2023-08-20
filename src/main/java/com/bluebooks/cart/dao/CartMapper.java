@@ -36,7 +36,7 @@ public interface CartMapper {
 	
 	public void deleteFromCart(
 			@Param("userId") int userId,
-			@Param("bookId") int bookId);
+			@Param("bookIdArr") int[] bookIdArr);
 	
 	public void updateBookCount(
 			@Param("userId") int userId,
@@ -47,5 +47,6 @@ public interface CartMapper {
 			@Param("userId") int userId,
 			@Param("bookId") int bookId);
 	
+	public void deleteCartByUserId(int userId);
 	
 }

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 		<div>
-	   	<div class="h3 d-flex justify-content-center mb-3">회원 리스트</div>
+	   	<div class="h3 d-flex normal-text justify-content-center pt-3 mb-4">회원 리스트</div>
 	  	</div>
 	  	
 	  	<div class="d-flex justify-content-between"> 
@@ -13,7 +13,7 @@
 	  			<div class="pt-2">검색어와 일치하는 회원 수 : ${userList.totalElements}</div>
 	  			</c:when>
 	  			<c:otherwise>
-	  				<div class="pt-2">총 회원 수 : ${userList.totalElements - 1}</div>
+	  				<div class="pt-2 pl-2 normal-text">총 회원 수 : ${userList.totalElements - 1}</div>
 	  			</c:otherwise>
 	  		</c:choose>
 	  		<div>		
@@ -26,7 +26,7 @@
 			</div>   		
    		</div>
 	  	<table class="table text-center">
-	  		<thead>
+	  		<thead class="board-head">
 	  			<tr>
 	  				<th>회원번호</th>
 	  				<th>아이디</th>
@@ -36,7 +36,7 @@
 	  				<th>상세보기</th>
 	  			</tr>
 	  		</thead>
-	  		<tbody>
+	  		<tbody class="board-body">
 		   		<c:forEach items="${userList.content}" var="user">
 		   			<tr>
 		   				<td>${user.id}</td>
@@ -53,6 +53,11 @@
 	  			</c:forEach>
 	  		</tbody>
 	  	</table>
+	  	
+	  	<c:if test="${not empty emptyList}">
+	  	<div class="d-flex justify-content-center normal-text mb-3">검색 결과가 없습니다.</div>
+	  	</c:if>
+	  	<c:if test="${empty emptyList}">
 	  	<div class="d-flex justify-content-between">
 		  	<c:choose>
 			  	<c:when test="${empty searchKeyword}">
@@ -93,6 +98,7 @@
 			  	</c:otherwise>
 	   		</c:choose>
    		</div>
+   		</c:if>
 	  	<c:if test="${endPage eq 0}">
 	   	<nav aria-label="Page navigation example">
 		  <ul class="pagination justify-content-center">

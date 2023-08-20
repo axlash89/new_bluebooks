@@ -7,7 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bluebooks.cart.bo.CartBO;
+import com.bluebooks.comment.bo.CommentBO;
 import com.bluebooks.common.Criteria;
+import com.bluebooks.like.bo.LikeBO;
 import com.bluebooks.onetoone.bo.OnetooneBO;
 import com.bluebooks.user.bo.UserBO;
 import com.bluebooks.user.entity.UserEntity;
@@ -26,9 +29,19 @@ public class WithdrawalBO {
 	@Autowired
 	private OnetooneBO onetooneBO;
 	
+	@Autowired
+	private LikeBO likeBO;
+	
+	@Autowired
+	private CartBO cartBO;
+	
+	@Autowired
+	private CommentBO commentBO;
+	
+	
 	public int deleteWithdrawal(int userId, String userLoginId, String reason) {
 		
-		// user(완료), onetoone(완료), like, comment, cart 다 지워야함.
+		// user(완료), onetoone(완료), like(완료), comment(완료), cart(완료) 다 지워야함.
 		
 		UserEntity userEntity = userBO.getUserEntityByLoginId(userLoginId);
 		
@@ -37,19 +50,21 @@ public class WithdrawalBO {
 		
 		int row = withdrawalMapper.insertWithdrawal(userId, userLoginId, userCreatedAt, reason);
 
-		userBO.deleteUserEntityByUserId(userId);
 		
 		onetooneBO.deleteOnetooneByUserId(userId);
+		
+		likeBO.deleteLikeByUserId(userId);
+		
+		commentBO.deleteCommentByUserId(userId);
+		
+		cartBO.deleteCartByUserId(userId);
+
+		userBO.deleteUserEntityByUserId(userId);
 
 		return row;
 		
 	}
 	
- 
-//	public List<Withdrawal> getWithdrawalList() {
-//		List<Withdrawal> withdrawalList = withdrawalMapper.selectWithdrawalList();
-//		return withdrawalList;
-//	}
 
 	public List<Withdrawal> selectWithdrawalList(Criteria criteria) {
 		return withdrawalMapper.selectWithdrawalList(criteria);

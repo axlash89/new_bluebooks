@@ -30,7 +30,7 @@
  		DELETE FROM 
  			`comment`
  		WHERE
- 			`id` = #{commentId} 			
+ 			`id` = #{commentId}
  	
  	</delete>
  	
@@ -54,5 +54,13 @@
 		WHERE
 			`eventId` = #{eventId}
  	</select>
+ 	
+ 	<delete id="deleteCommentByUserId" parameterType="int">
+ 		DELETE FROM 
+ 			`comment`
+ 		WHERE
+ 			`userId` =	#{userId}
+ 	</delete>
+ 	
 
 </mapper>

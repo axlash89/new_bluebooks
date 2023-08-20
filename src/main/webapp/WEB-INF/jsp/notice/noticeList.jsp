@@ -3,31 +3,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-		<div>
-	   	<div>공지사항</div>
+	   	<h3 class="normal-text text-center pt-4 pb-3">공지사항</h3>
+	   	<div class="d-flex justify-content-between">
+		  	<div class="normal-text h5 pt-2">총 게시물 수 : ${noticeList.totalElements}</div>
+		  	<div class="d-flex pr-2 mb-1">
+			  	<form action="/notice/notice_list_view" method="get">
+			  		<input type="text" id="searchNoticeBox" name="searchKeyword" placeholder="제목을 입력하세요.">
+			  		<input type="submit" class="btn btn-info" id="searchNoticeBtn" value="검색">
+			  	</form>
+		  	</div>
 	  	</div>
-	  	
-	  	<div class="d-flex justify-content-end pr-3">
-	  		<form action="/notice/notice_list_view" method="get">
-	  		<input type="text" id="searchNoticeBox" name="searchKeyword" placeholder="제목을 입력하세요.">
-	  		<input type="submit" id="searchNoticeBtn" value="검색">
-	  		</form>
-	  	</div>
-	  	
-	  	<div>총 게시물 수 : ${noticeList.totalElements}</div>
 	  	<table class="table text-center">
-	  		<thead>
+	  		<thead class="board-head">
 	  			<tr>
 	  				<th>번호</th>
 	  				<th>제목</th>
 	  				<th>작성날짜</th>
 	  			</tr>
 	  		</thead>
-	  		<tbody>
+	  		<tbody class="board-body">
 		   		<c:forEach items="${noticeList.content}" var="notice">
 		   			<tr>
 		   				<td>${notice.id}</td>
-		   				<td><a href="/notice/notice_detail_view?id=${notice.id}">${notice.subject}</a></td>
+		   				<td><a href="/notice/notice_detail_view?id=${notice.id}" class="a-tag-deco-none-category">${notice.subject}</a></td>
 		   				<td>
 		   					<%-- ZonedDateTime -> Date -> String --%>
 							<fmt:parseDate value="${notice.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
@@ -37,6 +35,8 @@
 	  			</c:forEach>
 	  		</tbody>
 	  	</table>
+	  	
+	  	
 	  	
 	  	<div class="d-flex justify-content-between">
 		  	<c:choose>

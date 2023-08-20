@@ -278,13 +278,16 @@
 	
 	</update>	
 	
-	<update id="updateStatusByOrderIdArr" parameterType="int">
+	<update id="updateStatusByOrderIdArr" parameterType="map">
 	
 		UPDATE
 			`order`
 		SET `status` = '배송중'
 		WHERE
-			`id` = #{orderId}
+			`id` IN		    	
+	    <foreach collection="orderIdArr" item="value" index="index" separator="," open="(" close=")">
+	    	${value}
+	    </foreach>
 	
 	</update>	
 	

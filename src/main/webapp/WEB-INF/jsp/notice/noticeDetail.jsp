@@ -5,9 +5,10 @@
 <div class="d-flex justify-content-center">
 	<div class="w-50">
 	
-		<h5>공지사항</h5>
-		
-		<input type="text" id="subject" class="form-control" placeholder="제목을 입력하세요" value="${noticeEntity.subject}">
+		<h4 class="normal-text text-center pt-4 pb-2">공지사항</h4>
+		<span class="normal-text">제목</span>
+		<input type="text" id="subject" class="form-control mb-3" placeholder="제목을 입력하세요" value="${noticeEntity.subject}">
+		<span class="normal-text">내용</span>
 		<textarea id="content" class="form-control" rows="10" placeholder="내용을 입력하세요">${noticeEntity.content}</textarea>
 		<%-- 이미지가 있을 때만 이미지 영역 추가 --%>
 		<c:if test="${not empty noticeEntity.imagePath}">
@@ -31,9 +32,9 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<div class="d-flex justify-content-end">
+				<div class="d-flex justify-content-end pt-2">
 					<div>
-						<input type="button" id="previousBtn" class="btn btn-secondary" value="목록">	
+						<input type="button" id="previousBtn" class="btn btn-secondary" value="목록으로">	
 					</div>			
 				</div>
 			</c:otherwise>

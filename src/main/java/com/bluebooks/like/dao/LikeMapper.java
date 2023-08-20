@@ -22,4 +22,9 @@ public interface LikeMapper {
 			@Param("commentId") int commentId, 
 			@Param("userId") int userId);
 	
+	public int deleteLikeByCommentIdArr(
+			@Param("commentIdArr") int[] commentIdArr);
+	
+	public void deleteLikeByUserId(int userId);
+	
 }

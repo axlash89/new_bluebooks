@@ -202,5 +202,26 @@ public class OnetooneBO {
 		
 	}
 	
+	public void deleteAnswer(int onetooneId) {
+		OnetooneEntity onetooneEntity = onetooneRepository.findById(onetooneId).orElse(null);
+		
+		onetooneEntity = onetooneEntity.toBuilder()
+				.answer("")
+				.status("미답변")
+				.build();
+				onetooneEntity = onetooneRepository.save(onetooneEntity);
+		
+	}
+	
+	public void updateAnswer(int onetooneId, String answer) {
+		OnetooneEntity onetooneEntity = onetooneRepository.findById(onetooneId).orElse(null);
+		
+		onetooneEntity = onetooneEntity.toBuilder()
+				.answer(answer)
+				.build();
+				onetooneEntity = onetooneRepository.save(onetooneEntity);
+		
+	}
+	
 	
 }

@@ -31,7 +31,7 @@ public class BookController {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(criteria);
 		pageMaker.setTotalCount(bookBO.getSearchedBookListTotalCount(searchKeyword));
-		
+		model.addAttribute("searchedResultCount", bookBO.getSearchedBookListTotalCount(searchKeyword));
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("nowPage", criteria.getPage());
         model.addAttribute("pageMaker", pageMaker);	
@@ -55,6 +55,7 @@ public class BookController {
 		pageMaker.setCri(criteria);
 		pageMaker.setTotalCount(bookBO.getAdvancedSearchedBookListTotalCount(title, author, publisher));
 		
+		
 		model.addAttribute("title", title);
 		model.addAttribute("author", author);
 		model.addAttribute("publisher", publisher);
@@ -77,7 +78,8 @@ public class BookController {
 
 	@GetMapping("/all_book_view")
 	public String allBookView(Model model, Criteria criteria,
-			@RequestParam(required = false) Integer cid) {
+			@RequestParam(required = false) Integer cid,
+			@RequestParam(required = false) String cname) {
 		List<Book> bookListByCategory = bookBO.getBookListByCategory(cid, criteria);
 
 		PageMaker pageMaker = new PageMaker();
@@ -86,6 +88,9 @@ public class BookController {
 		
 		model.addAttribute("bookListByCategory", bookListByCategory);
 		model.addAttribute("cid", cid);
+		if (cname != null) {
+			model.addAttribute("categoryName", cname);
+		}
 		model.addAttribute("nowPage", criteria.getPage());
         model.addAttribute("pageMaker", pageMaker);	
 		model.addAttribute("view", "category/categoryLayout");
@@ -96,7 +101,8 @@ public class BookController {
 
 	@GetMapping("/best_book_view")
 	public String bestBookView(Model model, Criteria criteria,
-			@RequestParam(required = false) Integer cid) {
+			@RequestParam(required = false) Integer cid,
+			@RequestParam(required = false) String cname) {
 		List<Book> bestBookListByCategory = bookBO.getBestBookListByCategory(cid, criteria);
 
 		PageMaker pageMaker = new PageMaker();
@@ -105,6 +111,9 @@ public class BookController {
 		
 		model.addAttribute("bestBookListByCategory", bestBookListByCategory);
 		model.addAttribute("cid", cid);
+		if (cname != null) {
+			model.addAttribute("categoryName", cname);
+		}
 		model.addAttribute("nowPage", criteria.getPage());
         model.addAttribute("pageMaker", pageMaker);	
 		model.addAttribute("view", "category/categoryLayout");
@@ -114,7 +123,8 @@ public class BookController {
 	
 	@GetMapping("/new_book_view")
 	public String newBookView(Model model, Criteria criteria,
-			@RequestParam(required = false) Integer cid) {
+			@RequestParam(required = false) Integer cid,
+			@RequestParam(required = false) String cname) {
 		List<Book> newBookListByCategory = bookBO.getNewBookListByCategory(cid, criteria);
 
 		PageMaker pageMaker = new PageMaker();
@@ -123,6 +133,9 @@ public class BookController {
 		
 		model.addAttribute("newBookListByCategory", newBookListByCategory);
 		model.addAttribute("cid", cid);
+		if (cname != null) {
+			model.addAttribute("categoryName", cname);
+		}
 		model.addAttribute("nowPage", criteria.getPage());
         model.addAttribute("pageMaker", pageMaker);	
 		model.addAttribute("view", "category/categoryLayout");

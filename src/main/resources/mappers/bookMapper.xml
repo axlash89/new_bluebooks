@@ -87,17 +87,14 @@
 			`id` = #{bookId}	
 	</select>
 		
-	<select id="selectBookByRecentBookIds" parameterType="map" resultType="String">
+	<select id="selectBookByRecentBookId" parameterType="int" resultType="String">
 	
 		SELECT
 			`cover`
 		FROM
 			`book`
 		WHERE
-			`id` IN	
-	    <foreach collection="recentBookIds" item="value" index="index" separator="," open="(" close=")">
-	    	${value}
-	    </foreach>			
+			`id` = #{bookId}		
 		
 	</select>
 	

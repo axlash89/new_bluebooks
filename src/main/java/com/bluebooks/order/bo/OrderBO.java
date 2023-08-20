@@ -139,11 +139,9 @@ public class OrderBO {
 			
 			List<Book> bookList = new ArrayList<>();
 			for (int j = 0; j < orderedBooksList.size(); j++) {
-				
 				bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
 			}
-			orderView.setBookList(bookList);
-			
+			orderView.setBookList(bookList);			
 			
 			orderViewList.add(orderView);
 			
@@ -228,7 +226,6 @@ public class OrderBO {
 				if (type.equals("byLoginId")) {
 					
 					List<UserEntity> searchedUserList = userBO.getUserEntityByLoginIdContaining(searchKeyword);
-					List<Order> orderListByLoginId = new ArrayList<>();
 					
 					if (searchedUserList.size() == 0) {
 						return orderViewList;
@@ -268,8 +265,7 @@ public class OrderBO {
 				orderView.setOrderedBooksList(orderedBooksList);
 				
 				List<Book> bookList = new ArrayList<>();
-				for (int j = 0; j < orderedBooksList.size(); j++) {
-					
+				for (int j = 0; j < orderedBooksList.size(); j++) {					
 					bookList.add(bookBO.getBookById(orderedBooksList.get(j).getBookId())); 
 				}
 				orderView.setBookList(bookList);
@@ -410,21 +406,13 @@ public class OrderBO {
 	}
 		
 	
-	public void updateStatusByOrderId(int orderId, String status) {
-		
-			orderMapper.updateStatusByOrderId(orderId, status);
-		
+	public void updateStatusByOrderId(int orderId, String status) {		
+			orderMapper.updateStatusByOrderId(orderId, status);		
 	}
 	
 	
-	public void updateStatusByOrderIdArr(Integer[] orderIdArr) {
-		
-		for (int i = 0; i < orderIdArr.length; i++) {
-			
-			orderMapper.updateStatusByOrderIdArr(orderIdArr[i]);
-			
-		}
-	
+	public void updateStatusByOrderIdArr(Integer[] orderIdArr) {		
+			orderMapper.updateStatusByOrderIdArr(orderIdArr);			
 	}
 	
 	
@@ -448,6 +436,5 @@ public class OrderBO {
 		return orderView;
 		
 	}
-	
 	
 }

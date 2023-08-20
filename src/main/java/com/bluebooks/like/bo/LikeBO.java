@@ -39,4 +39,12 @@ public class LikeBO {
 		
 	}
 	
+	public void deleteLikeByCommentIdArr(int[] commentIdArr) {
+		likeMapper.deleteLikeByCommentIdArr(commentIdArr);
+	}
+	
+	public void deleteLikeByUserId(int userId) {
+		likeMapper.deleteLikeByUserId(userId);
+	}
+	
 }

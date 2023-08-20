@@ -10,12 +10,6 @@
 
 <table class="table">
 	<tr>
-		<th class="normal-text">주문자 ID</th>
-		<td>${orderView.user.loginId}</td>	
-		<th class="normal-text">주문자 이름</th>
-		<td>${orderView.user.name}</td>	
-	</tr>
-	<tr>
 		<th class="normal-text">수령인</th>
 		<td>${orderView.order.recipientName}</td>	
 		<th class="normal-text">수령인 연락처</th>
@@ -52,7 +46,7 @@
 <div class="normal-text">수령 주소</div> <div>${orderView.order.recipientAddress}</div>
 </div>
 <div class="d-flex justify-content-center">
-	<button id="previousBtn" class="btn btn-dark">이전으로</button>
+	<button id="previousBtn" class="btn btn-dark mb-3">이전으로</button>
 </div>
 
 <script>

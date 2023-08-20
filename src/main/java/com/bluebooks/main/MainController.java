@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bluebooks.book.domain.Book;
+import com.bluebooks.event.domain.Event;
 import com.bluebooks.main.bo.MainBO;
 
 @Controller
@@ -23,7 +24,9 @@ public class MainController {
 		model.addAttribute("bestSellerTop10List", bestSellerTop10List);
 		List<Book> noteworthyNewBookTop5List = mainBO.getNoteworthyNewBookTop5List();
 		model.addAttribute("noteworthyNewBookTop5List", noteworthyNewBookTop5List);
-
+		List<Event> eventList = mainBO.getEventListForMain(); 		
+		model.addAttribute("eventList", eventList);
+				
 		model.addAttribute("view", "main");
 		
 		return "template/layout";

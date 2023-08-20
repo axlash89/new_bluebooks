@@ -5,12 +5,14 @@
 	    
 	    <div class="my-page-contents">
 	    	<div>
-		    	<div class="d-flex justify-content-center">회원탈퇴</div>
+		    	<div class="d-flex justify-content-center normal-text pt-4 pb-3 h3">회원탈퇴</div>
 	    	</div>
-	    	<div>
-	    		<textarea rows="4" cols="70" id="reason" placeholder="탈퇴하시는 이유를 알려주세요."></textarea>
-	    		<button id="withdrawBtn" class="btn btn-info float-right mr-5">탈퇴하기</button>
-	    	</div>	    	
+	    	<div class="d-flex justify-content-center">
+			    <div><textarea rows="7" cols="80" id="reason" placeholder="탈퇴하시는 이유를 알려주세요."></textarea></div>
+    		</div>
+    		<div class="d-flex justify-content-end mt-2">
+    			<div><button id="withdrawBtn" class="btn btn-info pt-2 mr-5">탈퇴하기</button></div> 
+    		</div>   	
 	    </div>
 
 <script>

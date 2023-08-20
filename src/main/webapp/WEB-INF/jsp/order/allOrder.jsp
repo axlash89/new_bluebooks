@@ -5,48 +5,51 @@
     
 	<div class="my-page-contents">
     	<div>
-	    	<div class="d-flex justify-content-center">주문내역 관리</div>
-	    	<div class="d-flex justify-content-between mt-3">
-	    		<div class="d-flex justify-content-center mt-3">주문내역</div><div><a href="/admin/admin_view?period=week" class="btn btn-info">최근 1주일</a><a href="/admin/admin_view?period=oneMonth" class="btn btn-info">1개월</a><a href="/admin/admin_view?period=threeMonths" class="btn btn-info">3개월</a><a href="/admin/admin_view" class="btn btn-primary">전체</a></div>
-	    	</div>
-    	</div>
-    	
+	    	<div class="d-flex justify-content-center h3 normal-text text-center pt-3 pb-4">주문내역 관리</div>
+	    	
  		<c:choose>
     		<c:when test="${periodText == 'week'}">
-    			<div class="h5 text-center">최근 일주일간의 주문 내역입니다.</div>
+    			<div class="h5 text-center normal-text">최근 일주일간의 주문 내역입니다.</div>
     		</c:when>
     		<c:when test="${periodText == 'oneMonth'}">
-    			<div class="h5 text-center">최근 한달 간의 주문 내역입니다.</div>
+    			<div class="h5 text-center normal-text">최근 한달 간의 주문 내역입니다.</div>
     		</c:when>
     		<c:when test="${periodText == 'threeMonths'}">
-    			<div class="h5 text-center">최근 3개월 간의 주문 내역입니다.</div>
+    			<div class="h5 text-center normal-text">최근 3개월 간의 주문 내역입니다.</div>
     		</c:when>
     		<c:otherwise>
-    			<div class="h5 text-center">전체 주문 내역입니다.</div>
+    			<div class="h5 text-center normal-text">전체 주문 내역입니다.</div>
     		</c:otherwise>
     	</c:choose>
     	
+    		<div class="d-flex justify-content-between mt-4">
+	    		<form action="/admin/admin_view" method="get" class="d-flex">
+					<div class="d-flex">
+						<select id="searchCondition">
+			    			<option id="byLoginId" selected>아이디</option>
+			    			<option id="byTitle">책 제목</option>
+			    		</select>
+						<div class="d-flex mb-2">
+							<input type="text" id="type" name="type" value="byLoginId" class="d-none">
+							<input type="text" id="orderSearchBox" class="form-control" name="searchKeyword" placeholder="아이디로 전체 검색">
+					   		<input type="submit" id="orderSearchBtn" class="btn btn-secondary" value="검색">
+				   		</div>
+			   		</div>
+				</form>
+		    	<div><a href="/admin/admin_view?period=week" class="btn btn-info">최근 1주일</a><a href="/admin/admin_view?period=oneMonth" class="btn btn-info ml-1">1개월</a><a href="/admin/admin_view?period=threeMonths" class="btn btn-info ml-1">3개월</a><a href="/admin/admin_view" class="btn btn-primary ml-1">전체</a></div>
+	    	</div>
+    	</div>
     	
-		<form action="/admin/admin_view" method="get" class="d-flex">
-			<select id="searchCondition">
-    			<option id="byLoginId" selected>아이디</option>
-    			<option id="byTitle">책 제목</option>
-    		</select>
-			<div class="d-flex mb-2">
-				<input type="text" id="type" name="type" value="byLoginId" class="d-none">
-				<input type="text" id="orderSearchBox" class="form-control" name="searchKeyword" placeholder="아이디로 전체 검색">
-		   		<input type="submit" id="orderSearchBtn" class="btn btn-secondary" value="검색">
-	   		</div>
-		</form>
+		
 		
     	
-    	<table class="table">
-    		<thead>
+    	<table class="table text-center">
+    		<thead class="order-list-board-head">
     			<tr>
    					<th>주문번호</th>
-   					<th>주문자ID</th>
+   					<th>아이디</th>
     				<th>상품정보</th>
-    				<th>수량</th>
+    				<th>권수</th>
     				<th>결제금액</th>
     				<th>주문상세</th>
     				<th>상태</th>
@@ -54,23 +57,23 @@
     				<th>처리</th>
     			</tr>
     		</thead>
-    		<tbody>
+    		<tbody class="order-list-board-body">
     			<c:forEach items="${orderViewList}" var="orderView">
 		    			<tr>
 		    				<td>${orderView.order.id}</td>
 		    				<td>${orderView.user.loginId}</td>
 		    				<td>
 			    				<c:forEach items="${orderView.bookList}" var="book">
-			    					${fn:substring(book.title,0,15)}..<br>
+			    					<a href="/book/book_detail_view?bookId=${book.id}" class="a-tag-deco-none-board">${fn:substring(book.title,0,8)}..</a><br>
 			    				</c:forEach>
 		    				</td>
 		    				<td>
 								<c:forEach items="${orderView.orderedBooksList}" var="orderedBooks">
-			    					${orderedBooks.bookCount}권<br>
+			    					${orderedBooks.bookCount}<br>
 			    				</c:forEach>
 							</td>
 		    				<td>${orderView.order.finalPrice}</td>
-		    				<td><a href="/admin/order_detail_view?orderId=${orderView.order.id}">상세보기</a></td>
+		    				<td><a href="/admin/order_detail_view?orderId=${orderView.order.id}">더보기</a></td>
 		    				<td>
 		    					<c:choose>
 		    					<c:when test="${orderView.order.status eq '결제완료'}">
@@ -88,7 +91,7 @@
 		    					</c:choose>
 		    				</td>
 		    				<td><c:if test="${orderView.order.status eq '결제완료'}"><input type="checkbox" class="check-one" value="${orderView.order.id}"></c:if></td>
-		    				<td><c:if test="${orderView.order.status eq '결제완료'}"><button class="send" class="btn btn-info" data-order-id="${orderView.order.id}">배송처리</button></c:if></td>
+		    				<td><c:if test="${orderView.order.status eq '결제완료'}"><button class="send" class="btn btn-sm btn-secondary" data-order-id="${orderView.order.id}">배송</button></c:if></td>
 		    			</tr>
 		    			<c:if test="${orderView.order.status eq '결제완료'}"><script>$('#checkAll').removeClass('d-none');</script></c:if>
 	    			</c:forEach>

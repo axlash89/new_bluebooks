@@ -84,6 +84,19 @@
 			
 	</delete>
 	
+	<select id="selectEventListForMain" resultType="com.bluebooks.event.domain.Event">
+	
+		SELECT
+			`id`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`event`
+		ORDER BY `id` DESC
+	
+	</select>
+	
 	
 
 </mapper>

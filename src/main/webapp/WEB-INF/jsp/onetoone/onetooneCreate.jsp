@@ -2,13 +2,17 @@
     pageEncoding="UTF-8"%>
 
 
-	<div>
-    	<div>1:1 문의 작성</div>
-    	<input type="text" id="subject" class="form-control" placeholder="제목을 입력하세요">
-    	<textarea id="content" class="form-control" placeholder="내용을 입력하세요" rows="3"></textarea>
+   	<div class="h3 normal-text text-center pt-3 pb-2">1:1 문의 작성</div>
+   	<div class="d-flex justify-content-center">
+    	<input type="text" id="subject" class="form-control w-75" placeholder="제목을 입력하세요">
    	</div>
-   	<input type="file" id="file" accept=".jpg, .jpeg, .png, .gif">
-	<div class="d-flex justify-content-end">
+   	<div class="d-flex justify-content-center pt-3">
+    	<textarea id="content" class="form-control w-75" placeholder="내용을 입력하세요" rows="7"></textarea>
+    </div>   
+   	<div class="d-flex justify-content-center pt-3">
+   		<input type="file" id="file" accept=".jpg, .jpeg, .png, .gif">
+   	</div>  
+	<div class="d-flex justify-content-around pt-3">
 		<a href="/onetoone/onetoone_list_view" class="btn btn-secondary">이전</a>
    		<input type="button" id="uploadBtn" class="btn btn-info" value="업로드">
    	</div>

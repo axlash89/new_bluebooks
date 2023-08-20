@@ -151,7 +151,7 @@ public class BookBO {
 				}
 			}			
 		} else if (title != "" && author != "" && publisher == "") {
-							
+			
 			for (int i = 0; i < advancedSearchedBookListByCategory.size(); i++) {
 				if (advancedSearchedBookListByCategory.get(i).getAuthor().contains(author) == false) {
 					advancedSearchedBookListByCategory.remove(i);
@@ -172,11 +172,11 @@ public class BookBO {
 		return totalCount;
 	}
 	
-	public List<String> getCoverByRecentBookIds(Integer[] recentBookIds) {
+	public String getCoverByRecentBookId(int bookId) {
 		
-		List<String> coverImagePathList = bookMapper.selectBookByRecentBookIds(recentBookIds);
+		String coverImagePath = bookMapper.selectBookByRecentBookId(bookId);
 		
-		return coverImagePathList;		
+		return coverImagePath;		
 	}
 	
 }

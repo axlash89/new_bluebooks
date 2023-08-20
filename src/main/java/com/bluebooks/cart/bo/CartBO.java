@@ -65,11 +65,7 @@ public class CartBO {
 	}
 	
 	public void deleteFromCart(int userId, int[] bookIdArr) {
-		
-		for (int i = 0; i < bookIdArr.length; i++) {
-			cartMapper.deleteFromCart(userId, bookIdArr[i]);
-		}
-		
+			cartMapper.deleteFromCart(userId, bookIdArr);
 	}
 	
 	
@@ -85,6 +81,11 @@ public class CartBO {
 		UserEntity user = userBO.getUserEntityById(userId);
 		return user.getPoint();
 	}
+	
+	
+	public void deleteCartByUserId(int userId) {
+		cartMapper.deleteCartByUserId(userId);
+}
 	
 	
 }

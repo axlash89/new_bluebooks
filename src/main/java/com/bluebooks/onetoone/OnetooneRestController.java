@@ -108,4 +108,34 @@ public class OnetooneRestController {
 		return result;
 	}
 	
+	@PutMapping("/delete_answer")
+	public Map<String, Object> deleteAnswer(
+			@RequestParam("onetooneId") int onetooneId) {
+		
+		// BO update
+		onetooneBO.deleteAnswer(onetooneId);
+		
+		// 응답
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 1);
+		result.put("result", "성공");
+		return result;
+	}
+	
+	@PutMapping("/update_answer")
+	public Map<String, Object> updateAnswer(
+			@RequestParam("onetooneId") int onetooneId,
+			@RequestParam("answer") String answer) {
+		
+		// BO update
+		onetooneBO.updateAnswer(onetooneId, answer);
+		
+		// 응답
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 1);
+		result.put("result", "성공");
+		return result;
+	}
+	
+	
 }

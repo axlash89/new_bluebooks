@@ -77,9 +77,9 @@ function resizeMap() {
 <div id="recentBooks" class="text-center">
 	<img src="/static/img/look.png" width="50px" class="mb-3">
 	
-	<div class="mb-3"><a href="#" id="link1"><img src="/static/img/emptyBook.png" id="img1" width="70px" class="recentBooksImg"></a></div>
-	<div class="mb-3"><a href="#" id="link2"><img src="/static/img/emptyBook.png" id="img2" width="70px" class="recentBooksImg d-none"></a></div>
-	<div class="mb-3"><a href="#" id="link3"><img src="/static/img/emptyBook.png" id="img3" width="70px" class="recentBooksImg d-none"></a></div>
+	<div class="mb-2"><a href="#" id="link1"><img src="/static/img/emptyBook.png" id="img1" width="43px" class="recentBooksImg"></a></div>
+	<div class="mb-2"><a href="#" id="link2"><img src="/static/img/emptyBook.png" id="img2" width="53px" class="recentBooksImg d-none"></a></div>
+	<div><a href="#" id="link3"><img src="/static/img/emptyBook.png" id="img3" width="63px" class="recentBooksImg d-none"></a></div>
 </div>
 
 <script>

@@ -31,8 +31,7 @@ public class EventBO {
 	
 	@Autowired
 	private LikeBO likeBO;
-	
-	
+		
 	public int addEvent(MultipartFile file) {
 		String imagePath = null;
 		
@@ -101,7 +100,7 @@ public class EventBO {
 		// comment 삭제
 		commentBO.deleteCommentByEventId(eventId);
 		
-		
+		fileManager.deleteFile(eventMapper.selectEventById(eventId).getImagePath());
 		eventMapper.deleteEventById(eventId);
 				
 	}

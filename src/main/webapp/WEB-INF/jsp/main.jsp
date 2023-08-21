@@ -36,7 +36,7 @@
 		</div>
 		
 		<div class="d-flex justify-content-center pt-3 pb-5">
-				<div id="leftSideOfEvent" class="d-flex align-items-center"><a href="#" class="prev d-none"><img src="/static/img/blue_previous_icon.png" width="20px"></a><%--<button class="prev">PREV</button>--%></div>
+				<div id="leftSideOfEvent" class="d-flex align-items-center"><a href="#" class="prev d-none"><img src="/static/img/blue_previous_icon.png" width="20px"></a></div>
 			<div class="main-box-for-event">
 				<div class="main-box-text text-center">진행중인 이벤트</div>
 				<div class="event-in-event-box">
@@ -46,7 +46,7 @@
 					</c:forEach>
 				</div>
 			</div>
-   				<div id="rightSideOfEvent" class="d-flex align-items-center"><a href="#" class="next"><img src="/static/img/blue_next_icon.png" width="20px"></a><%--<button class="next">NEXT</button>--%></div>
+   				<c:if test="${fn:length(eventList) > 1}"><div id="rightSideOfEvent" class="d-flex align-items-center"><a href="#" class="next"><img src="/static/img/blue_next_icon.png" width="20px"></a></div></c:if>
 		</div>
 			
 <script>

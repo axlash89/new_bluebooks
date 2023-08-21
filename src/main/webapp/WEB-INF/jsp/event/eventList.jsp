@@ -47,7 +47,7 @@
 									<a href="#" class="like-btn" data-comment-id="${commentView.comment.id}" data-user-id="${commentView.user.id}"><img src="/static/img/emptyHeart.png" width="17px" alt="채워진 하트"></a>
 								</c:otherwise>
 							</c:choose><span class="small">${commentView.likeCount}개</span>					
-							${commentView.comment.content}
+							<span class="pl-1">${commentView.comment.content}</span>
 							<c:if test="${commentView.user.id eq userId}">
 							<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}"><img src="/static/img/x-icon.png" class="event-comment-del-img" width="12px" alt="삭제 버튼"></a>
 							</c:if>

@@ -46,13 +46,13 @@
 			  		<a href="/notice/notice_list_view?page=0">첫 페이지로</a>
 			  		</c:when>
 			  		<c:otherwise>
-			  		첫 페이지로
+			  		<div class="ml-2">첫 페이지로</div>
 			  		</c:otherwise>
 				</c:choose>
 				
 				<c:choose>
 			  		<c:when test="${nowPage eq noticeList.totalPages - 1}">
-			  		마지막 페이지로  		
+			  		<div class="mr-2">마지막 페이지로</div>		
 			  		</c:when>
 			  		<c:otherwise>
 			  		<a href="/notice/notice_list_view?page=${noticeList.totalPages - 1}">마지막 페이지로</a>
@@ -65,12 +65,12 @@
 		  				<a href="/notice/notice_list_view?page=0${searchKeyword}">첫 페이지로</a>
 		  			</c:when>
 		  			<c:otherwise>
-		  			<div>첫 페이지로</div>
+		  			<div class="ml-2">첫 페이지로</div>
 		  			</c:otherwise>
 				</c:choose>
 				<c:choose>
 				<c:when test="${nowPage eq noticeList.totalPages - 1}">
-					<div>마지막 페이지로</div>	
+					<div class="mr-2">마지막 페이지로</div>	
 				</c:when>
 				<c:otherwise>
 					<a href="/notice/notice_list_view?page=${noticeList.totalPages - 1}${searchKeyword}" class="float-right">마지막 페이지로</a>

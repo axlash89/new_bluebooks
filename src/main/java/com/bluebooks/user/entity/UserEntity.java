@@ -30,9 +30,7 @@ public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)  // auto increment
 	private int id;
-	
-	private String type;
-	
+		
 	@Column(name = "loginId")
 	private String loginId;
 	

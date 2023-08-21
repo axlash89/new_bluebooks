@@ -61,7 +61,7 @@
     			<c:forEach items="${orderViewList}" var="orderView">
 		    			<tr>
 		    				<td>${orderView.order.id}</td>
-		    				<td>${orderView.user.loginId}</td>
+		    				<td><c:choose><c:when test="${empty orderView.user.loginId}">탈퇴한 회원</c:when><c:otherwise>${orderView.user.loginId}</c:otherwise></c:choose></td>
 		    				<td>
 			    				<c:forEach items="${orderView.bookList}" var="book">
 			    					<a href="/book/book_detail_view?bookId=${book.id}" class="a-tag-deco-none-board">${fn:substring(book.title,0,8)}..</a><br>

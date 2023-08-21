@@ -84,6 +84,10 @@
 	    		</tbody>
 	    	</table>   
 	    	
+	    	<c:if test="${onetooneList.totalElements eq 0}">
+		    	<div class="h5 text-center pt-3 pb-3 normal-text">문의하신 내역이 없습니다.</div>
+		    </c:if>
+		    
 	    	<c:if test="${onetooneList.totalElements ne 0}">
 	    	<div class="d-flex justify-content-between">
 			  	<c:choose>

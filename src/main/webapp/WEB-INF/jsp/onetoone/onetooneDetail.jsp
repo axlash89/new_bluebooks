@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center pt-3">
 	<div class="w-50">
 		<c:if test="${empty onetooneEntity.answer && userLoginId ne 'admin'}">
 			<h5 class="normal-text text-center pt-4 pb-3">관리자가 확인 후<br> 빠르게 답변드리겠습니다.</h5>

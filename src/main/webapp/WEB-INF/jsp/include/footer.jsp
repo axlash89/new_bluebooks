@@ -25,8 +25,8 @@
 					<div id="map" style="width: 465px; height: 400px;"></div>
 	     		</div>			
 				<div class="pt-2">
-					<div class="h5 text-center text-info">- 365일 연중무휴 -</div>
-					<div class="h5 text-center text-info pb-3">영업시간 10:00 ~ 20:00</div>
+					<div class="h5 text-center normal-text">365일 연중무휴</div>
+					<div class="h5 text-center normal-text pb-3">영업시간 10:00 ~ 20:00</div>
 					<a href="#" id="modalCloseBtn" data-dismiss="modal" class="a-tag-deco-none font-weight-bold">닫기</a>
 				</div>
 			</div>

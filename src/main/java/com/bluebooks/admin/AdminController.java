@@ -73,7 +73,7 @@ public class AdminController {
 	
 	
 	@GetMapping("/manage_onetoone_list_view")
-	public String manageOnetooneView(Model model, @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+	public String manageOnetooneView(Model model, @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
 			@RequestParam(required = false) String type,
 			@RequestParam(required = false) String searchKeyword) {
 		
@@ -141,7 +141,7 @@ public class AdminController {
 	
 	@GetMapping("/manage_user_view")
 	public String manageUserView(Model model, 
-								@PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+								@PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
 								@RequestParam(required= false) String searchKeyword) {		
 		
 		Page<UserEntity> userList = null;

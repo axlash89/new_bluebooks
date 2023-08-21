@@ -128,7 +128,8 @@
 <%-- 우편번호 검색 API --%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-
+<%-- 아임포트 결제 --%>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 
 <script>
 	$(document).ready(function() {
@@ -259,6 +260,7 @@
 					, success: function(data) {
 						if (data.code == 1) {
 							alert("결제가 완료되었습니다.");
+							
 							location.href="/order/my_order_view?period=week";
 						} else {
 							alert(data.errorMessage);
@@ -321,13 +323,39 @@
 						, success: function(data) {
 							if (data.code == 1) {
 								alert("결제가 완료되었습니다.");
-								location.href="/order/my_order_view?period=week";
-							} else {
+								// location.href="/order/my_order_view?period=week";
+								
+							const userCode = "imp51580572";
+							IMP.init(userCode);
+	
+							requestPay();	
+							function requestPay() {
+								alert("requestPay 메소드 들어옴");
+							  IMP.request_pay({
+
+								pg: "html5_inicis",  
+							    pay_method: "card",
+							    merchant_uid: data.orderId,
+							    amount: finalPrice,
+							    buyer_tel: recipientPhoneNumber,
+							    m_redirect_url: "http://localhost/order/my_order_view?period=week",
+							  }, function (rsp) { // callback
+						        if (rsp.success) {// 결제성공시 로직
+						            
+						        } else {// 결제 실패시
+									alert("결제 실패");
+									alert(rsp.error_msg);
+									console.log(rsp);            
+						        }
+							
+							});
+							}
+							}
+							  else {
 								alert(data.errorMessage);
 							}
-						} 
 						
-						, error:function(request, status, error) {
+						}, error:function(request, status, error) {
 							alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
 						}
 						

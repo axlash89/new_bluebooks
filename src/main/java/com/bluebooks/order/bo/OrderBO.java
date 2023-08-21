@@ -72,7 +72,49 @@ public class OrderBO {
 		return userBO.getUserEntityById(userId);
 	}
 	
-	public void createOrder(int userId, int usedPoint, int finalPrice, String payBy, 
+//	public void createOrder(int userId, int usedPoint, int finalPrice, String payBy, 
+//			String recipientName, String recipientZipCode, String recipientAddress, 
+//			String recipientPhoneNumber, int totalPoint, String bookIdString, String bookCount, Integer bookId, Integer bookCountFromDetail) {
+//		
+//		Order order= new Order();
+//		order.setUserId(userId);
+//		order.setUsedPoint(usedPoint);
+//		order.setFinalPrice(finalPrice);
+//		order.setPayBy(payBy);
+//		order.setRecipientName(recipientName);
+//		order.setRecipientZipCode(recipientZipCode);
+//		order.setRecipientAddress(recipientAddress);
+//		order.setRecipientPhoneNumber(recipientPhoneNumber);		
+//		orderMapper.insertOrder(order);
+//		
+//		userBO.updateUserEntityPointById(userId, usedPoint, totalPoint);
+//		
+//		if (bookIdString != null) {
+//			String[] bookIdStringArr = bookIdString.split("@");
+//			int[] bookIdArr = new int[bookIdStringArr.length];
+//			for (int i = 0; i < bookIdStringArr.length; i++) {
+//				bookIdArr[i] = Integer.parseInt(bookIdStringArr[i]);
+//			}
+//			cartBO.deleteFromCart(userId, bookIdArr);
+//			
+//			String[] bookCountStringArr = bookCount.split("");
+//			int[] bookCountArr = new int[bookCountStringArr.length];
+//			for (int i = 0; i < bookCountStringArr.length; i++) {
+//				bookCountArr[i] = Integer.parseInt(bookCountStringArr[i]);
+//			}			
+//			orderedBooksBO.insertOrderedBooksByOrderId(order.getId(), bookIdArr, bookCountArr);
+//		} else if (bookCountFromDetail != null) {
+//			orderedBooksBO.insertOrderedSingleBookByOrderIdFromDetail(order.getId(), bookId , bookCountFromDetail);
+//		} else {
+//			orderedBooksBO.insertOrderedSingleBookByOrderId(order.getId(), bookId);
+//			
+//		}
+//		
+//	}
+	 
+	
+	
+	public Order createOrder(int userId, int usedPoint, int finalPrice, String payBy, 
 			String recipientName, String recipientZipCode, String recipientAddress, 
 			String recipientPhoneNumber, int totalPoint, String bookIdString, String bookCount, Integer bookId, Integer bookCountFromDetail) {
 		
@@ -109,9 +151,11 @@ public class OrderBO {
 			orderedBooksBO.insertOrderedSingleBookByOrderId(order.getId(), bookId);
 			
 		}
+		return order;
 		
 	}
-	 
+	
+	
 	
 	
 	public List<OrderView> getOrderViewListByUserId(int userId, Criteria criteria, String period) {

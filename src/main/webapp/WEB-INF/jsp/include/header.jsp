@@ -24,7 +24,14 @@
 		       		<c:choose>
 			       		<c:when test="${not empty userName}">
 			       			<div class="ml-5">
-				       			<span class="d-flex justify-content-end d-block small ml-3 stop-drag header-text">${userName}님 안녕하세요!</span>			       			
+			       			<c:choose>
+			       			<c:when test="${userName ne '관리자'}">
+				       			<span class="d-flex justify-content-end d-block small ml-3 stop-drag header-text">${userName}님 안녕하세요!</span>
+				       		</c:when>
+				       		<c:otherwise>
+				       			<span class="d-flex justify-content-end d-block small ml-3 stop-drag header-text text-success">${userName}님 안녕하세요!</span>
+				       		</c:otherwise>
+				       		</c:choose>
 			       				<div class="d-flex justify-content-end"><a href="/cart/cart_list_view" class="small header-menu stop-drag">장바구니</a><a href="/user/sign_out" class="ml-3 small header-menu stop-drag">로그아웃</a></div>
 		       				</div>
 			       		</c:when>

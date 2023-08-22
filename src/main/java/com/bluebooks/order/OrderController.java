@@ -114,7 +114,6 @@ public class OrderController {
 		
 		UserEntity user = orderBO.getUserEntityByUserId(userId);
 		session.setAttribute("userPoint", user.getPoint());
-		
 		model.addAttribute("user", user);
 		
 		model.addAttribute("view", "order/createOrder");

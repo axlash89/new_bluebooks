@@ -41,14 +41,11 @@ public class OrderRestController {
 		
 		int userId = (int) session.getAttribute("userId");
 		
-//		orderBO.createOrder(userId, usedPoint, finalPrice, payBy, recipientName, recipientZipCode, 
-//				recipientAddress, recipientPhoneNumber, totalPoint, bookIdString, bookCount, bookId, bookCountFromDetail);
-		
-		Order order = orderBO.createOrder(userId, usedPoint, finalPrice, payBy, recipientName, recipientZipCode, recipientAddress, recipientPhoneNumber, totalPoint, bookIdString, bookCount, bookId, bookCountFromDetail);
+		orderBO.createOrder(userId, usedPoint, finalPrice, payBy, recipientName, recipientZipCode, 
+				recipientAddress, recipientPhoneNumber, totalPoint, bookIdString, bookCount, bookId, bookCountFromDetail);
 		
 			result.put("code", 1);
 			result.put("result", "성공");
-			result.put("orderId", order.getId());
 		
 		return result;
 		

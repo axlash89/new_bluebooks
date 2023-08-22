@@ -131,6 +131,11 @@ $(document).ready(function() {
 	
 	$('#orderBtn').on('click', function() {
 		
+		if(${empty userId}) {
+			alert("로그인이 필요합니다.");
+			return false;
+		}
+		
 		let result = confirm("주문 및 결제 페이지로 이동합니다.");
 		if (!result) {
 			return false;

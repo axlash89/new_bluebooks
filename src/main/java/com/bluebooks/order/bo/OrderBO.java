@@ -1,6 +1,8 @@
 package com.bluebooks.order.bo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import com.bluebooks.cart.bo.CartBO;
 import com.bluebooks.cart.domain.Cart;
 import com.bluebooks.cart.domain.CartView;
 import com.bluebooks.common.Criteria;
+import com.bluebooks.common.PayMethod;
+import com.bluebooks.common.PubPeriod;
 import com.bluebooks.order.dao.OrderMapper;
 import com.bluebooks.order.domain.Order;
 import com.bluebooks.order.domain.OrderView;
@@ -114,7 +118,7 @@ public class OrderBO {
 	 
 	
 	
-	public Order createOrder(int userId, int usedPoint, int finalPrice, String payBy, 
+	public void createOrder(int userId, int usedPoint, int finalPrice, String payBy, 
 			String recipientName, String recipientZipCode, String recipientAddress, 
 			String recipientPhoneNumber, int totalPoint, String bookIdString, String bookCount, Integer bookId, Integer bookCountFromDetail) {
 		
@@ -122,7 +126,11 @@ public class OrderBO {
 		order.setUserId(userId);
 		order.setUsedPoint(usedPoint);
 		order.setFinalPrice(finalPrice);
-		order.setPayBy(payBy);
+		
+		String payByForEnum = payBy.toUpperCase();
+		String payByInKorean = PayMethod.valueOf(payByForEnum).getValue();		
+		order.setPayBy(payByInKorean);		
+		
 		order.setRecipientName(recipientName);
 		order.setRecipientZipCode(recipientZipCode);
 		order.setRecipientAddress(recipientAddress);
@@ -151,7 +159,6 @@ public class OrderBO {
 			orderedBooksBO.insertOrderedSingleBookByOrderId(order.getId(), bookId);
 			
 		}
-		return order;
 		
 	}
 	

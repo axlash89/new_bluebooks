@@ -92,7 +92,7 @@
 	<div class="mb-2">총 상품 금액은 ${totalPrice}원</div>
 	<c:choose>
 	<c:when test="${totalPrice < 50000}">
-	<div class="mb-2">배송비는 2,500원</div>
+	<div class="mb-2">배송비는 2500원</div>
 	</c:when>
 	<c:otherwise>
 	<div class="mb-2">배송비는 0원</div>
@@ -101,30 +101,23 @@
 	<div id="goingToUsePoint" class="mb-2 d-none">사용할 블루북스 포인트는 <span id="usedPoint"></span></div>	
 	<div class="mb-2">적립 예상 포인트는 ${totalPoint}입니다.</div>
 </div>
-<div class="h3 text-center normal-text font-weight-bold">최종 결제금액 <span id="finalPrice" class="normal-text">&nbsp;&nbsp;${finalPrice}</span>원</div>
+<div class="text-center"><span class="h4 normal-text">최종 결제금액</span><span id="finalPrice" class="normal-text h2">&nbsp;&nbsp;<fmt:formatNumber value="${finalPrice}" pattern="#,###" />원</span></div>
 </div>
 <div class="d-flex justify-content-center mt-3 ml-5 normal-text">
 	<div>
-		이름 <input type="text" class="form-control col-8 ml-2 mb-3" name="recipientName" id="recipientName" placeholder="이름 입력" value="${user.name}"> 
-		휴대폰번호 <input type="text" class="form-control col-8 ml-2 mb-3" name="recipientPhoneNumber" placeholder="-없이 숫자만 입력" value="${user.phoneNumber}">
-		주소<input type="text" class="form-control col-4 ml-2 d-inline mb-1" name="recipientZipCode" id="sample6_postcode" onclick="sample6_execDaumPostcode()" placeholder="우편번호" value="${user.zipCode}" readonly><input type="button" class="btn btn-info" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+		수령인 이름 <input type="text" class="form-control col-8 ml-2 mb-3" name="recipientName" id="recipientName" placeholder="이름 입력" value="${user.name}"> 
+		수령인 휴대폰번호 <input type="text" class="form-control col-8 ml-2 mb-3" name="recipientPhoneNumber" placeholder="-없이 숫자만 입력" value="${user.phoneNumber}">
+		수령 주소<input type="text" class="form-control col-4 ml-2 d-inline mb-1" name="recipientZipCode" id="sample6_postcode" onclick="sample6_execDaumPostcode()" placeholder="우편번호" value="${user.zipCode}" readonly><input type="button" class="btn btn-info" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 		<div class="small font-weight-bold mt-1"><div>회원님의 기본 주소지가 입력되어있습니다.</div><div>수령지가 다르다면 '우편번호 찾기' 버튼을 눌러 변경해주세요.</div></div>
 		<input type="text" class="form-control col-8 ml-2 mt-1 mb-2" name="address1" id="sample6_address" placeholder="자동 입력" readonly>
 		나머지 주소 <input type="text" class="form-control col-8 ml-2 mb-1" name="address3" id="sample6_extraAddress" placeholder="자동 입력" readonly><input type="text" class="form-control col-8 ml-2 mb-2" name="address2" id="sample6_detailAddress" value="${user.address}" placeholder="나머지 주소 입력">
-		결제 수단 선택 
-		<select id="payBy">
-			<option>선택</option>
-			<option>신용카드</option>
-			<option>무통장입금</option>			
-			<option>계좌이체</option>						
-			<option>삼성페이</option>
-		</select>
 	</div>
 </div>
 <div class="order-create-final-btn pb-5 pt-3">
 	<input type="button" id="payBtn" value="결제하기" class="btn btn-info mr-5">
 	<input type="button" id="previousBtn" value="이전으로" class="btn btn-secondary">
 </div>
+
 <%-- 우편번호 검색 API --%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -208,9 +201,7 @@
 			} else {
 				recipientAddress = address2;
 			}
-			
-			let payBy = $('#payBy').val();
-			
+						
 			
 			if (!recipientName) {
 				alert("이름을 입력하세요");
@@ -231,12 +222,7 @@
 				alert("나머지 주소를 입력해주세요");
 				return;
 			}
-			
-			if (payBy == '선택') {
-				alert("결제 방법을 선택해주세요");
-				return;
-			}
-			
+						
 			let usedPoint = $('#usedPoint').text();
 			
 			if (usedPoint == '') {
@@ -246,123 +232,125 @@
 			let finalPrice = ${finalPrice} - usedPoint;
 			let totalPoint = ${totalPoint};
 			
-			if (${empty book}) {
+			
+			const userCode = "imp51580572";
+			IMP.init(userCode);
+
+			requestPay();
+			function requestPay() {
 				
-				let bookCount = ${bookCount}  // 이건 위에서 foreach에서 계산한거
-				
-				$.ajax({
-					type: "post"
-					, url: "/order/create"
-					, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
-						"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : payBy,
-						"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookIdString" : "${bookIdString}", "bookCount" : bookCount }
+				IMP.request_pay({
+
+					pg: "html5_inicis",
+				    pay_method: "byInicis",
+					merchant_uid: new Date().getTime(),
+					name: "블루북스 책",
+					amount: finalPrice,
+					currency: "KRW",
+					buyer_name: "${userName}",
+					buyer_email: "${user.email}",
 					
-					, success: function(data) {
-						if (data.code == 1) {
-							alert("결제가 완료되었습니다.");
+				}, function (rsp) {  // callback
+					
+			        if (rsp.success) {  // 결제성공시 로직
+						
+						if (${empty book}) {
 							
-							location.href="/order/my_order_view?period=week";
-						} else {
-							alert(data.errorMessage);
-						}
-					} 
-					
-					, error:function(request, status, error) {
-						alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
-					}
-				
-				});
-			
-			}
-			
-			if(${not empty book} && ${empty bookCountFromDetail}) {
-					
-					let bookId = ${bookId}
-					
-					$.ajax({
-						type: "post"
-						, url: "/order/create"
-						, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
-							"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : payBy,
-							"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookId" : bookId }
-						
-						, success: function(data) {
-							if (data.code == 1) {
-								alert("결제가 완료되었습니다.");
-								location.href="/order/my_order_view?period=week";
-							} else {
-								alert(data.errorMessage);
-							}
-						} 
-						
-						, error:function(request, status, error) {
-							alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
-						}
-				
-						
-					});
-					
-					
-			} 
-			
-			if(${not empty book} && ${not empty bookCountFromDetail}) {
-				
-					
-					let bookCountFromDetail = $('#bookCountFromDetail').val();
-					
-
-					let bookId = ${bookId}
-					
-					$.ajax({
-						type: "post"
-						, url: "/order/create"
-						, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
-							"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : payBy,
-							"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookId" : bookId, "bookCountFromDetail": bookCountFromDetail }
-						
-						, success: function(data) {
-							if (data.code == 1) {
-								alert("결제가 완료되었습니다.");
-								// location.href="/order/my_order_view?period=week";
+							let bookCount = ${bookCount}  // 이건 위에서 foreach에서 계산한거
+							
+							$.ajax({
+								type: "post"
+								, url: "/order/create"
+								, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
+									"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : rsp.pay_method,
+									"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookIdString" : "${bookIdString}", "bookCount" : bookCount }
 								
-							const userCode = "imp51580572";
-							IMP.init(userCode);
-	
-							requestPay();	
-							function requestPay() {
-								alert("requestPay 메소드 들어옴");
-							  IMP.request_pay({
-
-								pg: "html5_inicis",  
-							    pay_method: "card",
-							    merchant_uid: data.orderId,
-							    amount: finalPrice,
-							    buyer_tel: recipientPhoneNumber,
-							    m_redirect_url: "http://localhost/order/my_order_view?period=week",
-							  }, function (rsp) { // callback
-						        if (rsp.success) {// 결제성공시 로직
-						            
-						        } else {// 결제 실패시
-									alert("결제 실패");
-									alert(rsp.error_msg);
-									console.log(rsp);            
-						        }
+								, success: function(data) {
+									if (data.code == 1) {
+										alert("결제가 완료되었습니다.");
+										
+										location.href="/order/my_order_view?period=week";
+									} else {
+										alert(data.errorMessage);
+									}
+								} 
+								
+								, error:function(request, status, error) {
+									alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
+								}
 							
 							});
-							}
-							}
-							  else {
-								alert(data.errorMessage);
-							}
 						
-						}, error:function(request, status, error) {
-							alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
 						}
 						
-					});	
-					
+						if(${not empty book} && ${empty bookCountFromDetail}) {
+								
+								let bookId = ${bookId}
+								
+								$.ajax({
+									type: "post"
+									, url: "/order/create"
+									, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
+										"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : rsp.pay_method,
+										"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookId" : bookId }
+									
+									, success: function(data) {
+										if (data.code == 1) {
+											alert("결제가 완료되었습니다.");
+											location.href="/order/my_order_view?period=week";
+										} else {
+											alert(data.errorMessage);
+										}
+									} 
+									
+									, error:function(request, status, error) {
+										alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
+									}
+							
+									
+								});
+								
+								
+						} 
+						
+						if(${not empty book} && ${not empty bookCountFromDetail}) {
+							
+								
+								let bookCountFromDetail = $('#bookCountFromDetail').val();
+								
+
+								let bookId = ${bookId}
+								
+								$.ajax({
+									type: "post"
+									, url: "/order/create"
+									, data : { "recipientName" : recipientName, "recipientPhoneNumber" : recipientPhoneNumber, 
+										"recipientZipCode" : recipientZipCode, "recipientAddress" : recipientAddress, "payBy" : rsp.pay_method,
+										"usedPoint" : usedPoint, "finalPrice" : finalPrice, "totalPoint" : totalPoint, "bookId" : bookId, "bookCountFromDetail": bookCountFromDetail }
+									
+									, success: function(data) {
+										if (data.code == 1) {
+											alert("결제가 완료되었습니다.");
+											location.href="/order/my_order_view?period=week";							
+										} else {
+											alert(data.errorMessage);
+										}
+									
+									}, error:function(request, status, error) {
+										alert("주문 실패, 고객센터로 연락주시면 도와드리겠습니다.")
+									}
+									
+								});	
+						
+						}
+			            
+			        } else {  // 결제 실패시
+			        	
+						alert(rsp.error_msg);
+						console.log(rsp);            
+			        }
 				
-			
+				});
 			}
 			
 		});

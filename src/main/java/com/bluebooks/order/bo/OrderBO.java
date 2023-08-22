@@ -127,9 +127,9 @@ public class OrderBO {
 		order.setUsedPoint(usedPoint);
 		order.setFinalPrice(finalPrice);
 		
+		// enum 통째로 넣기
 		String payByForEnum = payBy.toUpperCase();
-		String payByInKorean = PayMethod.valueOf(payByForEnum).getValue();		
-		order.setPayBy(payByInKorean);		
+		order.setPayBy(PayMethod.valueOf(payByForEnum));
 		
 		order.setRecipientName(recipientName);
 		order.setRecipientZipCode(recipientZipCode);

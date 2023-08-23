@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import com.bluebooks.common.Status;
+import com.bluebooks.test.Status;
 
 public class EnumTest {
 

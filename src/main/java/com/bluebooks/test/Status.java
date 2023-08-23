@@ -1,4 +1,4 @@
-package com.bluebooks.common;
+package com.bluebooks.test;
 
 import lombok.Getter;
 

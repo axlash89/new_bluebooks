@@ -13,6 +13,28 @@ header {
 	height: 105px;
 }
 
+.notice-box {
+	width: 450px;
+	text-align: center;
+}
+
+.notice-detail-head {
+	background-color: aliceblue;
+	width: 800px;
+	height: 60px;
+	color:#045FB4;
+	font-weight: 700;
+	font-size: 13px;	
+	border-radius: 20px;
+}
+
+.notice-detail-body {
+	text-align: center;
+	width: 800px;
+	height: auto;
+	min-height: 300px;
+	border-radius: 20px;
+}
 
 #recentBooks { position:absolute; top:70px; right:50%; margin-right:-530px; }
 

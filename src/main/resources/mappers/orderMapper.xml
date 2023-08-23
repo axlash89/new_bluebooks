@@ -3,6 +3,22 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bluebooks.order.dao.OrderMapper">
+
+<resultMap id="orderResultMap" type="com.bluebooks.order.domain.Order">
+    <id property="id" column="id" />
+    <result property="userId" column="userId" />
+    <result property="usedPoint" column="usedPoint" />
+    <result property="finalPrice" column="finalPrice" />
+    <result property="payBy" column="payBy" javaType="com.bluebooks.common.enums.PayBy" typeHandler="com.bluebooks.order.typehandler.PayByTypeHandler" />
+    <result property="status" column="status" />
+    <result property="recipientName" column="recipientName" />
+    <result property="recipientZipCode" column="recipientZipCode" />
+    <result property="recipientAddress" column="recipientAddress" />
+    <result property="recipientPhoneNumber" column="recipientPhoneNumber" />
+    <result property="createdAt" column="createdAt" />
+    <result property="updatedAt" column="updatedAt" />
+</resultMap>
+
 	
 	<insert id="insertOrder" parameterType="com.bluebooks.order.domain.Order" useGeneratedKeys="true" keyProperty="id">
 	
@@ -25,7 +41,7 @@
  			#{userId}
 			,#{usedPoint}
 			,#{finalPrice}
-			,#{payBy}
+			,#{payBy, typeHandler=com.bluebooks.order.typehandler.PayByTypeHandler}
 			,"결제완료"
 			,#{recipientName}
 			,#{recipientZipCode}
@@ -37,7 +53,7 @@
 	
 	</insert>
 	
-	<select id="selectOrderListByUserId" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+	<select id="selectOrderListByUserId" parameterType="map" resultMap="orderResultMap">
 			
 		SELECT 
 			`id`
@@ -78,7 +94,7 @@
 	</select>
 		
 	
-	<select id="selectOrderListByUserIdAndByPeriod" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+	<select id="selectOrderListByUserIdAndByPeriod" parameterType="map" resultMap="orderResultMap">
 		
 		SELECT 
 			`id`
@@ -153,7 +169,7 @@
 	
 	
 	
-	<select id="selectOrderList" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+	<select id="selectOrderList" parameterType="map" resultMap="orderResultMap">
 		
 		SELECT 
 			`id`
@@ -194,7 +210,7 @@
 	</select>
 		
 	
-	<select id="selectOrderListByPeriod" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+	<select id="selectOrderListByPeriod" parameterType="map" resultMap="orderResultMap">
 		
 		SELECT 
 			`id`
@@ -291,7 +307,7 @@
 	
 	</update>	
 	
-	<select id="selectOrderListByUserIdList" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+	<select id="selectOrderListByUserIdList" parameterType="map" resultMap="orderResultMap">
 	
 		SELECT 
 			`id`
@@ -340,7 +356,7 @@
 	    </foreach> 	
 	</select>
 	
-	<select id="selectOrderByIdList" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+	<select id="selectOrderByIdList" parameterType="map" resultMap="orderResultMap">
 		
 		
 		SELECT 
@@ -373,7 +389,7 @@
 	</select>
 		
 	
-	<select id="selectOrderListByUserIdListAndByPeriod" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+	<select id="selectOrderListByUserIdListAndByPeriod" parameterType="map" resultMap="orderResultMap">
 		SELECT 
 			`id`
 			,`userId`
@@ -486,7 +502,7 @@
 	</select>
 	
 	
-	<select id="selectOrderByIdListAndByPeriod" parameterType="map" resultType="com.bluebooks.order.domain.Order">
+	<select id="selectOrderByIdListAndByPeriod" parameterType="map" resultMap="orderResultMap">
 		
 		
 		SELECT 
@@ -536,7 +552,7 @@
 	</select>
 	
 	
-	<select id="getOrderById" parameterType="int">
+	<select id="getOrderById" parameterType="int" resultMap="orderResultMap">
 	
 		SELECT 
 			`id`

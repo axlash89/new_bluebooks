@@ -11,19 +11,19 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
 	<div class="text-center">
-    	<h4 class="normal-text text-center pt-4 pb-2">공지사항 작성</h4>
+    	<h4 class="normal-text text-center pt-4 pb-2">공지사항 수정</h4>
    	</div>
    	<div class="d-flex justify-content-center">
    		<div>
 		   	<span class="normal-text">제목</span>
-		   	<input type="text" id="subject" class="form-control mb-2" placeholder="제목을 입력하세요">
+		   	<input type="text" id="subject" class="form-control mb-2" placeholder="제목을 입력하세요" value="${subject}">
 		    <span class="normal-text">내용</span>
-		    <textarea id="summernote"></textarea>
+		    <textarea id="summernote">${content}</textarea>
 		   	
 		   	
 			<div class="d-flex justify-content-end mt-2 mb-5">
 				<a href="/notice/notice_list_view" class="btn btn-secondary">이전</a>
-		   		<input type="button" id="uploadBtn" class="btn btn-info ml-3" value="업로드">
+		   		<input type="button" id="updateBtn" class="btn btn-info ml-3" value="수정">
 		   	</div>
 	   	</div>
    	</div>
@@ -61,7 +61,8 @@ $(document).ready(function() {
 	      contentType:false, 	
 	      processData:false, 	
 		      success:function(data){     	  
-	          	$(editor).summernote("insertImage", data.url);
+	          	$(editor).summernote("insertImage", data.url); 
+	
 	      	  } 
 
   		  }); 
@@ -69,10 +70,19 @@ $(document).ready(function() {
 
 	
 	
-	$('#uploadBtn').on('click', function() {
+	$('#updateBtn').on('click', function() {
 		
 		let subject = $('#subject').val().trim();
 		let content = $('#summernote').val();
+		
+		let originalSubject = "${subject}";
+		let originalContent = `${content}`;
+		let noticeId = ${noticeId};
+		
+		if (subject == originalSubject && content == originalContent) {
+			alert("수정된 내용이 없습니다.");
+			return;
+		}
 						
 		// validation check
 		if (!subject) {
@@ -87,15 +97,15 @@ $(document).ready(function() {
 		
 		$.ajax({
 			// request
-			type: "post"
-			, url: "/notice/create"
-			, data: {"subject": subject, "content": content}
+			type: "put"
+			, url: "/notice/update"
+			, data: {"subject": subject, "content": content, "noticeId": noticeId}
 			
 			//response
 			, success: function(data) {
 				if (data.code == 1) {
-					alert("공지사항 업로드 완료");
-					location.href="/notice/notice_list_view"
+					alert("공지사항 수정 완료");
+					location.href="/notice/notice_detail_view?id=" + noticeId;
 				} else {
 					// 로직 상 실패
 					alert(data.errorMessage);
@@ -103,7 +113,7 @@ $(document).ready(function() {
 			}
 			
 			, error:function(request, status, error) {
-				alert("공지사항 업로드를 실패하였습니다.");
+				alert("공지사항 수정을 실패하였습니다.");
 			}
 			
 		});

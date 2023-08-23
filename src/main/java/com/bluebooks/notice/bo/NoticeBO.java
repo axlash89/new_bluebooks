@@ -37,33 +37,38 @@ public class NoticeBO {
 	}
 	
 	
-	public int addNotice(String subject, String content, MultipartFile file) {
+	public int addNotice(String subject, String content) {
 		
-		String imagePath = null;
+		NoticeEntity noticeEntity;
 		
 		// 이미지가 있으면 업로드 후 imagePath 받아옴
-		if (file != null) {
-			imagePath = fileManager.saveFile("admin", file);
-			if (imagePath == null) {
-				return 0;
-			}
+		
+		if (content.contains("img src=")) {
+			String finalImagePath = content.substring(content.indexOf("/images/"), content.indexOf(".jpg") + 4);
+			noticeEntity = noticeRepository.save(
+					NoticeEntity.builder()
+					.subject(subject)
+					.content(content)
+					.imagePath(finalImagePath)
+					.build()
+				);			
+		} else {
+			noticeEntity = noticeRepository.save(
+					NoticeEntity.builder()
+					.subject(subject)
+					.content(content)
+					.imagePath(null)
+					.build()
+				);
 		}
 		
-				
-		NoticeEntity noticeEntity = noticeRepository.save(
-				NoticeEntity.builder()
-				.subject(subject)
-				.content(content)
-				.imagePath(imagePath)
-				.build()
-			);			
 		
 		return noticeEntity == null ? null : 1;
 		
 	}
 	
 	
-	public void updateNotice(int noticeId, String subject, String content, MultipartFile file) {
+	public void updateNotice(int noticeId, String subject, String content) {
 		
 				NoticeEntity noticeEntity = noticeRepository.findById(noticeId).orElse(null);
 				
@@ -71,27 +76,29 @@ public class NoticeBO {
 					logger.warn("###[공지사항 수정] notice is null. noticeId:{}", noticeId);
 				}
 								
-				if(noticeEntity != null && file == null) {
-					
-					noticeEntity = noticeEntity.toBuilder()
-							.subject(subject)
-							.content(content)
-							.build();
-							noticeEntity = noticeRepository.save(noticeEntity);
-							
-				} else if (noticeEntity != null && file != null) {
-
-					String imagePath = null;			
-					imagePath = fileManager.saveFile("admin", file);
-					
-					if (imagePath != null && noticeEntity.getImagePath() != null) {
+				if(noticeEntity != null && content.contains("img src=")) {
+					String finalImagePath = content.substring(content.indexOf("/images/"), content.indexOf(".jpg") + 4);
+					if (noticeEntity.getImagePath() != null && noticeEntity.getImagePath() != finalImagePath) {
 						fileManager.deleteFile(noticeEntity.getImagePath());
 					}
 					
 					noticeEntity = noticeEntity.toBuilder()
 							.subject(subject)
 							.content(content)
-							.imagePath(imagePath)
+							.imagePath(finalImagePath)
+							.build();
+							noticeEntity = noticeRepository.save(noticeEntity);
+							
+				} else if (noticeEntity != null && content.contains("img src=") == false) {
+					
+					if(noticeEntity.getImagePath() != null) {
+						fileManager.deleteFile(noticeEntity.getImagePath());
+					}
+					
+					noticeEntity = noticeEntity.toBuilder()
+							.subject(subject)
+							.content(content)
+							.imagePath(null)
 							.build();
 							noticeEntity = noticeRepository.save(noticeEntity);
 							
@@ -101,7 +108,7 @@ public class NoticeBO {
 	
 	
 	
-	public void deleteNoticeEntityByIdAndUserId(int noticeId) {
+	public void deleteNoticeEntityById(int noticeId) {
 		
 		NoticeEntity noticeEntity = noticeRepository.findById(noticeId).orElse(null);
 		

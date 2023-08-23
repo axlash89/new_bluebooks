@@ -10,10 +10,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bluebooks.common.PageMaker;
 import com.bluebooks.notice.bo.NoticeBO;
 import com.bluebooks.notice.entity.NoticeEntity;
 
@@ -85,5 +85,20 @@ public class NoticeController {
 		model.addAttribute("view", "notice/noticeDetail");
 		return "template/layout";
 	}
+	
+	
+	@PostMapping("/notice_update_view")
+	public String noticeUpdateView(Model model,
+			@RequestParam("noticeId") int noticeId,
+			@RequestParam("subject") String subject,
+			@RequestParam("content") String content) {
+		
+		model.addAttribute("noticeId", noticeId);
+		model.addAttribute("subject", subject);
+		model.addAttribute("content", content);
+		model.addAttribute("view", "notice/noticeUpdate");
+		return "template/layout";
+	}
+	
 
 }

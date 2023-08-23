@@ -14,7 +14,7 @@ import com.bluebooks.aladin.AladinApiBO;
 import com.bluebooks.book.dao.BookMapper;
 import com.bluebooks.book.domain.Book;
 import com.bluebooks.common.Criteria;
-import com.bluebooks.common.PubPeriod;
+import com.bluebooks.common.enums.PubPeriod;
 
 @Service
 public class BookBO {

@@ -21,7 +21,7 @@ public class DatabaseConfig {
 
         Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*Mapper.xml");
         sessionFactory.setMapperLocations(res);
-
+        
         return sessionFactory.getObject();
     }
 	

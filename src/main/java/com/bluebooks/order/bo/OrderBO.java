@@ -14,8 +14,8 @@ import com.bluebooks.cart.bo.CartBO;
 import com.bluebooks.cart.domain.Cart;
 import com.bluebooks.cart.domain.CartView;
 import com.bluebooks.common.Criteria;
-import com.bluebooks.common.PayMethod;
-import com.bluebooks.common.PubPeriod;
+import com.bluebooks.common.enums.PayBy;
+import com.bluebooks.common.enums.PubPeriod;
 import com.bluebooks.order.dao.OrderMapper;
 import com.bluebooks.order.domain.Order;
 import com.bluebooks.order.domain.OrderView;
@@ -127,9 +127,8 @@ public class OrderBO {
 		order.setUsedPoint(usedPoint);
 		order.setFinalPrice(finalPrice);
 		
-		// enum 통째로 넣기
 		String payByForEnum = payBy.toUpperCase();
-		order.setPayBy(PayMethod.valueOf(payByForEnum));
+		order.setPayBy(PayBy.valueOf(payByForEnum));
 		
 		order.setRecipientName(recipientName);
 		order.setRecipientZipCode(recipientZipCode);
@@ -157,7 +156,6 @@ public class OrderBO {
 			orderedBooksBO.insertOrderedSingleBookByOrderIdFromDetail(order.getId(), bookId , bookCountFromDetail);
 		} else {
 			orderedBooksBO.insertOrderedSingleBookByOrderId(order.getId(), bookId);
-			
 		}
 		
 	}

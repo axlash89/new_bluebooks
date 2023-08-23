@@ -1,4 +1,4 @@
-package com.bluebooks.common;
+package com.bluebooks.common.enums;
 
 public enum PubPeriod {
 	

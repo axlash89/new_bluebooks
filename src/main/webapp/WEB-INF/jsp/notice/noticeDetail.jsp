@@ -1,124 +1,58 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="d-flex justify-content-center">
-	<div class="w-50">
-	
-		<h4 class="normal-text text-center pt-4 pb-2">공지사항</h4>
-		<span class="normal-text">제목</span>
-		<input type="text" id="subject" class="form-control mb-3" placeholder="제목을 입력하세요" value="${noticeEntity.subject}">
-		<span class="normal-text">내용</span>
-		<textarea id="content" class="form-control" rows="10" placeholder="내용을 입력하세요">${noticeEntity.content}</textarea>
-		<%-- 이미지가 있을 때만 이미지 영역 추가 --%>
-		<c:if test="${not empty noticeEntity.imagePath}">
-			<div class="my-3">
-				<img src="${noticeEntity.imagePath}" alt="업로드 된 이미지" width="200px">
-			</div>
-		</c:if>
+	<div>	
+		<h3 class="normal-text text-center pt-4 pb-5">공지사항</h3>
+		<div class="d-flex justify-content-center align-items-center notice-detail-head border">	
+			<div class="normal-text text-center h4">${noticeEntity.subject}</div>
+		</div>	
+		<div class="d-flex justify-content-end normal-text h5 mt-2 mr-3 mb-3">
+				<fmt:parseDate value="${noticeEntity.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
+				<fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy년 M월 d일 HH:mm"/>
+		</div>
+		<div class="notice-detail-body mt-3 mb-5 border py-3">
+			${noticeEntity.content}
+		</div>
 		
+		
+				
 		<c:choose>
-			<c:when test="${userLoginId eq 'admin'}">
-				<div class="d-flex justify-content-end my-3">
-					<input type="file" id="file" accept=".jpg, .jpeg, .png, .gif">
-				</div>
-			
-				<div class="d-flex justify-content-between">		
+			<c:when test="${userLoginId eq 'admin'}">			
+				<div class="d-flex justify-content-between mb-5 px-5">		
 					<button type="button" id="deleteBtn" class="btn btn-secondary" data-notice-id="${noticeEntity.id}">삭제</button>			
-					<div>
-						<input type="button" id="previousBtn" class="btn btn-secondary" value="목록">					
-						<button type="button" id="updateBtn" class="btn btn-info" data-notice-id="${noticeEntity.id}">수정</button>
+					<div class="d-flex">
+						<input type="button" id="previousBtnForAdmin" class="btn btn-secondary" value="목록">					
+						<form action="/notice/notice_update_view" method="post">
+							<input type="text" name="noticeId" value="${noticeEntity.id}" class="d-none">
+							<input type="text" name="subject" value="${noticeEntity.subject}" class="d-none">
+							<textarea name="content" class="d-none">${noticeEntity.content}</textarea>
+							<input type="submit" value="수정" class="btn btn-info ml-2">
+						</form>		
 					</div>			
 				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="d-flex justify-content-end pt-2">
 					<div>
-						<input type="button" id="previousBtn" class="btn btn-secondary" value="목록으로">	
+						<input type="button" id="previousBtn" class="btn btn-secondary mb-5" value="목록으로">	
 					</div>			
 				</div>
 			</c:otherwise>
 		</c:choose>
-	</div>
+	</div>	
 </div>
 
 <script>
 
 $(document).ready(function() {
 		
-	$('#updateBtn').on('click', function() {
-		
-				
-		let subject = $('#subject').val().trim();		
-		let content = $('#content').val();
-		let file = $('#file').val();
-
-		
-		if (subject == "${noticeEntity.subject}" && content == "${noticeEntity.content}" && file == "") {
-			alert("수정된 내용이 없습니다.");
-			return;
-		}		
-		
-		let result = confirm("공지사항 내용을 수정하시겠습니까?");
-		if (!result) {
-			return;
-		}
-		
-		if (!subject) {
-			alert("제목을 입력하세요");
-			return;
-		}
-		
-		if (!content) {
-			alert("내용을 입력하세요");
-			return;
-		}
-		
-		// 파일이 업로드 된 경우 확장자 체크		
-		if (file) {
-			let ext = file.split(".").pop().toLowerCase();
-			if ($.inArray(ext, ['jpg', 'jpeg', 'gif', 'png']) == -1) {
-				alert("이미지 파일만 업로드할 수 있습니다.");
-				$('#file').val("");
-				return;
-			}
-		}
-		
-		// 폼 태그를 스크립트에서 만든다.
-		let noticeId = $(this).data('notice-id');
-		
-		let formData = new FormData();
-		formData.append("noticeId", noticeId);
-		formData.append("subject", subject);
-		formData.append("content", content);
-		formData.append("file", $('#file')[0].files[0]);
-		
-		$.ajax({
-			
-			// request
-			type: "put"
-			, url: "/notice/update"
-			, data: formData
-			, enctype: "multipart/form-data"  // 파일 업로드를 위한 필수 설정
-			, processData: false  // 파일 업로드를 위한 필수 설정
-			, contentType: false  // 파일 업로드를 위한 필수 설정
-			
-			// response
-			, success:function(data) {
-				if (data.code == 1) {
-					alert("공지사항 내용이 수정되었습니다.");
-					location.reload(true);
-				} else {
-					alert(data.errorMessage);
-				}
-			}
-			, error:function(request, status, error) {
-				alert("공지사항 내용 수정을 실패하였습니다.");
-			}
-		});
-		
-	});
 	
+	$('#previousBtnForAdmin').on('click', function() {
+		location.href='/notice/notice_list_view';
+	});
 	
 	$('#previousBtn').on('click', function() {
 		history.back();

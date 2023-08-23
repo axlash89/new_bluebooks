@@ -74,6 +74,9 @@ public class OrderController {
 		
 		OrderView orderView = orderBO.getOrderView(orderId);
 		
+		
+		
+		model.addAttribute("payByEnum", orderView.getOrder().getPayBy().getValue());
 		model.addAttribute("orderView", orderView);
 		model.addAttribute("view", "my/myLayout");
 		model.addAttribute("secondView", "order/myOrderDetail");

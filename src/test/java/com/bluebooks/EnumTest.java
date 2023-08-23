@@ -4,10 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import com.bluebooks.test.CalcType;
 import com.bluebooks.test.Status;
 
 public class EnumTest {
 
+	
+	
 	Status getStatus() {
 		return Status.Y;
 	}
@@ -25,6 +28,20 @@ public class EnumTest {
 		assertEquals(v1, 1);
 		assertEquals(v2, true);
 		assertEquals(status, Status.Y);
+	}
+	
+	
+	@Test
+	void 계산테스트() {
+		// given
+		CalcType calcType = CalcType.CALC_C;
+						
+		// when
+		int result = calcType.calculate(500);
+		
+		// then
+		assertEquals(result, 1500);
+		
 	}
 	
 }

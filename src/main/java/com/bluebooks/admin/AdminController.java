@@ -65,6 +65,7 @@ public class AdminController {
 		
 		OrderView orderView = adminBO.getOrderView(orderId);
 		
+		model.addAttribute("payByEnum", orderView.getOrder().getPayBy().getValue());
 		model.addAttribute("orderView", orderView);
 		model.addAttribute("view", "admin/adminLayout");
 		model.addAttribute("secondView", "/order/orderDetail");		

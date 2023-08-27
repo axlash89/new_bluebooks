@@ -195,9 +195,8 @@ function resizeMap() {
 	  } else {
 		
 		// 24시간 후의 시간 객체 생성
-		var expirationDate = new Date();
-		expirationDate.setTime(expirationDate.getTime() + (24 * 60 * 60 * 1000));
-		console.log("expirationDate::" + expirationDate);
+		// var expirationDate = new Date();
+		// expirationDate.setTime(expirationDate.getTime() + (24 * 60 * 60 * 1000));
 		  
 		  
 	 	var recentCoverImagePaths2 = getCookie('recent_books');
@@ -220,7 +219,7 @@ function resizeMap() {
 	    }
 	    
 	    
-	    setCookie('recent_books', recentCoverImagePaths2, expirationDate);
+	    // setCookie('recent_books', recentCoverImagePaths2, expirationDate);
 	    
 	    
 	    var recentBookIds2 = getCookie('recent_books_id');
@@ -230,7 +229,7 @@ function resizeMap() {
 	    document.getElementById("link2").href = "/book/book_detail_view?bookId=" + recentBookIdArr2[1];
 	    document.getElementById("link3").href = "/book/book_detail_view?bookId=" + recentBookIdArr2[2];
 	    
-	    setCookie('recent_books_id', recentBookIds2, expirationDate);
+	    // setCookie('recent_books_id', recentBookIds2, expirationDate);
 	    
 	  }
 	  

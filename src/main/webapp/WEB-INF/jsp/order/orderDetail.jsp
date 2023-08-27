@@ -38,7 +38,7 @@
 		<th class="normal-text">최종 결제금액</th>
 		<td>${orderView.order.finalPrice}원</td>
 		<th class="normal-text">결제수단</th>
-		<td>${orderView.order.payBy}</td>
+		<td>${payByEnum}</td>
 	</tr>
 	<tr>
 		<th class="normal-text">사용 포인트</th>

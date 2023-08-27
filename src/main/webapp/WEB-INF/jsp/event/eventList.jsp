@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <div class="text-center">
    	<h3 class="normal-text text-center pt-4">이벤트 게시판</h3>
 </div>
@@ -29,28 +31,34 @@
 					<c:choose>
 					<c:when test="${not empty eventView.commentViewList}">
 					<c:forEach items="${eventView.commentViewList}" var="commentView" varStatus="status">	
-						<div class="comment-box mt-1">					
-							<c:choose>
-							<c:when test="${userLoginId eq commentView.user.loginId}">
-							<span class="font-weight-bold mr-1 text-info">${commentView.user.loginId}</span>
-							</c:when>
-							<c:otherwise>
-							<span class="font-weight-bold mr-1">${commentView.user.loginId}</span>
-							</c:otherwise>
-							</c:choose>
-							<span class="small">좋아요</span>
-							<c:choose>
-								<c:when test="${commentView.filledLike}">
-									<a href="#" class="like-btn" data-comment-id="${commentView.comment.id}" data-user-id="${commentView.user.id}"><img src="/static/img/filledHeart.png" width="17px" alt="채워진 하트"></a>
+						<div class="d-flex justify-content-between mt-1">
+							<div class="comment-content-box">					
+								<c:choose>
+								<c:when test="${userLoginId eq commentView.user.loginId}">
+								<span class="font-weight-bold mr-1 text-info">${commentView.user.loginId}</span>
 								</c:when>
 								<c:otherwise>
-									<a href="#" class="like-btn" data-comment-id="${commentView.comment.id}" data-user-id="${commentView.user.id}"><img src="/static/img/emptyHeart.png" width="17px" alt="채워진 하트"></a>
+								<span class="font-weight-bold mr-1">${commentView.user.loginId}</span>
 								</c:otherwise>
-							</c:choose><span class="small">${commentView.likeCount}개</span>					
-							<span class="pl-1">${commentView.comment.content}</span>
-							<c:if test="${commentView.user.id eq userId}">
-							<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}"><img src="/static/img/x-icon.png" class="event-comment-del-img" width="12px" alt="삭제 버튼"></a>
-							</c:if>
+								</c:choose>
+								<span class="small font-weight-bold">좋아요</span>
+								<c:choose>
+									<c:when test="${commentView.filledLike}">
+										<a href="#" class="like-btn" data-comment-id="${commentView.comment.id}" data-user-id="${commentView.user.id}"><img src="/static/img/filledHeart.png" width="17px" alt="채워진 하트"></a>
+									</c:when>
+									<c:otherwise>
+										<a href="#" class="like-btn" data-comment-id="${commentView.comment.id}" data-user-id="${commentView.user.id}"><img src="/static/img/emptyHeart.png" width="17px" alt="채워진 하트"></a>
+									</c:otherwise>
+								</c:choose><span class="small font-weight-bold">${commentView.likeCount}개</span>					
+								<span class="pl-1">${commentView.comment.content}</span>
+								<c:if test="${commentView.user.id eq userId}">
+								<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}"><img src="/static/img/x-icon.png" class="event-comment-del-img" width="12px" alt="삭제 버튼"></a>
+								</c:if>
+							</div>
+							<div class="comment-date-box text-right pl-1">
+								<fmt:parseDate value="${commentView.comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedCreatedAt"/>
+								<span class="comment-date text-secondary pt-1 float-right mr-1 stop-drag"><fmt:formatDate value="${parsedCreatedAt}" pattern="yy.MM.dd HH:mm"/></span>
+							</div>
 						</div>
 					</c:forEach>
 					</c:when>
@@ -332,8 +340,8 @@ $(document).ready(function() {
 			return;
 		}
 		
-		if (content.length > 70) {
-			alert("댓글은 70자 이내로 작성해주세요. 작성하신 댓글이 " + (content.length - 70) + "자 초과되었습니다.");
+		if (content.length > 55) {
+			alert("댓글은 55자 이내로 작성해주세요. 작성하신 댓글이 " + (content.length - 55) + "자 초과되었습니다.");
 			return;
 		}
 		

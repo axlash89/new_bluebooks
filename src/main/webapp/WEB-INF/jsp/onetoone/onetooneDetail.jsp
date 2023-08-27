@@ -39,7 +39,7 @@
 		</c:if>	
 		<c:if test="${not empty onetooneEntity.answer}">
 			<h5 class="normal-text text-center pt-4 pb-2">문의하신 내용 답변드립니다.</h5>
-			<textarea id="answer" class="form-control mb-2" rows="7" placeholder="내용을 입력하세요">${onetooneEntity.answer}</textarea>
+			<textarea id="answer" class="form-control mb-3" rows="7" placeholder="내용을 입력하세요">${onetooneEntity.answer}</textarea>
 			<input type="text" value="${onetooneEntity.answer}" id="originalAnswer" class="d-none">
 			<c:if test="${userLoginId eq 'admin'}">				
 				<div class="d-flex justify-content-between mb-4">		

@@ -373,7 +373,7 @@ header {
 
 .main-box-for-event {
 	width: 680px;
-	height: 250px;
+	height: 270px;
 	background-color:#E0ECF8;
 	border: 10px solid;
 	border-color:#E0ECF8;
@@ -496,6 +496,14 @@ header {
 	border-color:aliceblue;
 	border-radius: 10px;
 	overflow: hidden;
+}
+
+.comment-content-box {
+	width: 740px;
+}
+
+.comment-date-box {
+	width: 180px;
 }
 
 .event-comment-del-img {

@@ -48,6 +48,13 @@ public class UserController {
 		String userLoginId = (String) session.getAttribute("userLoginId");		
 		UserEntity userEntity = userBO.getUserEntityByLoginId(userLoginId);
 		
+		
+		final String REGEX = "[0-9]+";
+		
+		if(userLoginId.matches(REGEX)) {
+			model.addAttribute("kakaoUser", "kakaoUser");	
+		}
+		
 		model.addAttribute("user", userEntity);		
 		model.addAttribute("view", "my/myLayout");
 		model.addAttribute("secondView", "/user/editMyInfo");

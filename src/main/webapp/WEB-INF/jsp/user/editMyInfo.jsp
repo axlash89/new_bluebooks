@@ -14,10 +14,12 @@
 					<th class="text-center">아이디</th>
 					<td>${user.loginId}</td>
 				</tr>
+				<c:if test="${empty kakaoUser}">
 				<tr>
 					<th></th>
 					<td><button id="passwordChangeOpenBtn" class="btn btn-info btn-sm">비밀번호 변경</button></td>
-				</tr>			
+				</tr>
+				</c:if>			
 				<tr class="password-change d-none">
 					<th class="text-center pt-4">기존 비밀번호</th>
 					<td><input type="password" id="originalPassword" class="form-control col-10 ml-2" name="password" placeholder="비밀번호 입력"></td>

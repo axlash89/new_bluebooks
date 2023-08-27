@@ -101,7 +101,7 @@
 	<div id="goingToUsePoint" class="mb-2 d-none">사용할 블루북스 포인트는 <span id="usedPoint"></span></div>	
 	<div class="mb-2">적립 예상 포인트는 ${totalPoint}입니다.</div>
 </div>
-<div class="text-center"><span class="h4 normal-text">최종 결제금액</span><span id="finalPrice" class="normal-text h2">&nbsp;&nbsp;<fmt:formatNumber value="${finalPrice}" pattern="#,###" />원</span></div>
+<div class="text-center"><span class="h4 normal-text">최종 결제금액</span><span id="finalPrice" class="normal-text ml-2 h2">&nbsp;&nbsp;<fmt:formatNumber value="${finalPrice}" pattern="#,###" /></span></div>
 </div>
 <div class="d-flex justify-content-center mt-3 ml-5 normal-text">
 	<div>

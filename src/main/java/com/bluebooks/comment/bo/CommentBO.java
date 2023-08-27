@@ -57,12 +57,12 @@ public class CommentBO {
 		
 		keySet.sort((v1, v2) -> commentIdAndLikeCountKeyValueMap.get(v2).compareTo(commentIdAndLikeCountKeyValueMap.get(v1)));
 
-		List<Comment> CommentListOrderByLikeCount = new ArrayList<>();
+		List<Comment> commentListOrderByLikeCount = new ArrayList<>();
         for (Integer key : keySet) {
         	
         	for (int i = 0; i < commentList.size(); i++) {
         		if (commentList.get(i).getId() == key) {
-                	CommentListOrderByLikeCount.add(commentList.get(i));
+                	commentListOrderByLikeCount.add(commentList.get(i));
                 	commentList.remove(i);
                 	i--;
                 	break;
@@ -72,16 +72,16 @@ public class CommentBO {
         }
 		
 		List<CommentView> commentViewList = new ArrayList<>();
-		for (int i = 0; i < CommentListOrderByLikeCount.size(); i++) {			
+		for (int i = 0; i < commentListOrderByLikeCount.size(); i++) {			
 			CommentView commentView = new CommentView();
-			UserEntity user = userBO.getUserEntityById(CommentListOrderByLikeCount.get(i).getUserId());			
-			int likeCount = likeBO.getLikeCountByCommentId(CommentListOrderByLikeCount.get(i).getId());	
+			UserEntity user = userBO.getUserEntityById(commentListOrderByLikeCount.get(i).getUserId());			
+			int likeCount = likeBO.getLikeCountByCommentId(commentListOrderByLikeCount.get(i).getId());	
 			boolean filledLike = false;
 			if (userId != null) {
-				filledLike = likeBO.getLikeOrNot(CommentListOrderByLikeCount.get(i).getId(), userId);
+				filledLike = likeBO.getLikeOrNot(commentListOrderByLikeCount.get(i).getId(), userId);
 			}
 			
-			commentView.setComment(CommentListOrderByLikeCount.get(i));
+			commentView.setComment(commentListOrderByLikeCount.get(i));
 			commentView.setUser(user);
 			commentView.setLikeCount(likeCount);
 			commentView.setFilledLike(filledLike);

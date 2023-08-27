@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<h3 class="text-center">블루북스에서 회원님의 추가 정보가 필요합니다.</h3>
+<h3 class="normal-text pt-4 pl-5">블루북스에서 회원님의 추가 정보가 필요합니다.</h3>
 
 <div id="signUpBox" class="d-flex justify-content-center align-items-center pt-5">
 	

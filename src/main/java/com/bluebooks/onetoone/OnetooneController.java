@@ -25,7 +25,7 @@ public class OnetooneController {
 	
 	// /onetoone/onetoone_list_view?page=2
 	@GetMapping("/onetoone_list_view")
-	public String onetooneListView(HttpSession session, Model model, @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+	public String onetooneListView(HttpSession session, Model model, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
 		
 		
 		int userId = (int)session.getAttribute("userId");

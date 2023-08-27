@@ -41,7 +41,7 @@
 				<div class="main-box-text text-center">진행중인 이벤트</div>
 				<div class="event-in-event-box">
 					<c:forEach items="${eventList}" var="event" varStatus="status">
-						<a href="/event/event_list_view"><img src="${event.imagePath}" alt="이벤트 이미지" width="680px" height="200px"></a>
+						<a href="/event/event_list_view"><img src="${event.imagePath}" alt="이벤트 이미지" width="680px" height="230px"></a>
 						<c:set var="eventCount" value="${status.count}"/>
 					</c:forEach>
 				</div>

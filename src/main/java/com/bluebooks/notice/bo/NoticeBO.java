@@ -77,7 +77,7 @@ public class NoticeBO {
 								
 				if(noticeEntity != null && content.contains("img src=")) {
 					String finalImagePath = content.substring(content.indexOf("/images/"), content.indexOf(".jpg") + 4);
-					if (noticeEntity.getImagePath() != null && noticeEntity.getImagePath() != finalImagePath) {
+					if (noticeEntity.getImagePath() != null && noticeEntity.getImagePath().equals(finalImagePath) == false) {
 						fileManager.deleteFile(noticeEntity.getImagePath());
 					}
 					

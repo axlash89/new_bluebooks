@@ -30,7 +30,7 @@ public class OrderController {
 	private OrderBO orderBO;
 	
 	@GetMapping("/my_order_view")
-	public String signUpView(Model model, HttpSession session, Criteria criteria, 
+	public String myOrderView(Model model, HttpSession session, Criteria criteria, 
 			@RequestParam(required=false) String period) {
 		
 		int userId = (int) session.getAttribute("userId");
@@ -55,6 +55,7 @@ public class OrderController {
 		model.addAttribute("view", "my/myLayout");
 		model.addAttribute("secondView", "order/myOrder");
 		return "template/layout";
+		
 	}
 	
 	@GetMapping("/my_order_more_detail")

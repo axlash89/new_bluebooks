@@ -1,4 +1,4 @@
-# new_bluebooks
+# 블루북스 프로젝트
 ### 기획서 링크 
 https://www.notion.so/c1144a04719d4f7ea477253cb5d43900?pvs=4
 

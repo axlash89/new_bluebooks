@@ -12,12 +12,12 @@
 			<div class="d-flex align-items-center pb-3">
 				<div>
 					<h5 class="d-flex justify-content-end pt-2">고객센터 1544-8613</h5>
-					<div class="pt-1"><a href="#" id="#findIdAnchorTag" data-toggle="modal" data-target="#findIdModal" class="a-tag-deco-none"><h5 class="d-flex justify-content-end">오프라인 매장 위치·영업시간 안내</h5></a></div>
+					<div class="pt-1"><a href="#" id="#findIdAnchorTag" data-toggle="modal" data-target="#mapModal" class="a-tag-deco-none"><h5 class="d-flex justify-content-end">오프라인 매장 위치·영업시간 안내</h5></a></div>
 				</div>
 			</div>
 		</div>
 		
-<div class="modal fade" id="findIdModal">
+<div class="modal fade" id="mapModal">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content text-center">								
 			<div class="modal-body" style="max-height: auto; max-width: auto; overflow-y: auto;">

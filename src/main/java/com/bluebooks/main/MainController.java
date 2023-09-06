@@ -17,7 +17,7 @@ public class MainController {
 	@Autowired
 	private MainBO mainBO;
 	
-	@GetMapping("/main_view")
+	@GetMapping("/")
 	public String mainView(Model model) {
 		
 		List<Book> bestSellerTop10List = mainBO.getBestSellerTop10List();

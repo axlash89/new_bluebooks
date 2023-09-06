@@ -5,7 +5,7 @@
   		<div class="d-flex justify-content-around pt-2">
 			<div>
 	        	<div class="pl-2">
-	        		<a href="/main_view" class="logo-text stop-drag">
+	        		<a href="/" class="logo-text stop-drag">
 		        		<img src="/static/img/bluebooks.png" class="mt-1 mb-1" width="80px"><br>
 		        		<span class="text-center font-weight-bold h5">블루북스</span>
 	        		</a>

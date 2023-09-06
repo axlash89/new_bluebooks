@@ -92,7 +92,7 @@ $(document).ready(function() {
 		$.post(url, params)
 		.done(function(data) {
 			if (data.code == 1) {
-				location.href = "/main_view";
+				location.href = "/";
 			} else {
 				alert(data.errorMessage);
 			}

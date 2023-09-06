@@ -123,7 +123,7 @@ public class KakaoController {
 			session.setAttribute("userName", user.getName());
 			session.setAttribute("userPoint", user.getPoint());
 
-			return "redirect:/main_view";
+			return "redirect:/";
 			
 		} else {
 			

@@ -42,7 +42,7 @@ $(document).ready(function() {
 			, success: function(data) {
 				if (data.code == 1) {
 					alert("더 나은 블루북스로 찾아뵙겠습니다. 그동안 이용해주셔서 감사합니다.");
-					location.href="/main_view"
+					location.href="/"
 				} else {
 					alert(data.errorMessage);
 				}

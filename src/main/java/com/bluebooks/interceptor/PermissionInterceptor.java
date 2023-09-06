@@ -48,7 +48,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 				
 		// 로그인 && /user로 온 경우 => 글 목록 페이지로 이동, 컨트롤러 수행 방지
 		if (userId != null && uri.startsWith("/user/sign")) {
-			response.sendRedirect("/main_view");			
+			response.sendRedirect("/");			
 			return false;  // 컨트롤러 수행 안함.
 		}
 		
@@ -68,14 +68,14 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		
 		if (userLoginId == null) {
 			if (uri.startsWith("/admin")) {
-				response.sendRedirect("/main_view");			
+				response.sendRedirect("/");			
 				return false;  // 컨트롤러 수행 안함.
 			}	
 		}
 		
 		if (userLoginId != null) {		
 			if (userLoginId.equals("admin") == false && uri.startsWith("/admin")) {
-				response.sendRedirect("/main_view");			
+				response.sendRedirect("/");			
 				return false;  // 컨트롤러 수행 안함.
 			}		
 		}

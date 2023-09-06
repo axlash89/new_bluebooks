@@ -45,7 +45,7 @@
 
 
 <script>
-$("#findIdModal").on('shown.bs.modal', function() {
+$("#mapModal").on('shown.bs.modal', function() {
 	// id 속성값이 myModal인 element 에 지도를 표시하는 로직
 	
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 

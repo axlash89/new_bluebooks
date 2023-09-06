@@ -51,7 +51,7 @@ public class KakaoController {
 		
 		params.add("grant_type", "authorization_code");
 		params.add("client_id", "1f3a717bfeb202d1b0336161e6208697");
-		params.add("redirect_uri", "http://3.39.189.144:8080/auth/kakao/callback");
+		params.add("redirect_uri", "http://13.125.206.153:8080/auth/kakao/callback");
 		params.add("code", code);
 		
 		// HttpHeader와 HttpBody를 하나의 오브젝트에 담기

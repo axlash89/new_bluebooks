@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <div class="sign-up-text h3 text-center pt-3 pb-3">블루북스 회원가입</div> 
 <span class="sign-up-text d-block mt-2 mb-2 text-center">카카오 아이디가 있다면, "카카오 로그인"</span><span class="sign-up-text d-block mt-2 mb-2 text-center">몇가지 추가정보 기입만으로 간편가입 완료!</span>
-<div class="d-flex justify-content-center mb-3"><a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1f3a717bfeb202d1b0336161e6208697&redirect_uri=http://localhost/auth/kakao/callback" class="ml-3"><img src="/static/img/kakaoLoginBtn.png"></a></div>   
+<div class="d-flex justify-content-center mb-3"><a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=1f3a717bfeb202d1b0336161e6208697&redirect_uri=http://13.125.206.153:8080/auth/kakao/callback" class="ml-3"><img src="/static/img/kakaoLoginBtn.png"></a></div>   
 <div id="signUpBox" class="d-flex justify-content-center align-items-center pl-5 pr-5 pb-5">
 		<div id="signUpTable">
 		<table class="table pt-3">

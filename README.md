@@ -1,5 +1,5 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=0B2161&height=185&section=header&text=블루북스%20프로젝트&fontSize=50&fontColor=FFFFFF&fontAlignY=38)
-<!-- ### ■ 블루북스 홈페이지 링크 ( http://bluebooks.site ) -->
+### ■ 블루북스 홈페이지 링크 ( http://bluebooks.site )
 ### ■ 포트폴리오 링크 ( [바로가기](https://axlash.notion.site/de49184f5fcc4a3888c6097ee452fa55?pvs=4, "포트폴리오 바로가기") )
 <br/>
 

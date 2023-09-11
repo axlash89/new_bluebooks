@@ -224,11 +224,12 @@ function resizeMap() {
 	    
 	    var recentBookIds2 = getCookie('recent_books_id');
 		var recentBookIdArr2 = recentBookIds2 ? recentBookIds2.split('/') : [];
-	  
-		document.getElementById("link1").href = "/book/book_detail_view?bookId=" + recentBookIdArr2[0];
-	    document.getElementById("link2").href = "/book/book_detail_view?bookId=" + recentBookIdArr2[1];
-	    document.getElementById("link3").href = "/book/book_detail_view?bookId=" + recentBookIdArr2[2];
-	    
+
+		if (recentBookIdArr2.length > 0) {
+			document.getElementById("link1").href = "/book/book_detail_view?bookId=" + recentBookIdArr2[0];
+		    document.getElementById("link2").href = "/book/book_detail_view?bookId=" + recentBookIdArr2[1];
+		    document.getElementById("link3").href = "/book/book_detail_view?bookId=" + recentBookIdArr2[2];
+		}
 	    // setCookie('recent_books_id', recentBookIds2, expirationDate);
 	    
 	  }

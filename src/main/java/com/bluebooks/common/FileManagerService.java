@@ -23,7 +23,7 @@ public class FileManagerService {
 	
 	// input : loginId, MultipartFile(이미지 파일) 
 	// output : web image path(String)
-	public String saveFile(String loginId, MultipartFile file) {
+	public String saveFile(String loginId, MultipartFile file) { 
 		
 		// 파일 디렉토리(폴더)   예) aaaa_167845645/sun.png
 		String directoryName = loginId + "_" + System.currentTimeMillis() + "/";  // aaaa_167845645/
